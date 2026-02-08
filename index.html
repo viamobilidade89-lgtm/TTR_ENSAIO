@@ -11,6 +11,7 @@
         :root { 
             --cor-fundo: #0f172a; --cor-card: #1e293b; --cor-primaria: #38bdf8; 
             --cor-texto: #f8fafc; --fonte-tam: 14px;
+            --anim-velocidade: 2s; /* Padrão da animação */
         }
 
         body { 
@@ -47,6 +48,19 @@
         .item-historico { background: rgba(0,0,0,0.2); padding: 10px; border-radius: 5px; margin-bottom: 8px; border-left: 3px solid var(--cor-primaria); font-size: 0.8em; }
         
         footer { text-align: center; margin-top: 40px; font-size: 0.9em; opacity: 0.6; font-weight: bold; letter-spacing: 1px; }
+
+        /* Animação do Título */
+        .titulo-animado {
+            animation-name: fadeInOut;
+            animation-iteration-count: infinite;
+            animation-direction: alternate; /* Faz fade-in e depois fade-out */
+            animation-timing-function: ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0%   { opacity: 0.2; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -78,6 +92,18 @@
     <label>Cor Destaque:</label> <input type="color" id="cfgPrim" oninput="salvarConfig()">
     
     <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+    <h3>Animação do Título</h3>
+    <label>Ativar Animação:</label>
+    <input type="checkbox" id="animAtiva" onchange="salvarConfig()" style="width:auto; margin-bottom:15px;">
+    
+    <label>Velocidade:</label>
+    <select id="animVelocidade" onchange="salvarConfig()">
+        <option value="1s">Rápida</option>
+        <option value="2s" selected>Normal</option>
+        <option value="3s">Lenta</option>
+    </select>
+
+    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin: 20px 0;">
     <h3>Histórico de Ensaios</h3>
     <div id="listaHist">Vazio.</div>
     <button onclick="limparHistorico()" style="background:#ef4444; width:100%; margin-top:10px; font-size: 11px;">LIMPAR HISTÓRICO</button>
@@ -87,7 +113,7 @@
     <div class="card">
         <div class="tres-pontos" onclick="toggleMenu()">&#8942;</div>
         <header style="text-align:center; margin-bottom:20px;">
-            <h1 style="margin:0; color:var(--cor-primaria)">ALPHA TTR</h1>
+            <h1 id="tituloApp" style="margin:0; color:var(--cor-primaria)">TTR</h1>
             <p style="opacity:0.8">Equipe Alpha - Registro de Campo</p>
         </header>
 
@@ -161,20 +187,46 @@
     }
 
     function salvarConfig() {
-        const conf = { bg: document.getElementById('cfgBg').value, prim: document.getElementById('cfgPrim').value };
-        localStorage.setItem('alpha_ttr_v5_conf', JSON.stringify(conf));
+        const conf = { 
+            bg: document.getElementById('cfgBg').value, 
+            prim: document.getElementById('cfgPrim').value,
+            animAtiva: document.getElementById('animAtiva').checked,
+            animVelocidade: document.getElementById('animVelocidade').value
+        };
+        localStorage.setItem('alpha_ttr_v6_conf', JSON.stringify(conf));
         aplicarConfig();
     }
 
     function aplicarConfig() {
-        const c = JSON.parse(localStorage.getItem('alpha_ttr_v5_conf'));
-        if(!c) return;
+        const c = JSON.parse(localStorage.getItem('alpha_ttr_v6_conf'));
+        if(!c) { // Configurações padrão se não houver nada salvo
+            document.getElementById('animAtiva').checked = true;
+            document.getElementById('animVelocidade').value = "2s";
+            return; 
+        }
+
         document.documentElement.style.setProperty('--cor-fundo', c.bg);
         document.documentElement.style.setProperty('--cor-primaria', c.prim);
+        
+        document.getElementById('cfgBg').value = c.bg;
+        document.getElementById('cfgPrim').value = c.prim;
+
+        const titulo = document.getElementById('tituloApp');
+        if (c.animAtiva) {
+            titulo.classList.add('titulo-animado');
+            titulo.style.animationDuration = c.animVelocidade;
+        } else {
+            titulo.classList.remove('titulo-animado');
+            titulo.style.opacity = '1'; // Garante que fica visível quando desativado
+        }
+        document.getElementById('animAtiva').checked = c.animAtiva;
+        document.getElementById('animVelocidade').value = c.animVelocidade;
     }
 
     function calcularTudo() {
         const t = parseFloat(document.getElementById('tempMed').value);
+        if (isNaN(t)) { alert("Por favor, insira uma temperatura válida."); return; }
+
         const fator = (235 + 75) / (235 + t);
         const k = 1.5;
 
@@ -201,18 +253,18 @@
     }
 
     function salvarHist() {
-        let h = JSON.parse(localStorage.getItem('alpha_ttr_v5_hist') || "[]");
+        let h = JSON.parse(localStorage.getItem('alpha_ttr_v6_hist') || "[]");
         h.unshift(dadosSalvos);
-        localStorage.setItem('alpha_ttr_v5_hist', JSON.stringify(h.slice(0,10)));
+        localStorage.setItem('alpha_ttr_v6_hist', JSON.stringify(h.slice(0,10)));
         carregarHist();
     }
 
     function carregarHist() {
-        const h = JSON.parse(localStorage.getItem('alpha_ttr_v5_hist') || "[]");
+        const h = JSON.parse(localStorage.getItem('alpha_ttr_v6_hist') || "[]");
         document.getElementById('listaHist').innerHTML = h.map(x => `<div class="item-historico"><b>${x.data}</b><br>${x.local}</div>`).join("");
     }
 
-    function limparHistorico() { localStorage.removeItem('alpha_ttr_v5_hist'); carregarHist(); }
+    function limparHistorico() { localStorage.removeItem('alpha_ttr_v6_hist'); carregarHist(); }
 
     function gerarPDF() {
         if(!dadosSalvos) return alert("Calcule antes!");
