@@ -3,303 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENSAIO TTRE - EQUIPE ALPHA</title>
+    <title>ALPHA TTR - EQUIPE ALPHA</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 
     <style>
         :root { 
-            --bg-color: #0a0a0a; --card-bg: #161616; --primary: #007bff; 
-            --text-color: #ffffff; --border: #333; --font-family: 'Segoe UI'; --font-size: 14px;
+            --cor-fundo: #0f172a; --cor-card: #1e293b; --cor-primaria: #38bdf8; 
+            --cor-texto: #f8fafc; --fonte-tam: 14px;
         }
 
         body { 
-            font-family: var(--font-family); font-size: var(--font-size);
-            background: var(--bg-color); color: var(--text-color); margin: 0; padding: 15px; transition: 0.3s; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: var(--fonte-tam);
+            background: var(--cor-fundo); color: var(--cor-texto); margin: 0; padding: 15px; transition: 0.3s; 
         }
         
         .container { max-width: 850px; margin: auto; }
-        .card { background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border); position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .card { background: var(--cor-card); padding: 25px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
         
-        /* Menu Lateral */
-        .drawer { 
+        .gaveta { 
             position: fixed; top: 0; right: -350px; width: 320px; height: 100%; 
-            background: var(--card-bg); border-left: 2px solid var(--primary); 
+            background: var(--cor-card); border-left: 3px solid var(--cor-primaria); 
             z-index: 1000; transition: 0.4s; padding: 20px; box-sizing: border-box; overflow-y: auto;
         }
-        .drawer.active { right: 0; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 999; }
-        .menu-dots { position: absolute; top: 20px; right: 20px; cursor: pointer; font-size: 28px; color: var(--primary); z-index: 10; }
+        .gaveta.ativa { right: 0; }
+        .mascara { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 999; }
+        .tres-pontos { position: absolute; top: 20px; right: 20px; cursor: pointer; font-size: 28px; color: var(--cor-primaria); }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+        .grade { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 600px) { .grade { grid-template-columns: 1fr; } }
 
+        label { display: block; margin-top: 10px; font-weight: bold; font-size: 0.9em; }
         input, select { 
-            width: 100%; padding: 10px; margin: 5px 0 15px; background: rgba(255,255,255,0.05); 
-            border: 1px solid var(--border); border-radius: 6px; color: inherit; font-size: inherit; box-sizing: border-box;
+            width: 100%; padding: 12px; margin: 5px 0 10px; background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: inherit; font-size: inherit; box-sizing: border-box;
         }
         
-        button { padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; transition: 0.2s; }
-        .btn-calc { background: var(--primary); width: 100%; font-size: 1.1em; margin-bottom: 10px; }
+        button { padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; color: white; transition: 0.2s; }
+        .btn-calc { background: var(--cor-primaria); color: #000; width: 100%; font-size: 1.1em; margin-top: 15px; }
         
-        /* Resultados */
-        .res-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
-        .res-box { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border-top: 3px solid var(--primary); }
-        .res-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .res-line { padding: 8px 0; border-bottom: 1px solid var(--border); font-family: monospace; }
-
-        /* Configurações */
-        .config-group { margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-        .config-group label { display: block; font-size: 12px; margin-bottom: 5px; opacity: 0.7; }
-        .hist-item { background: #222; padding: 10px; border-radius: 5px; margin-bottom: 10px; border-left: 3px solid var(--primary); font-size: 11px; }
+        .db-manager { background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px dashed var(--cor-primaria); }
+        .res-caixa { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px; border-top: 4px solid var(--cor-primaria); margin-top: 20px; }
+        .item-historico { background: rgba(0,0,0,0.2); padding: 10px; border-radius: 5px; margin-bottom: 8px; border-left: 3px solid var(--cor-primaria); font-size: 0.8em; }
         
-        footer { text-align: center; margin-top: 30px; font-size: 12px; opacity: 0.6; }
+        footer { text-align: center; margin-top: 40px; font-size: 0.9em; opacity: 0.6; font-weight: bold; letter-spacing: 1px; }
     </style>
 </head>
-<body id="mainBody">
+<body>
 
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+<div class="mascara" id="mascara" onclick="toggleMenu()"></div>
 
-<div class="drawer" id="drawer">
-    <h2 style="color:var(--primary)">Configurações</h2>
+<div class="gaveta" id="gaveta">
+    <h2 style="color:var(--cor-primaria)">⚙️ Configurações</h2>
     
-    <div class="config-group">
-        <label>Personalização de Cores</label>
-        Fundo: <input type="color" id="setBg" oninput="saveSettings()">
-        Card: <input type="color" id="setCard" oninput="saveSettings()">
-        Texto: <input type="color" id="setText" oninput="saveSettings()">
-        Destaque: <input type="color" id="setPrim" oninput="saveSettings()">
+    <div class="db-manager">
+        <label>Cadastrar Técnico</label>
+        <div style="display:flex; gap:5px">
+            <input type="text" id="novoTecnico" placeholder="Nome" style="margin-bottom:0">
+            <button onclick="adicionarDB('tecnicos', 'novoTecnico')" style="background:var(--cor-primaria); color:#000">+</button>
+        </div>
     </div>
 
-    <div class="config-group">
-        <label>Fonte do Sistema</label>
-        <select id="setFont" onchange="saveSettings()">
-            <option value="'Segoe UI'">Padrão (Segoe)</option>
-            <option value="'Arial'">Arial</option>
-            <option value="'Courier New'">Robótica (Courier)</option>
-            <option value="'Verdana'">Verdana</option>
-            <option value="'Georgia'">Elegante (Georgia)</option>
-        </select>
-        
-        <label>Tamanho da Letra</label>
-        <select id="setSize" onchange="saveSettings()">
-            <option value="12px">Pequena</option>
-            <option value="14px" selected>Média</option>
-            <option value="16px">Grande</option>
-            <option value="18px">Extra Grande</option>
-        </select>
+    <div class="db-manager">
+        <label>Cadastrar Local</label>
+        <div style="display:flex; gap:5px">
+            <input type="text" id="novoLocal" placeholder="Local/Subestação" style="margin-bottom:0">
+            <button onclick="adicionarDB('locais', 'novoLocal')" style="background:var(--cor-primaria); color:#000">+</button>
+        </div>
     </div>
 
-    <h3 style="color:var(--primary)">Histórico</h3>
+    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+    
+    <label>Cor de Fundo:</label> <input type="color" id="cfgBg" oninput="salvarConfig()">
+    <label>Cor Destaque:</label> <input type="color" id="cfgPrim" oninput="salvarConfig()">
+    
+    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+    <h3>Histórico de Ensaios</h3>
     <div id="listaHist">Vazio.</div>
-    <button onclick="limparHistorico()" style="background:#dc3545; width:100%; margin-top:10px; font-size:12px">Apagar Histórico</button>
+    <button onclick="limparHistorico()" style="background:#ef4444; width:100%; margin-top:10px; font-size: 11px;">LIMPAR HISTÓRICO</button>
 </div>
 
 <div class="container">
     <div class="card">
-        <div class="menu-dots" onclick="toggleMenu()">&#8942;</div>
-        <header style="text-align:center;">
-            <h1 style="margin:0; color:var(--primary)">ENSAIO TTRE</h1>
-            <p style="opacity:0.7">Equipe Alpha - Subestação</p>
+        <div class="tres-pontos" onclick="toggleMenu()">&#8942;</div>
+        <header style="text-align:center; margin-bottom:20px;">
+            <h1 style="margin:0; color:var(--cor-primaria)">ALPHA TTR</h1>
+            <p style="opacity:0.8">Equipe Alpha - Registro de Campo</p>
         </header>
 
+        <div class="grade">
+            <div>
+                <label>Técnico</label>
+                <select id="selTecnico"></select>
+            </div>
+            <div>
+                <label>Local</label>
+                <select id="selLocal"></select>
+            </div>
+        </div>
+
         <label>Temperatura Medida (°C)</label>
-        <input id="tm" type="number" step="0.1" value="25">
+        <input id="tempMed" type="number" step="0.1" value="25">
 
-        <div class="grid">
+        <div class="grade" style="margin-top:10px">
             <section>
-                <h3 style="color:var(--primary)">Entrada</h3>
-                <select id="unitIn">
-                    <option value="1e-12">pΩ</option>
-                    <option value="1e-6">µΩ</option>
-                    <option value="1e-3">mΩ</option>
-                    <option value="1" selected>Ω</option>
-                </select>
-                <input id="e1" type="number" placeholder="Fase H1-H3">
-                <input id="e2" type="number" placeholder="Fase H1-H2">
-                <input id="e3" type="number" placeholder="Fase H2-H3">
+                <h3 style="color:var(--cor-primaria)">Alta Tensão (Ω)</h3>
+                <input id="ent1" type="number" step="any" placeholder="H1-H3">
+                <input id="ent2" type="number" step="any" placeholder="H1-H2">
+                <input id="ent3" type="number" step="any" placeholder="H2-H3">
             </section>
-
             <section>
-                <h3 style="color:var(--primary)">Saída</h3>
-                <select id="unitOut">
-                    <option value="1e-6">µΩ</option>
-                    <option value="1e-3" selected>mΩ</option>
-                    <option value="1">Ω</option>
-                </select>
-                <input id="s1" type="number" placeholder="Fase X0-X1">
-                <input id="s2" type="number" placeholder="Fase X0-X2">
-                <input id="s3" type="number" placeholder="Fase X0-X3">
+                <h3 style="color:var(--cor-primaria)">Baixa Tensão (mΩ)</h3>
+                <input id="sai1" type="number" step="any" placeholder="X0-X1">
+                <input id="sai2" type="number" step="any" placeholder="X0-X2">
+                <input id="sai3" type="number" step="any" placeholder="X0-X3">
             </section>
         </div>
 
-        <button class="btn-calc" onclick="calcular()">CALCULAR E SALVAR</button>
-        <div style="display:flex; gap:10px">
-            <button style="flex:1; background:#444" onclick="limparCampos()">LIMPAR</button>
-            <button style="flex:1; background:#6f42c1" onclick="gerarPDF()">GERAR PDF</button>
+        <button class="btn-calc" onclick="calcularTudo()">CALCULAR E SALVAR</button>
+        <div style="display:flex; gap:10px; margin-top:10px;">
+            <button style="flex:1; background:#475569" onclick="location.reload()">NOVO ENSAIO</button>
+            <button style="flex:1; background:#4f46e5" onclick="gerarPDF()">GERAR PDF</button>
         </div>
     </div>
 
-    <div class="res-container" id="areaResultados" style="display:none;">
-        <div class="res-box">
-            <div class="res-header">
-                <b>Entrada</b>
-                <button onclick="ciclar('In')" style="background:none; color:var(--primary); font-size:10px; border:1px solid var(--primary)">Mudar Unidade</button>
-            </div>
-            <div id="resE"></div>
-        </div>
-        <div class="res-box">
-            <div class="res-header">
-                <b>Saída</b>
-                <button onclick="ciclar('Out')" style="background:none; color:var(--primary); font-size:10px; border:1px solid var(--primary)">Mudar Unidade</button>
-            </div>
-            <div id="resS"></div>
-        </div>
+    <div id="areaResultados" class="grade" style="display:none; margin-top:20px;">
+        <div class="res-caixa"><div id="exibirEnt"></div></div>
+        <div class="res-caixa"><div id="exibirSai"></div></div>
     </div>
 
-    <footer>Produzido pela Equipe Alpha</footer>
+    <footer>PRODUCED BY ALPHA TEAM</footer>
 </div>
 
 <script>
-    let dadosAtuais = null;
-    const escalas = [
-        {l:"pΩ", v:1e-12}, {l:"µΩ", v:1e-6}, {l:"mΩ", v:1e-3}, {l:"Ω", v:1}, {l:"kΩ", v:1e3}
-    ];
-    let idxE = 3; // Começa em Ohms
-    let idxS = 2; // Começa em mOhms
+    let dadosSalvos = null;
 
     function toggleMenu() {
-        const d = document.getElementById('drawer');
-        d.classList.toggle('active');
-        document.getElementById('overlay').style.display = d.classList.contains('active') ? 'block' : 'none';
+        document.getElementById('gaveta').classList.toggle('ativa');
+        document.getElementById('mascara').style.display = document.getElementById('gaveta').classList.contains('ativa') ? 'block' : 'none';
     }
 
-    function saveSettings() {
-        const settings = {
-            bg: document.getElementById('setBg').value,
-            card: document.getElementById('setCard').value,
-            text: document.getElementById('setText').value,
-            prim: document.getElementById('setPrim').value,
-            font: document.getElementById('setFont').value,
-            size: document.getElementById('setSize').value
-        };
-        localStorage.setItem('alpha_ttre_settings', JSON.stringify(settings));
-        applySettings();
+    function adicionarDB(chave, idInput) {
+        const input = document.getElementById(idInput);
+        if(!input.value) return;
+        let lista = JSON.parse(localStorage.getItem('alpha_db_' + chave) || "[]");
+        lista.push(input.value);
+        localStorage.setItem('alpha_db_' + chave, JSON.stringify(lista));
+        input.value = "";
+        carregarSelects();
     }
 
-    function applySettings() {
-        const s = JSON.parse(localStorage.getItem('alpha_ttre_settings'));
-        if(!s) return;
-        const root = document.documentElement;
-        root.style.setProperty('--bg-color', s.bg);
-        root.style.setProperty('--card-bg', s.card);
-        root.style.setProperty('--text-color', s.text);
-        root.style.setProperty('--primary', s.prim);
-        root.style.setProperty('--font-family', s.font);
-        root.style.setProperty('--font-size', s.size);
-        
-        // Atualiza inputs das configurações para bater com o atual
-        document.getElementById('setBg').value = s.bg;
-        document.getElementById('setCard').value = s.card;
-        document.getElementById('setText').value = s.text;
-        document.getElementById('setPrim').value = s.prim;
-        document.getElementById('setFont').value = s.font;
-        document.getElementById('setSize').value = s.size;
+    function carregarSelects() {
+        const tecs = JSON.parse(localStorage.getItem('alpha_db_tecnicos') || "[]");
+        const locs = JSON.parse(localStorage.getItem('alpha_db_locais') || "[]");
+        document.getElementById('selTecnico').innerHTML = '<option value="">Selecionar Técnico...</option>' + tecs.map(t => `<option value="${t}">${t}</option>`).join("");
+        document.getElementById('selLocal').innerHTML = '<option value="">Selecionar Local...</option>' + locs.map(l => `<option value="${l}">${l}</option>`).join("");
     }
 
-    function calcular() {
-        const tm = parseFloat(document.getElementById('tm').value);
-        if(isNaN(tm)) return alert("Preencha a temperatura!");
+    function salvarConfig() {
+        const conf = { bg: document.getElementById('cfgBg').value, prim: document.getElementById('cfgPrim').value };
+        localStorage.setItem('alpha_ttr_v5_conf', JSON.stringify(conf));
+        aplicarConfig();
+    }
 
-        const fator = (235 + 75) / (235 + tm);
-        const CONST = 1.5;
+    function aplicarConfig() {
+        const c = JSON.parse(localStorage.getItem('alpha_ttr_v5_conf'));
+        if(!c) return;
+        document.documentElement.style.setProperty('--cor-fundo', c.bg);
+        document.documentElement.style.setProperty('--cor-primaria', c.prim);
+    }
 
-        const processar = (id, multi) => {
-            const v = document.getElementById(id).value;
-            if(v === "") return null;
-            // Cálculo rigoroso: (Valor Lido * Unidade) * 1.5 * Fator de Temperatura
-            return (parseFloat(v) * multi) * CONST * fator;
+    function calcularTudo() {
+        const t = parseFloat(document.getElementById('tempMed').value);
+        const fator = (235 + 75) / (235 + t);
+        const k = 1.5;
+
+        const ler = (id, multi) => {
+            const val = document.getElementById(id).value;
+            return val === "" ? null : (parseFloat(val) * multi) * k * fator;
         };
 
-        const mIn = parseFloat(document.getElementById('unitIn').value);
-        const mOut = parseFloat(document.getElementById('unitOut').value);
-
-        dadosAtuais = {
+        dadosSalvos = {
             data: new Date().toLocaleString(),
-            temp: tm,
-            entrada: [
-                {p:"H1-H3", v: processar('e1', mIn)},
-                {p:"H1-H2", v: processar('e2', mIn)},
-                {p:"H2-H3", v: processar('e3', mIn)}
-            ],
-            saida: [
-                {p:"X0-X1", v: processar('s1', mOut)},
-                {p:"X0-X2", v: processar('s2', mOut)},
-                {p:"X0-X3", v: processar('s3', mOut)}
-            ]
+            tecnico: document.getElementById('selTecnico').value || "Não informado",
+            local: document.getElementById('selLocal').value || "Não informado",
+            t: t,
+            ent: [ {l:"H1-H3", v: ler('ent1', 1)}, {l:"H1-H2", v: ler('ent2', 1)}, {l:"H2-H3", v: ler('ent3', 1)} ],
+            sai: [ {l:"X0-X1", v: ler('sai1', 0.001)}, {l:"X0-X2", v: ler('sai2', 0.001)}, {l:"X0-X3", v: ler('sai3', 0.001)} ]
         };
 
         document.getElementById('areaResultados').style.display = 'grid';
-        renderResultados();
-        salvarNoHistorico();
-    }
-
-    function renderResultados() {
-        if(!dadosAtuais) return;
-        const format = (val, esc) => val === null ? "---" : (val / esc.v).toFixed(6) + " " + esc.l;
         
-        document.getElementById('resE').innerHTML = dadosAtuais.entrada.map(i => `<div class="res-line">${i.p}: ${format(i.v, escalas[idxE])}</div>`).join("");
-        document.getElementById('resS').innerHTML = dadosAtuais.saida.map(i => `<div class="res-line">${i.p}: ${format(i.v, escalas[idxS])}</div>`).join("");
+        document.getElementById('exibirEnt').innerHTML = "<b>Alta Tensão (Ω)</b><br>" + dadosSalvos.ent.map(i => `<div>${i.l}: ${i.v ? i.v.toFixed(3) : '---'} Ω</div>`).join("");
+        document.getElementById('exibirSai').innerHTML = "<b>Baixa Tensão (mΩ)</b><br>" + dadosSalvos.sai.map(i => `<div>${i.l}: ${i.v ? (i.v*1000).toFixed(3) : '---'} mΩ</div>`).join("");
+        
+        salvarHist();
     }
 
-    function ciclar(tipo) {
-        if(tipo === 'In') idxE = (idxE + 1) % escalas.length;
-        else idxS = (idxS + 1) % escalas.length;
-        renderResultados();
-    }
-
-    function salvarNoHistorico() {
-        let h = JSON.parse(localStorage.getItem('alpha_ttre_hist') || "[]");
-        h.unshift(dadosAtuais);
-        localStorage.setItem('alpha_ttre_hist', JSON.stringify(h.slice(0,10)));
+    function salvarHist() {
+        let h = JSON.parse(localStorage.getItem('alpha_ttr_v5_hist') || "[]");
+        h.unshift(dadosSalvos);
+        localStorage.setItem('alpha_ttr_v5_hist', JSON.stringify(h.slice(0,10)));
         carregarHist();
     }
 
     function carregarHist() {
-        const h = JSON.parse(localStorage.getItem('alpha_ttre_hist') || "[]");
-        document.getElementById('listaHist').innerHTML = h.map(x => `
-            <div class="hist-item">
-                <b>${x.data}</b><br>Temp: ${x.temp}°C | Medido: ${(x.entrada[0].v || 0).toExponential(2)}Ω
-            </div>
-        `).join("");
+        const h = JSON.parse(localStorage.getItem('alpha_ttr_v5_hist') || "[]");
+        document.getElementById('listaHist').innerHTML = h.map(x => `<div class="item-historico"><b>${x.data}</b><br>${x.local}</div>`).join("");
     }
 
-    function limparHistorico() { localStorage.removeItem('alpha_ttre_hist'); carregarHist(); }
-
-    function limparCampos() {
-        ["e1","e2","e3","s1","s2","s3"].forEach(id => document.getElementById(id).value = "");
-        document.getElementById('areaResultados').style.display = 'none';
-    }
+    function limparHistorico() { localStorage.removeItem('alpha_ttr_v5_hist'); carregarHist(); }
 
     function gerarPDF() {
-        if(!dadosAtuais) return alert("Calcule primeiro!");
+        if(!dadosSalvos) return alert("Calcule antes!");
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.setFontSize(18); doc.text("RELATORIO DE ENSAIO TTRE", 10, 20);
-        doc.setFontSize(11); doc.text(`Equipe Alpha | Data: ${dadosAtuais.data} | Temp: ${dadosAtuais.temp}C`, 10, 30);
+        doc.setFontSize(16);
+        doc.text("RELATÓRIO DE ENSAIO ALPHA TTR", 10, 15);
+        doc.setFontSize(10);
+        doc.text(`Técnico: ${dadosSalvos.tecnico} | Local: ${dadosSalvos.local}`, 10, 25);
+        doc.text(`Data: ${dadosSalvos.data} | Temperatura: ${dadosSalvos.t}°C`, 10, 30);
         
-        let rows = [];
-        dadosAtuais.entrada.concat(dadosAtuais.saida).forEach(i => {
-            if(i.v !== null) rows.push([i.p, i.v.toFixed(8) + " Ohms", (i.v*1000).toFixed(4) + " mOhms"]);
-        });
-
-        doc.autoTable({startY: 40, head: [['Ponto', 'Resultado (Ohms)', 'Resultado (mOhms)']], body: rows});
-        doc.text("Produzido pela Equipe Alpha", 10, doc.lastAutoTable.finalY + 20);
-        doc.save(`TTRE_Alpha_${Date.now()}.pdf`);
+        let linhas = [];
+        dadosSalvos.ent.forEach(i => linhas.push([i.l, i.v ? i.v.toFixed(3) + " Ω" : "---"]));
+        dadosSalvos.sai.forEach(i => linhas.push([i.l, i.v ? (i.v*1000).toFixed(3) + " mΩ" : "---"]));
+        
+        doc.autoTable({startY: 35, head: [['Ponto de Medição', 'Resultado Corrigido']], body: linhas});
+        doc.text("PRODUCED BY ALPHA TEAM", 10, doc.lastAutoTable.finalY + 15);
+        doc.save(`ALPHA_TTR_${dadosSalvos.local.replace(/\s+/g, '_')}.pdf`);
     }
 
-    window.onload = () => { applySettings(); carregarHist(); };
+    window.onload = () => { carregarSelects(); aplicarConfig(); carregarHist(); };
 </script>
-
 </body>
 </html>
