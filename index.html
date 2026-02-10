@@ -9,14 +9,13 @@
 
     <style>
         :root { 
-            --cor-fundo: #0f172a; --cor-card: rgba(30, 41, 59, 0.8); --cor-primaria: #38bdf8; 
+            --cor-fundo: #0f172a; --cor-card: rgba(30, 41, 59, 0.85); --cor-primaria: #38bdf8; 
             --cor-texto: #f8fafc; --fonte-tam: 14px;
         }
 
         body { 
             font-family: 'Segoe UI', sans-serif; font-size: var(--fonte-tam);
             background: var(--cor-fundo); 
-            /* ABAIXO: Você pode trocar o link se quiser uma imagem de fundo no site todo */
             background-image: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), url('background.jpg');
             background-size: cover; background-attachment: fixed;
             color: var(--cor-texto); margin: 0; padding: 15px; transition: 0.3s; 
@@ -29,7 +28,6 @@
             backdrop-filter: blur(10px); box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
         }
         
-        /* Estilo da Logo */
         .logo-container { text-align: center; margin-bottom: 10px; }
         .logo-img { max-width: 120px; height: auto; border-radius: 10px; display: block; margin: 0 auto 15px; }
 
@@ -43,7 +41,8 @@
         .tres-pontos { position: absolute; top: 20px; right: 20px; cursor: pointer; font-size: 28px; color: var(--cor-primaria); }
 
         .grade { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media (max-width: 600px) { .grade { grid-template-columns: 1fr; } }
+        .grade-tri { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+        @media (max-width: 600px) { .grade, .grade-tri { grid-template-columns: 1fr; } }
 
         label { display: block; margin-top: 10px; font-weight: bold; font-size: 0.85em; color: var(--cor-primaria); }
         input, select { 
@@ -71,16 +70,23 @@
 <div class="gaveta" id="gaveta">
     <h2 style="color:var(--cor-primaria)">⚙️ Ajustes Alpha</h2>
     
-    <div style="background:rgba(0,0,0,0.2); padding:10px; border-radius:8px; margin-bottom:15px">
-        <label>Cadastrar Técnico</label>
-        <div style="display:flex; gap:5px">
-            <input type="text" id="novoTecnico" placeholder="Nome" style="margin-bottom:0">
+    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; margin-bottom:15px">
+        <label>Base de Técnicos</label>
+        <div style="display:flex; gap:5px; margin-bottom:10px">
+            <input type="text" id="novoTecnico" placeholder="Nome" style="margin:0">
             <button onclick="adicionarDB('tecnicos', 'novoTecnico')" style="background:var(--cor-primaria); color:#000">+</button>
         </div>
-        <label style="margin-top:15px">Cadastrar Local</label>
-        <div style="display:flex; gap:5px">
-            <input type="text" id="novoLocal" placeholder="Local" style="margin-bottom:0">
+
+        <label>Base de Locais</label>
+        <div style="display:flex; gap:5px; margin-bottom:10px">
+            <input type="text" id="novoLocal" placeholder="Local" style="margin:0">
             <button onclick="adicionarDB('locais', 'novoLocal')" style="background:var(--cor-primaria); color:#000">+</button>
+        </div>
+
+        <label>Base de Equipamentos</label>
+        <div style="display:flex; gap:5px">
+            <input type="text" id="novoEquip" placeholder="Ex: TTR Megger" style="margin:0">
+            <button onclick="adicionarDB('equipamentos', 'novoEquip')" style="background:var(--cor-primaria); color:#000">+</button>
         </div>
     </div>
 
@@ -108,9 +114,10 @@
             <p style="opacity:0.6; font-size: 0.9em;">Field Registry • Alpha Team</p>
         </header>
 
-        <div class="grade">
-            <div><label>Técnico Responsável</label><select id="selTecnico"></select></div>
+        <div class="grade-tri">
+            <div><label>Técnico</label><select id="selTecnico"></select></div>
             <div><label>Localização</label><select id="selLocal"></select></div>
+            <div><label>Equipamento</label><select id="selEquip"></select></div>
         </div>
 
         <label>Temperatura do Ensaio (°C)</label>
@@ -134,7 +141,7 @@
         <button class="btn-calc" onclick="calcularTudo()">EFETUAR CÁLCULO</button>
         <div style="display:flex; gap:10px; margin-top:10px;">
             <button style="flex:1; background:#334155" onclick="location.reload()">REINICIAR</button>
-            <button style="flex:1; background:#4f46e5" onclick="gerarPDF()">GERAR RELATÓRIO PDF</button>
+            <button style="flex:1; background:#4f46e5" onclick="gerarPDF()">GERAR PDF</button>
         </div>
     </div>
 
@@ -159,7 +166,6 @@
 </div>
 
 <script>
-    // Toda a lógica de cálculo e unidades de pΩ a kΩ permanece a mesma das versões anteriores
     let dadosSalvos = null;
     const escalas = [
         {l:"pΩ", v:1e-12}, {l:"µΩ", v:1e-6}, {l:"mΩ", v:1e-3}, {l:"Ω", v:1}, {l:"kΩ", v:1e3}
@@ -185,8 +191,11 @@
     function carregarSelects() {
         const tecs = JSON.parse(localStorage.getItem('db_tecnicos') || "[]");
         const locs = JSON.parse(localStorage.getItem('db_locais') || "[]");
-        document.getElementById('selTecnico').innerHTML = '<option value="">Selecionar Técnico...</option>' + tecs.map(t=>`<option>${t}</option>`).join("");
-        document.getElementById('selLocal').innerHTML = '<option value="">Selecionar Local...</option>' + locs.map(l=>`<option>${l}</option>`).join("");
+        const equips = JSON.parse(localStorage.getItem('db_equipamentos') || "[]");
+        
+        document.getElementById('selTecnico').innerHTML = '<option value="">Selecione...</option>' + tecs.map(t=>`<option>${t}</option>`).join("");
+        document.getElementById('selLocal').innerHTML = '<option value="">Selecione...</option>' + locs.map(l=>`<option>${l}</option>`).join("");
+        document.getElementById('selEquip').innerHTML = '<option value="">Selecione...</option>' + equips.map(e=>`<option>${e}</option>`).join("");
     }
 
     function salvarConfig() {
@@ -194,12 +203,12 @@
             prim: document.getElementById('cfgPrim').value,
             anim: document.getElementById('cfgAnim').value
         };
-        localStorage.setItem('alpha_conf_v7', JSON.stringify(conf));
+        localStorage.setItem('alpha_conf_v8', JSON.stringify(conf));
         aplicarConfig();
     }
 
     function aplicarConfig() {
-        const c = JSON.parse(localStorage.getItem('alpha_conf_v7'));
+        const c = JSON.parse(localStorage.getItem('alpha_conf_v8'));
         if(!c) return;
         document.documentElement.style.setProperty('--cor-primaria', c.prim);
         document.getElementById('tituloTTR').className = c.anim !== "none" ? "titulo-animado" : "";
@@ -219,8 +228,9 @@
 
         dadosSalvos = {
             data: new Date().toLocaleString(),
-            tecnico: document.getElementById('selTecnico').value,
-            local: document.getElementById('selLocal').value,
+            tecnico: document.getElementById('selTecnico').value || "Não informado",
+            local: document.getElementById('selLocal').value || "Não informado",
+            equip: document.getElementById('selEquip').value || "Não informado",
             t: t,
             ent: [ler('ent1', 1), ler('ent2', 1), ler('ent3', 1)],
             sai: [ler('sai1', 0.001), ler('sai2', 0.001), ler('sai3', 0.001)]
@@ -248,24 +258,44 @@
         atualizarDisplay();
     }
 
-    function limparHistorico() { localStorage.clear(); location.reload(); }
+    function limparHistorico() { 
+        if(confirm("Deseja limpar todos os dados cadastrados?")) {
+            localStorage.clear(); 
+            location.reload(); 
+        }
+    }
 
     function gerarPDF() {
+        if(!dadosSalvos) return alert("Realize o cálculo primeiro!");
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.setFontSize(14);
-        doc.text("ALPHA TTR - REPORT", 10, 15);
+        
+        doc.setFontSize(16);
+        doc.text("ALPHA TTR - FIELD REPORT", 10, 15);
+        
         doc.setFontSize(10);
-        doc.text(`Local: ${dadosSalvos.local} | Técnico: ${dadosSalvos.tecnico}`, 10, 25);
+        doc.text(`Técnico: ${dadosSalvos.tecnico}`, 10, 25);
+        doc.text(`Local: ${dadosSalvos.local}`, 10, 30);
+        doc.text(`Equipamento: ${dadosSalvos.equip}`, 10, 35);
+        doc.text(`Data: ${dadosSalvos.data} | Temperatura: ${dadosSalvos.t}°C`, 10, 40);
+        
         let rows = [];
         dadosSalvos.ent.forEach((v,i) => rows.push(["Alta Tensão H"+(i+1), v ? v.toFixed(3)+" Ω" : "---"]));
         dadosSalvos.sai.forEach((v,i) => rows.push(["Baixa Tensão X"+(i+1), v ? (v*1000).toFixed(3)+" mΩ" : "---"]));
-        doc.autoTable({startY: 35, head: [['Measurement', 'Corrected Result']], body: rows});
-        doc.text("PRODUCED BY ALPHA TEAM", 10, doc.lastAutoTable.finalY + 20);
-        doc.save(`TTR_${dadosSalvos.local}.pdf`);
+        
+        doc.autoTable({
+            startY: 45, 
+            head: [['Ponto de Medição', 'Resultado Corrigido (75°C)']], 
+            body: rows,
+            theme: 'striped'
+        });
+        
+        doc.text("PRODUCED BY ALPHA TEAM", 10, doc.lastAutoTable.finalY + 15);
+        doc.save(`Relatorio_TTR_${dadosSalvos.local}.pdf`);
     }
 
     window.onload = () => { carregarSelects(); aplicarConfig(); };
 </script>
 </body>
-</html>
+    </html>
+    
