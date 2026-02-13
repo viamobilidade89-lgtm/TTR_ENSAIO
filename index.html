@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALPHA TTR - ESPECIALISTA FASORIAL</title>
+    <title>ALPHA TTR - MULTI-FASORIAL</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 
@@ -15,30 +15,13 @@
 
         body { 
             font-family: 'Segoe UI', sans-serif; font-size: var(--fonte-tam);
-            background: var(--cor-fundo); 
-            background-image: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
-            color: var(--cor-texto); margin: 0; padding: 15px; 
+            background: var(--cor-fundo); color: var(--cor-texto); margin: 0; padding: 15px; 
         }
         
         .container { max-width: 900px; margin: auto; }
-        .card { 
-            background: var(--cor-card); padding: 25px; border-radius: 20px; 
-            border: 1px solid rgba(255,255,255,0.1); position: relative; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
-        }
+        .card { background: var(--cor-card); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); position: relative; }
         
-        .secao-titulo { text-align: center; border-bottom: 1px solid rgba(56, 189, 248, 0.2); margin-bottom: 20px; padding-bottom: 10px; }
-        .logo-img { max-width: 100px; margin-bottom: 10px; }
-
-        .gaveta { 
-            position: fixed; top: 0; right: -350px; width: 320px; height: 100%; 
-            background: #1e293b; border-left: 3px solid var(--cor-primaria); 
-            z-index: 1000; transition: 0.4s; padding: 20px; overflow-y: auto;
-        }
-        .gaveta.ativa { right: 0; }
-        .mascara { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 999; }
-        .tres-pontos { position: absolute; top: 20px; right: 20px; cursor: pointer; font-size: 28px; color: var(--cor-primaria); }
-
+        .secao-titulo { text-align: center; border-bottom: 1px solid rgba(56, 189, 248, 0.2); margin-bottom: 20px; }
         .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px; }
         
         label { display: block; margin-top: 10px; font-weight: bold; font-size: 0.85em; color: var(--cor-primaria); text-transform: uppercase; }
@@ -47,198 +30,132 @@
             border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: inherit; box-sizing: border-box;
         }
         
-        .info-box { background: rgba(56, 189, 248, 0.1); padding: 10px; border-radius: 8px; border-left: 4px solid var(--cor-primaria); font-size: 0.85em; margin-bottom: 20px; }
+        .info-conexao { 
+            background: rgba(56, 189, 248, 0.15); padding: 15px; border-radius: 10px; 
+            border: 1px dashed var(--cor-primaria); margin-bottom: 20px; font-size: 0.9em;
+        }
 
         button { padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
         .btn-calc { background: var(--cor-primaria); color: #000; width: 100%; font-size: 1.1em; margin-top: 15px; }
         
-        .titulo-animado { animation: fadeInOut var(--vel-anim, 2s) infinite alternate ease-in-out; }
-        @keyframes fadeInOut { 0% { opacity: 0.3; } 100% { opacity: 1; } }
-
         .res-caixa { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; border-top: 4px solid var(--cor-primaria); }
-        footer { text-align: center; margin-top: 30px; font-size: 0.8em; opacity: 0.5; letter-spacing: 2px; }
+        .badge { background: var(--cor-primaria); color: #000; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 0.8em; }
     </style>
 </head>
 <body>
 
-<div class="mascara" id="mascara" onclick="toggleMenu()"></div>
-
-<div class="gaveta" id="gaveta">
-    <h2 style="color:var(--cor-primaria)">⚙️ Configurações</h2>
-    <label>Técnico</label>
-    <div style="display:flex; gap:5px"><input id="nT" type="text"><button onclick="addDB('tecnicos','nT')">+</button></div>
-    <label>Local</label>
-    <div style="display:flex; gap:5px"><input id="nL" type="text"><button onclick="addDB('locais','nL')">+</button></div>
-    <label>Equipamento</label>
-    <div style="display:flex; gap:5px"><input id="nE" type="text"><button onclick="addDB('equipamentos','nE')">+</button></div>
-    <hr>
-    <label>Animação:</label>
-    <select id="cfgAnim" onchange="salvarConfig()"><option value="none">OFF</option><option value="2s" selected>ON</option></select>
-    <button onclick="localStorage.clear(); location.reload();" style="background:#ef4444; width:100%; margin-top:20px;">RESET TOTAL</button>
-</div>
-
 <div class="container">
     <div class="card">
-        <div class="tres-pontos" onclick="toggleMenu()">&#8942;</div>
-        
         <header class="secao-titulo">
-            <img src="logo.png" alt="" class="logo-img" onerror="this.style.display='none'">
-            <h1 id="tituloTTR" style="color:var(--cor-primaria); margin:0; font-size: 1.3em;">TESTE DE RELAÇÃO DE TRANSFORMAÇÃO - TTR</h1>
+            <h1 id="tituloTTR" style="color:var(--cor-primaria); margin-bottom:5px;">TTR - CONFIGURAÇÃO POR GRUPO VETORIAL</h1>
+            <p style="opacity:0.7; margin-top:0;">EQUIPE ALPHA - ENGENHARIA DE CAMPO</p>
         </header>
 
         <div class="grade">
-            <div><label>Fasorial (Grupo Vetorial)</label>
-                <select id="selFasorial" onchange="atualizarDica()">
-                    <option value="Dyn1">Dyn1 (330°)</option>
-                    <option value="Dyn11" selected>Dyn11 (30°)</option>
-                    <option value="Ynd1">Ynd1 (330°)</option>
-                    <option value="Ynd11">Ynd11 (30°)</option>
-                    <option value="Yy0">Yy0 (0°)</option>
-                    <option value="Dd0">Dd0 (0°)</option>
-                    <option value="Dz1">Dz1 (330°)</option>
-                    <option value="Dz11">Dz11 (30°)</option>
+            <div>
+                <label>Selecione o Fasorial</label>
+                <select id="selFasorial" onchange="configurarBornes()">
+                    <optgroup label="Delta-Estrela (Comum)">
+                        <option value="Dyn1">Dyn1 (330°)</option>
+                        <option value="Dyn11" selected>Dyn11 (30°)</option>
+                    </optgroup>
+                    <optgroup label="Estrela-Delta">
+                        <option value="Ynd1">Ynd1 (330°)</option>
+                        <option value="Ynd11">Ynd11 (30°)</option>
+                    </optgroup>
+                    <optgroup label="Estrela-Estrela / Delta-Delta">
+                        <option value="Yyn0">Yyn0 (0°)</option>
+                        <option value="Ynyn0">Ynyn0 (0°)</option>
+                        <option value="Dd0">Dd0 (0°)</option>
+                    </optgroup>
                 </select>
             </div>
-            <div><label>Temperatura (°C)</label><input id="tempMed" type="number" value="25"></div>
+            <div><label>Temperatura Ensaio (°C)</label><input id="tempMed" type="number" value="25"></div>
         </div>
 
-        <div class="info-box" id="dicaConexao">
-            <b>Dica Dyn11:</b> Medir Alta (H1-H3) e Baixa (X0-X1). O sistema corrigirá o fator térmico (75°C) e considerará a relação de fase.
-        </div>
-
-        <div class="grade">
-            <div><label>Técnico</label><select id="selTecnico"></select></div>
-            <div><label>Local</label><select id="selLocal"></select></div>
-            <div><label>Equipamento</label><select id="selEquip"></select></div>
-        </div>
+        <div class="info-conexao" id="infoConexao">
+            </div>
 
         <div class="grade">
             <section>
-                <h3 style="color:var(--cor-primaria); font-size: 0.9em; border-bottom: 1px solid #333">ALTA TENSÃO (Ω)</h3>
-                <input id="h1" type="number" placeholder="Fase A / H1-H3">
-                <input id="h2" type="number" placeholder="Fase B / H1-H2">
-                <input id="h3" type="number" placeholder="Fase C / H2-H3">
+                <h3 style="color:var(--cor-primaria); font-size: 0.9em;">ALTA TENSÃO (Ω)</h3>
+                <label id="lH1">Fase A</label><input id="h1" type="number" step="any">
+                <label id="lH2">Fase B</label><input id="h2" type="number" step="any">
+                <label id="lH3">Fase C</label><input id="h3" type="number" step="any">
             </section>
             <section>
-                <h3 style="color:var(--cor-primaria); font-size: 0.9em; border-bottom: 1px solid #333">BAIXA TENSÃO (mΩ)</h3>
-                <input id="x1" type="number" placeholder="Fase a / X0-X1">
-                <input id="x2" type="number" placeholder="Fase b / X0-X2">
-                <input id="x3" type="number" placeholder="Fase c / X0-X3">
+                <h3 style="color:var(--cor-primaria); font-size: 0.9em;">BAIXA TENSÃO (mΩ)</h3>
+                <label id="lX1">Fase a</label><input id="x1" type="number" step="any">
+                <label id="lX2">Fase b</label><input id="x2" type="number" step="any">
+                <label id="lX3">Fase c</label><input id="x3" type="number" step="any">
             </section>
         </div>
 
-        <button class="btn-calc" onclick="calcular()">CALCULAR ENSAIO</button>
+        <button class="btn-calc" onclick="calcular()">CALCULAR E APLICAR CORREÇÃO</button>
         
         <div style="display:flex; gap:10px; margin-top:10px;">
-            <button style="flex:1; background:#334155; color:white" onclick="location.reload()">NOVO</button>
-            <button style="flex:1; background:#4f46e5; color:white" onclick="gerarPDF()">PDF</button>
+            <button style="flex:1; background:#334155; color:white" onclick="location.reload()">REINICIAR</button>
+            <button style="flex:1; background:#4f46e5; color:white" onclick="gerarPDF()">GERAR PDF</button>
         </div>
     </div>
 
     <div id="areaRes" class="grade" style="display:none; margin-top:20px;">
-        <div class="res-caixa"><b>Alta Tensão (75°C)</b><div id="reH" style="font-family:monospace; margin-top:5px"></div></div>
-        <div class="res-caixa"><b>Baixa Tensão (75°C)</b><div id="reX" style="font-family:monospace; margin-top:5px"></div></div>
+        <div class="res-caixa"><b>Alta Tensão (75°C)</b><div id="reH" style="font-family:monospace; margin-top:10px"></div></div>
+        <div class="res-caixa"><b>Baixa Tensão (75°C)</b><div id="reX" style="font-family:monospace; margin-top:10px"></div></div>
     </div>
-
-    <footer>PRODUCED BY ALPHA TEAM</footer>
 </div>
 
 <script>
-    let dados = null;
+    const configuracoes = {
+        "Dyn11": { info: "Conexão: H1-H3 / X0-X1 | H2-H1 / X0-X2 | H3-H2 / X0-X3", h: ["H1-H3", "H2-H1", "H3-H2"], x: ["X0-X1", "X0-X2", "X0-X3"], kH: 1.5 },
+        "Dyn1":  { info: "Conexão: H1-H2 / X0-X1 | H2-H3 / X0-X2 | H3-H1 / X0-X3", h: ["H1-H2", "H2-H3", "H3-H1"], x: ["X0-X1", "X0-X2", "X0-X3"], kH: 1.5 },
+        "Ynd11": { info: "Conexão: H1-H0 / X1-X3 | H2-H0 / X2-X1 | H3-H0 / X3-X2", h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X3", "X2-X1", "X3-X2"], kH: 1.0 },
+        "Ynd1":  { info: "Conexão: H1-H0 / X1-X2 | H2-H0 / X2-X3 | H3-H0 / X3-X1", h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X2", "X2-X3", "X3-X1"], kH: 1.0 },
+        "Yyn0":  { info: "Conexão direta: H1-H0 / X1-X0 | H2-H0 / X2-X0 | H3-H0 / X3-X0", h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X0", "X2-X0", "X3-X0"], kH: 1.0 },
+        "Ynyn0": { info: "Conexão Neutro-Neutro: H1-N / X1-n | H2-N / X2-n | H3-N / X3-n", h: ["H1-N", "H2-N", "H3-N"], x: ["X1-n", "X2-n", "X3-n"], kH: 1.0 },
+        "Dd0":   { info: "Conexão Delta-Delta: H1-H3 / X1-X3 | H2-H1 / X2-X1 | H3-H2 / X3-X2", h: ["H1-H3", "H2-H1", "H3-H2"], x: ["X1-X3", "X2-X1", "X3-X2"], kH: 1.5 }
+    };
 
-    function toggleMenu() {
-        document.getElementById('gaveta').classList.toggle('ativa');
-        document.getElementById('mascara').style.display = document.getElementById('gaveta').classList.contains('ativa') ? 'block' : 'none';
-    }
-
-    function addDB(chave, id) {
-        let v = document.getElementById(id).value;
-        if(!v) return;
-        let l = JSON.parse(localStorage.getItem('db_'+chave) || "[]");
-        l.push(v);
-        localStorage.setItem('db_'+chave, JSON.stringify(l));
-        document.getElementById(id).value = "";
-        carregarSelects();
-    }
-
-    function carregarSelects() {
-        const f = (c, s) => {
-            let l = JSON.parse(localStorage.getItem('db_'+c) || "[]");
-            document.getElementById(s).innerHTML = '<option value="">---</option>' + l.map(x=>`<option>${x}</option>`).join("");
-        };
-        f('tecnicos','selTecnico'); f('locais','selLocal'); f('equipamentos','selEquip');
-    }
-
-    function atualizarDica() {
+    function configurarBornes() {
         const fas = document.getElementById('selFasorial').value;
-        const dicas = {
-            "Dyn1": "<b>Dica Dyn1:</b> Delta na Alta, Estrela na Baixa. Deslocamento de 330°.",
-            "Dyn11": "<b>Dica Dyn11:</b> Delta na Alta, Estrela na Baixa. Deslocamento de 30°.",
-            "Yy0": "<b>Dica Yy0:</b> Estrela em ambos os lados. Sem deslocamento angular.",
-            "Dd0": "<b>Dica Dd0:</b> Delta em ambos os lados. Sem deslocamento angular."
-        };
-        document.getElementById('dicaConexao').innerHTML = dicas[fas] || "Verifique as conexões conforme diagrama do transformador.";
+        const c = configuracoes[fas];
+        
+        document.getElementById('infoConexao').innerHTML = `<b>Orientação Técnica:</b> ${c.info}`;
+        
+        // Atualiza Labels dos inputs
+        document.getElementById('lH1').innerText = c.h[0];
+        document.getElementById('lH2').innerText = c.h[1];
+        document.getElementById('lH3').innerText = c.h[2];
+        
+        document.getElementById('lX1').innerText = c.x[0];
+        document.getElementById('lX2').innerText = c.x[1];
+        document.getElementById('lX3').innerText = c.x[2];
     }
 
     function calcular() {
         const t = parseFloat(document.getElementById('tempMed').value);
+        const fas = document.getElementById('selFasorial').value;
+        const c = configuracoes[fas];
         const fator = (235 + 75) / (235 + t);
         
-        const ler = (ids, mult, corrAdicional) => {
-            return ids.map(id => {
-                let v = document.getElementById(id).value;
-                return v === "" ? null : (parseFloat(v) * mult * fator * corrAdicional);
-            });
-        };
+        const hVal = [
+            (parseFloat(document.getElementById('h1').value) || 0) * fator * c.kH,
+            (parseFloat(document.getElementById('h2').value) || 0) * fator * c.kH,
+            (parseFloat(document.getElementById('h3').value) || 0) * fator * c.kH
+        ];
 
-        dados = {
-            fasorial: document.getElementById('selFasorial').value,
-            tecnico: document.getElementById('selTecnico').value,
-            local: document.getElementById('selLocal').value,
-            equip: document.getElementById('selEquip').value,
-            temp: t,
-            // ALTA TENSÃO: Aplica fator 1.5 (se for Delta fase-fase)
-            h: ler(['h1','h2','h3'], 1, 1.5),
-            // BAIXA TENSÃO: Apenas fator térmico (sem 1.5)
-            x: ler(['x1','x2','x3'], 0.001, 1)
-        };
+        const xVal = [
+            (parseFloat(document.getElementById('x1').value) || 0) * 0.001 * fator,
+            (parseFloat(document.getElementById('x2').value) || 0) * 0.001 * fator,
+            (parseFloat(document.getElementById('x3').value) || 0) * 0.001 * fator
+        ];
 
         document.getElementById('areaRes').style.display = 'grid';
-        document.getElementById('reH').innerHTML = dados.h.map((v,i)=>`Fase ${i+1}: ${v?v.toFixed(4):'---'} Ω<br>`).join("");
-        document.getElementById('reX').innerHTML = dados.x.map((v,i)=>`Fase ${i+1}: ${v?(v*1000).toFixed(4):'---'} mΩ<br>`).join("");
+        document.getElementById('reH').innerHTML = hVal.map((v, i) => `<span>${c.h[i]}:</span> <b>${v.toFixed(4)} Ω</b><br>`).join("");
+        document.getElementById('reX').innerHTML = xVal.map((v, i) => `<span>${c.x[i]}:</span> <b>${(v*1000).toFixed(4)} mΩ</b><br>`).join("");
     }
 
-    function gerarPDF() {
-        if(!dados) return alert("Calcule antes!");
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        doc.setFontSize(14);
-        doc.text("RELATÓRIO DE ENSAIO TTR - ALPHA TEAM", 10, 15);
-        doc.setFontSize(10);
-        doc.text(`Fasorial: ${dados.fasorial} | Técnico: ${dados.tecnico}`, 10, 25);
-        doc.text(`Local: ${dados.local} | Equipamento: ${dados.equip}`, 10, 30);
-        
-        let linhas = [];
-        dados.h.forEach((v,i) => linhas.push(["Alta H"+(i+1), v ? v.toFixed(4)+" Ω" : "---"]));
-        dados.x.forEach((v,i) => linhas.push(["Baixa X"+(i+1), v ? (v*1000).toFixed(4)+" mΩ" : "---"]));
-        
-        doc.autoTable({startY: 35, head: [['Ponto', 'Resultado (75°C)']], body: linhas});
-        doc.save(`TTR_${dados.fasorial}_${dados.local}.pdf`);
-    }
-
-    function salvarConfig() {
-        localStorage.setItem('alpha_anim', document.getElementById('cfgAnim').value);
-        aplicarConfig();
-    }
-
-    function aplicarConfig() {
-        let a = localStorage.getItem('alpha_anim') || "2s";
-        document.getElementById('tituloTTR').className = a !== "none" ? "titulo-animado" : "";
-        document.documentElement.style.setProperty('--vel-anim', a);
-        document.getElementById('cfgAnim').value = a;
-    }
-
-    window.onload = () => { carregarSelects(); aplicarConfig(); atualizarDica(); };
+    window.onload = configurarBornes;
 </script>
 </body>
 </html>
