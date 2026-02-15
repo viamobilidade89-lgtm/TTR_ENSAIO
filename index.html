@@ -3,36 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALPHA HUB - SISTEMA GERENCIAL</title>
+    <title>ENSAIO DE RELAÇÃO DE TRANSFORMAÇÃO - ALPHA</title>
     <style>
         :root { --fundo: #0f172a; --card: #1e293b; --primaria: #38bdf8; --texto: #f8fafc; --erro: #ff4d4d; --sucesso: #00e676; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--fundo); color: var(--texto); margin: 0; padding: 10px; }
-        .container { max-width: 900px; margin: auto; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--fundo); color: var(--texto); margin: 0; padding: 10px; display: flex; flex-direction: column; min-height: 100vh; }
+        .container { max-width: 900px; margin: auto; flex: 1; width: 100%; }
         
-        /* CABEÇALHO E MENU */
-        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 20px; }
-        .btn-config { background: none; border: 1px solid var(--primaria); color: var(--primaria); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        /* CABEÇALHO */
+        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primaria); padding-bottom: 15px; margin-bottom: 25px; }
+        .titulo-principal { color: var(--primaria); margin: 0; font-size: 1.4em; text-transform: uppercase; letter-spacing: 2px; }
+        .btn-config { background: none; border: 1px solid var(--primaria); color: var(--primaria); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-config:hover { background: var(--primaria); color: #000; }
 
-        .card { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
-        .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 15px; }
-        label { display: block; margin-bottom: 4px; font-weight: bold; font-size: 0.75em; color: var(--primaria); text-transform: uppercase; }
-        input, select { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #334155; color: white; border-radius: 6px; box-sizing: border-box; }
+        .card { background: var(--card); padding: 25px; border-radius: 15px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.75em; color: var(--primaria); text-transform: uppercase; }
+        input, select { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 6px; box-sizing: border-box; font-size: 0.9em; }
 
-        /* GAVETA LATERAL (CONFIGURAÇÕES) */
+        /* GAVETA LATERAL */
         .gaveta { position: fixed; top: 0; right: -350px; width: 320px; height: 100%; background: #1e293b; border-left: 3px solid var(--primaria); z-index: 1000; transition: 0.4s; padding: 20px; box-sizing: border-box; overflow-y: auto; }
         .gaveta.ativa { right: 0; }
         .mascara { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 999; }
-        .gaveta h3 { color: var(--primaria); border-bottom: 1px solid #334155; padding-bottom: 10px; }
-        .item-config { margin-bottom: 20px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; }
-        .btn-add { background: var(--sucesso); color: #000; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-top: 5px; width: 100%; font-weight: bold; }
-
-        /* TABELA TTR */
-        .info-teorica { background: rgba(56, 189, 248, 0.15); padding: 15px; border-radius: 8px; border-left: 5px solid var(--primaria); margin: 15px 0; text-align: center; }
+        
+        /* TABELA E RESULTADOS */
+        .info-teorica { background: rgba(56, 189, 248, 0.1); padding: 15px; border-radius: 10px; border: 1px dashed var(--primaria); margin: 20px 0; text-align: center; }
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { border: 1px solid #334155; padding: 10px; text-align: center; font-size: 0.85em; }
-        .status-badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.7em; }
+        th, td { border: 1px solid #334155; padding: 12px; text-align: center; font-size: 0.9em; }
+        th { background: #0f172a; color: var(--primaria); text-transform: uppercase; font-size: 0.75em; }
+        .status-badge { padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 0.8em; }
         .reprovado { background: var(--erro); color: white; }
         .satisfatorio { background: var(--sucesso); color: #0f172a; }
+
+        /* RODAPÉ */
+        footer { text-align: center; padding: 30px 10px; color: var(--primaria); font-weight: bold; letter-spacing: 3px; font-size: 0.9em; text-transform: uppercase; opacity: 0.8; }
+
+        @media print {
+            .btn-config, .gaveta, .mascara, .btn-add { display: none !important; }
+            body { background: white; color: black; }
+            .card { border: none; box-shadow: none; }
+            input, select { border: none; color: black; background: none; appearance: none; -webkit-appearance: none; }
+            th { background: #eee !important; color: black !important; }
+            .titulo-principal { color: black !important; border-bottom: 2px solid black; }
+            footer { color: black !important; margin-top: 50px; }
+        }
     </style>
 </head>
 <body>
@@ -40,49 +53,36 @@
 <div class="mascara" id="mascara" onclick="toggleMenu()"></div>
 
 <div class="gaveta" id="gaveta">
-    <h3>⚙️ Configurações ALPHA</h3>
-    
-    <div class="item-config">
+    <h3 style="color:var(--primaria)">⚙️ ADMINISTRAÇÃO</h3>
+    <div style="background:rgba(0,0,0,0.2); padding:10px; border-radius:8px; margin-bottom:15px;">
         <label>Cadastrar Técnico</label>
-        <input type="text" id="novoTecnico" placeholder="Nome do Técnico">
-        <button class="btn-add" onclick="salvarItem('tecnicos', 'novoTecnico')">+ ADICIONAR</button>
+        <input type="text" id="nT" placeholder="Nome">
+        <button onclick="salvarItem('tecnicos', 'nT')" style="width:100%; margin-top:5px; background:var(--sucesso); border:none; padding:8px; cursor:pointer; font-weight:bold;">+</button>
     </div>
-
-    <div class="item-config">
-        <label>Cadastrar Local/SE</label>
-        <input type="text" id="novoLocal" placeholder="Ex: SE Marituba">
-        <button class="btn-add" onclick="salvarItem('locais', 'novoLocal')">+ ADICIONAR</button>
+    <div style="background:rgba(0,0,0,0.2); padding:10px; border-radius:8px; margin-bottom:15px;">
+        <label>Cadastrar Local</label>
+        <input type="text" id="nL" placeholder="Subestação">
+        <button onclick="salvarItem('locais', 'nL')" style="width:100%; margin-top:5px; background:var(--sucesso); border:none; padding:8px; cursor:pointer; font-weight:bold;">+</button>
     </div>
-
-    <div class="item-config">
-        <label>Equipamento (TTR)</label>
-        <input type="text" id="novoEquip" placeholder="Ex: Megger TTR300">
-        <button class="btn-add" onclick="salvarItem('equipamentos', 'novoEquip')">+ ADICIONAR</button>
-    </div>
-
-    <button onclick="limparTudo()" style="background:var(--erro); color:white; border:none; width:100%; padding:10px; border-radius:5px; cursor:pointer; margin-top:20px;">LIMPAR BANCO DE DADOS</button>
+    <button onclick="localStorage.clear(); location.reload();" style="background:var(--erro); color:white; border:none; width:100%; padding:10px; border-radius:5px; cursor:pointer;">LIMPAR TUDO</button>
 </div>
 
 <div class="container">
     <header>
-        <h1 style="color:var(--primaria); margin:0;">ALPHA HUB</h1>
-        <button class="btn-config" onclick="toggleMenu()">CONFIGURAÇÕES ⚙️</button>
+        <h1 class="titulo-principal">ENSAIO DE RELAÇÃO DE TRANSFORMAÇÃO</h1>
+        <button class="btn-config" onclick="toggleMenu()">CONFIG ⚙️</button>
     </header>
 
     <div class="card">
-        <h2>Ensaio de TTR</h2>
-        
         <div class="grade">
-            <div><label>Técnico Resp.</label><select id="selTecnico" class="select-dinamico"></select></div>
-            <div><label>Local / SE</label><select id="selLocal" class="select-dinamico"></select></div>
-            <div><label>Instrumento</label><select id="selEquip" class="select-dinamico"></select></div>
+            <div><label>Técnico Resp.</label><select id="selTec" class="select-dinamico"></select></div>
+            <div><label>Local / SE</label><select id="selLoc" class="select-dinamico"></select></div>
+            <div><label>TAG / Prefixo</label><input type="text" id="tag" placeholder="Ex: TR-01"></div>
         </div>
 
         <div class="grade">
-            <div><label>TAG Equipamento</label><input type="text" id="tag" placeholder="Ex: TR-01"></div>
-            <div><label>Nº de Série</label><input type="text" id="serie" placeholder="000000"></div>
-            <div><label>Fasorial</label>
-                <select id="selFas" onchange="iniciarTTR()">
+            <div><label>Grupo Fasorial</label>
+                <select id="selFas" onchange="iniciarEnsaio()">
                     <option value="">-- SELECIONE --</option>
                     <option value="Ydn1_11_X0">Ydn1/Ydn11 (C/ X0 Aparente)</option>
                     <option value="Dyn1_11_X0">Dyn1/Dyn11 (C/ X0 Aparente)</option>
@@ -90,109 +90,106 @@
                     <option value="Yyn0_Dd0">Yyn0 e Dd0 (Direto)</option>
                 </select>
             </div>
+            <div><label>U1 (Alta) kV</label><input type="number" id="u1" oninput="calc()"></div>
+            <div><label>U2 (Baixa) V</label><input type="number" id="u2" oninput="calc()"></div>
         </div>
 
-        <div class="grade">
-            <div><label>U1 (Alta)</label><input type="number" id="u1" oninput="calcTeo()"></div>
-            <div><label>U2 (Baixa)</label><input type="number" id="u2" oninput="calcTeo()"></div>
+        <div id="boxReferencia" class="info-teorica" style="display:none;">
+            REFERÊNCIA TEÓRICA: <span id="valTeo" style="font-size:1.4em; font-weight:bold; color:var(--primaria)">0.00000</span>
         </div>
 
-        <div id="boxTeo" class="info-teorica" style="display:none;">
-            <b>VALOR TEÓRICO:</b> <span id="vTeo" style="font-size:1.3em">0.0000</span>
-        </div>
-
-        <div id="areaEnsaio" style="display:none;">
+        <div id="tabelaDados" style="display:none;">
             <table>
                 <thead>
-                    <tr><th>Ponto de Medição</th><th>Lido</th><th>Erro %</th><th>Status</th></tr>
+                    <tr>
+                        <th>Conexão Bornes</th>
+                        <th>Valor Medido</th>
+                        <th>Desvio %</th>
+                        <th>Status</th>
+                    </tr>
                 </thead>
                 <tbody id="corpoTabela"></tbody>
             </table>
-            <button class="btn-add" style="background:var(--primaria); margin-top:20px; padding:15px;" onclick="window.print()">GERAR RELATÓRIO PDF</button>
+            <button onclick="window.print()" style="width:100%; margin-top:20px; padding:15px; background:var(--primaria); border:none; border-radius:8px; font-weight:bold; cursor:pointer; color:#000;">GERAR RELATÓRIO FINAL</button>
         </div>
     </div>
+
+    <footer>Produced by EQUIPE ALPHA</footer>
 </div>
 
 <script>
-    // LÓGICA DE CONFIGURAÇÃO (LOCAL STORAGE)
-    function toggleMenu() {
-        const g = document.getElementById('gaveta');
-        g.classList.toggle('ativa');
-        document.getElementById('mascara').style.display = g.classList.contains('ativa') ? 'block' : 'none';
-    }
-
-    function salvarItem(chave, idInput) {
-        const valor = document.getElementById(idInput).value;
-        if (!valor) return;
-        let lista = JSON.parse(localStorage.getItem('alpha_' + chave) || "[]");
-        lista.push(valor);
-        localStorage.setItem('alpha_' + chave, JSON.stringify(lista));
-        document.getElementById(idInput).value = "";
-        carregarDropdowns();
-    }
-
-    function carregarDropdowns() {
-        const campos = ['tecnicos', 'locais', 'equipamentos'];
-        const selects = ['selTecnico', 'selLocal', 'selEquip'];
-
-        campos.forEach((campo, i) => {
-            const lista = JSON.parse(localStorage.getItem('alpha_' + campo) || "[]");
-            let html = '<option value="">-- Selecione --</option>';
-            lista.forEach(item => html += `<option value="${item}">${item}</option>`);
-            document.getElementById(selects[i]).innerHTML = html;
-        });
-    }
-
-    function limparTudo() { if(confirm("Deseja apagar todos os técnicos e locais cadastrados?")) { localStorage.clear(); location.reload(); } }
-
-    // LÓGICA TTR (REDUZIDA PARA EXEMPLO)
-    const REGRAS = {
+    const DB = {
         "Ydn1_11_X0": { f: (u1, u2) => (u1 * 1.732) / u2, h: ["H1-H3", "H1-H2", "H3-H1"], x: ["X1-X0", "X2-X0", "X3-X0"] },
         "Dyn1_11_X0": { f: (u1, u2) => (u1 * 1.732) / u2, h: ["H1-H3", "H2-H1", "H3-H2"], x: ["X1-X0", "X2-X0", "X3-X0"] },
         "Ynyn0":      { f: (u1, u2) => u1 / u2, h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X0", "X2-X0", "X3-X0"] },
         "Yyn0_Dd0":   { f: (u1, u2) => u1 / u2, h: ["H1-H2", "H2-H3", "H3-H1"], x: ["X1-X2", "X2-X3", "X3-X1"] }
     };
 
-    let vTeoGlobal = 0;
+    let vTeo = 0;
 
-    function iniciarTTR() {
+    function toggleMenu() {
+        const g = document.getElementById('gaveta');
+        g.classList.toggle('ativa');
+        document.getElementById('mascara').style.display = g.classList.contains('ativa') ? 'block' : 'none';
+    }
+
+    function salvarItem(chave, id) {
+        const val = document.getElementById(id).value;
+        if(!val) return;
+        let lista = JSON.parse(localStorage.getItem('alpha_'+chave) || "[]");
+        lista.push(val);
+        localStorage.setItem('alpha_'+chave, JSON.stringify(lista));
+        document.getElementById(id).value = "";
+        carregarDropdowns();
+    }
+
+    function carregarDropdowns() {
+        ['tecnicos', 'locais'].forEach((chave, i) => {
+            const lista = JSON.parse(localStorage.getItem('alpha_'+chave) || "[]");
+            const select = document.querySelectorAll('.select-dinamico')[i];
+            select.innerHTML = '<option>-- SELECIONAR --</option>' + lista.map(item => `<option>${item}</option>`).join("");
+        });
+    }
+
+    function iniciarEnsaio() {
         const fas = document.getElementById('selFas').value;
         if(!fas) return;
-        const conf = REGRAS[fas];
+        const conf = DB[fas];
         const tbody = document.getElementById('corpoTabela');
         tbody.innerHTML = "";
         conf.h.forEach((h, i) => {
             tbody.innerHTML += `<tr>
                 <td><b>${h} / ${conf.x[i]}</b></td>
-                <td><input type="number" step="any" oninput="validar(this)" style="width:100px"></td>
+                <td><input type="number" step="any" oninput="validar(this)" style="width:120px; border:1px solid #475569; padding:5px; border-radius:4px; background:#0f172a; color:white; text-align:center;"></td>
                 <td class="erro">-</td>
                 <td><span class="status-badge">...</span></td>
             </tr>`;
         });
-        document.getElementById('areaEnsaio').style.display = 'block';
-        document.getElementById('boxTeo').style.display = 'block';
-        calcTeo();
+        document.getElementById('tabelaDados').style.display = 'block';
+        document.getElementById('boxReferencia').style.display = 'block';
+        calc();
     }
 
-    function calcTeo() {
+    function calc() {
         const u1 = parseFloat(document.getElementById('u1').value);
         const u2 = parseFloat(document.getElementById('u2').value);
         const fas = document.getElementById('selFas').value;
         if(u1 && u2 && fas) {
-            vTeoGlobal = REGRAS[fas].f(u1, u2);
-            document.getElementById('vTeo').innerText = vTeoGlobal.toFixed(5);
+            vTeo = DB[fas].f(u1, u2);
+            document.getElementById('valTeo').innerText = vTeo.toFixed(5);
         }
     }
 
     function validar(input) {
         const med = parseFloat(input.value);
         const linha = input.closest('tr');
-        if(med && vTeoGlobal) {
-            const erro = ((med - vTeoGlobal) / vTeoGlobal) * 100;
+        if(med && vTeo) {
+            const erro = ((med - vTeo) / vTeo) * 100;
             linha.querySelector('.erro').innerText = erro.toFixed(3) + "%";
             const badge = linha.querySelector('.status-badge');
-            badge.innerText = Math.abs(erro) <= 0.5 ? "OK" : "ERRO";
-            badge.className = "status-badge " + (Math.abs(erro) <= 0.5 ? "satisfatorio" : "reprovado");
+            const ok = Math.abs(erro) <= 0.5;
+            badge.innerText = ok ? "SATISFATÓRIO" : "REPROVADO";
+            badge.className = "status-badge " + (ok ? "satisfatorio" : "reprovado");
         }
     }
 
