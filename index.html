@@ -49,7 +49,7 @@
             body { background: white; color: black; }
             .card { border: 1px solid #000; display: block !important; box-shadow: none; }
             th { background: #eee !important; color: #000 !important; }
-            input, select { border: none; color: black; background: none; padding: 2px; }
+            input, select { border: none !important; color: black !important; background: none !important; padding: 2px; -webkit-appearance: none; }
         }
     </style>
 </head>
@@ -83,22 +83,34 @@
         <div class="grade">
             <div><label>Técnico</label><select class="selTec"></select></div>
             <div><label>Local</label><select class="selLoc"></select></div>
-            <div><label>Equipamento</label><input type="text" placeholder="Ex: Transf. 01"></div>
+            <div>
+                <label>Tipo Equip.</label>
+                <select id="tipoEqpMeg" onchange="atualizarSugestoesMeg()">
+                    <option value="TRANSFORMADOR">TRANSFORMADOR</option>
+                    <option value="DISJUNTOR">DISJUNTOR</option>
+                    <option value="OUTROS">OUTROS</option>
+                </select>
+            </div>
         </div>
         
         <div class="no-print" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-            <label style="color: var(--sucesso)">Entrada de Dados (Megômetro)</label>
+            <label style="color: var(--sucesso)">Entrada de Medição</label>
             <div class="grade">
-                <div style="grid-column: span 2;"><label>Ponto/Enrolamento</label><input type="text" id="pontoMeg" placeholder="Ex: AT vs BT+TERRA"></div>
-                <div><label>V. Aplicado (V)</label><input type="number" id="vMeg"></div>
+                <div style="grid-column: span 2;">
+                    <label>Ponto de Medição</label>
+                    <div id="containerPontoMeg">
+                        <select id="pontoMegSelect"></select>
+                    </div>
+                </div>
+                <div><label>V. Aplicado (V)</label><input type="number" id="vMeg" placeholder="5000"></div>
             </div>
             <div class="grade">
                 <div><label>30s (GΩ)</label><input type="number" id="m30" oninput="liveMeg()"></div>
                 <div><label>60s (GΩ)</label><input type="number" id="m60" oninput="liveMeg()"></div>
                 <div><label>120s (GΩ)</label><input type="number" id="m120" oninput="liveMeg()"></div>
                 <div style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
-                    <span id="iaLive" style="font-size: 0.7em; color: var(--primaria)">IA: -</span>
-                    <span id="ipLive" style="font-size: 0.7em; color: var(--primaria)">IP: -</span>
+                    <span id="iaLive" style="font-size: 0.75em; color: var(--primaria); font-weight:bold;">IA: -</span>
+                    <span id="ipLive" style="font-size: 0.75em; color: var(--primaria); font-weight:bold;">IP: -</span>
                 </div>
             </div>
             <button class="btn-acao btn-add" onclick="addMegTable()">➕ ADICIONAR AO RELATÓRIO</button>
@@ -106,9 +118,7 @@
 
         <table id="tabMegFinal">
             <thead>
-                <tr>
-                    <th>Ponto</th><th>V (V)</th><th>30s</th><th>60s</th><th>120s</th><th>IA</th><th>IP</th><th class="no-print">Ações</th>
-                </tr>
+                <tr><th>Ponto</th><th>V (V)</th><th>30s</th><th>60s</th><th>120s</th><th>IA</th><th>IP</th><th class="no-print">Ações</th></tr>
             </thead>
             <tbody id="corpoMeg"></tbody>
         </table>
@@ -119,26 +129,21 @@
         <div class="grade">
             <div><label>Técnico</label><select class="selTec"></select></div>
             <div><label>Local</label><select class="selLoc"></select></div>
-            <div><label>Equipamento</label><input type="text" placeholder="Ex: Disjuntor Geral"></div>
+            <div><label>TAG</label><input type="text"></div>
         </div>
-
         <div class="no-print" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-            <label style="color: var(--sucesso)">Entrada de Dados (Microohmímetro)</label>
             <div class="grade">
-                <div style="grid-column: span 2;"><label>Ponto/Fase</label><input type="text" id="pontoMicro" placeholder="Ex: Fase A (Entrada/Saída)"></div>
-                <div><label>Corrente (A)</label><input type="number" id="currMicro" placeholder="Ex: 100"></div>
+                <div style="grid-column: span 2;"><label>Ponto/Fase</label><input type="text" id="pontoMicro"></div>
+                <div><label>Corrente (A)</label><input type="number" id="currMicro"></div>
                 <div><label>Resistência (µΩ)</label><input type="number" id="resMicro"></div>
             </div>
-            <button class="btn-acao btn-add" onclick="addMicroTable()">➕ ADICIONAR AO RELATÓRIO</button>
+            <button class="btn-acao btn-add" onclick="addMicroTable()">➕ ADICIONAR</button>
         </div>
-
         <table id="tabMicroFinal">
-            <thead>
-                <tr><th>Ponto/Fase</th><th>Corrente (A)</th><th>Resistência (µΩ)</th><th class="no-print">Ações</th></tr>
-            </thead>
+            <thead><tr><th>Ponto</th><th>I (A)</th><th>R (µΩ)</th><th class="no-print">Ações</th></tr></thead>
             <tbody id="corpoMicro"></tbody>
         </table>
-        <button class="btn-acao" style="background:var(--primaria); color:#000; margin-top:20px;" onclick="window.print()">🖨️ IMPRIMIR RELATÓRIO</button>
+        <button class="btn-acao" style="background:var(--primaria); color:#000;" onclick="window.print()">🖨️ IMPRIMIR</button>
     </div>
 
     <div id="modTTR" class="card">
@@ -174,12 +179,32 @@
 </div>
 
 <script>
+    // REGRAS PONTOS MEGÔMETRO
+    const PONTOS_SUGERIDOS = {
+        "TRANSFORMADOR": ["PRIMÁRIO X SECUNDÁRIO", "PRIMÁRIO X CARCAÇA", "SECUNDÁRIO X CARCAÇA"],
+        "DISJUNTOR": ["ENTRADA X SAÍDA", "ENTRADA X CARCAÇA", "SAÍDA X CARCAÇA"],
+        "OUTROS": ["ENTRADA X SAÍDA"]
+    };
+
+    function atualizarSugestoesMeg() {
+        const tipo = document.getElementById('tipoEqpMeg').value;
+        const container = document.getElementById('containerPontoMeg');
+        
+        if (tipo === "OUTROS") {
+            container.innerHTML = `<input type="text" id="pontoMegInput" placeholder="Digite o ponto manualmente">`;
+        } else {
+            const opcoes = PONTOS_SUGERIDOS[tipo].map(p => `<option value="${p}">${p}</option>`).join("");
+            container.innerHTML = `<select id="pontoMegSelect">${opcoes}</select>`;
+        }
+    }
+
     // NAVEGAÇÃO
     function abrirModulo(id) {
         document.getElementById('menuPrincipal').style.display = 'none';
         document.getElementById('btnVoltar').style.visibility = 'visible';
         document.getElementById('mod' + id).style.display = 'block';
         document.getElementById('tituloApp').innerText = id;
+        if(id === 'MEGGER') atualizarSugestoesMeg();
     }
 
     function voltarAoMenu() {
@@ -189,7 +214,7 @@
         document.getElementById('tituloApp').innerText = 'ALPHA HUB';
     }
 
-    // MEGÔMETRO
+    // MEGÔMETRO LÓGICA
     function liveMeg() {
         const m30 = parseFloat(document.getElementById('m30').value);
         const m60 = parseFloat(document.getElementById('m60').value);
@@ -199,30 +224,36 @@
     }
 
     function addMegTable() {
-        const p = document.getElementById('pontoMeg').value;
+        const tipo = document.getElementById('tipoEqpMeg').value;
+        const ponto = tipo === "OUTROS" ? document.getElementById('pontoMegInput').value : document.getElementById('pontoMegSelect').value;
         const v = document.getElementById('vMeg').value;
-        const m30 = document.getElementById('m30').value;
-        const m60 = document.getElementById('m60').value;
-        const m120 = document.getElementById('m120').value;
-        if(!p || !m120) return alert("Preencha os dados!");
-        const row = `<tr><td>${p}</td><td>${v}</td><td>${m30}</td><td>${m60}</td><td>${m120}</td><td><b>${(m60/m30).toFixed(2)}</b></td><td><b>${(m120/m60).toFixed(2)}</b></td><td class="no-print"><button onclick="this.parentElement.parentElement.remove()" style="color:var(--erro);background:none;border:none;cursor:pointer;">✖</button></td></tr>`;
-        document.getElementById('corpoMeg').innerHTML += row;
-        ['pontoMeg','m30','m60','m120'].forEach(id => document.getElementById(id).value = "");
+        const m30 = parseFloat(document.getElementById('m30').value);
+        const m60 = parseFloat(document.getElementById('m60').value);
+        const m120 = parseFloat(document.getElementById('m120').value);
+
+        if(!ponto || !m120) return alert("Preencha todos os campos!");
+
+        const row = `<tr>
+            <td>${ponto}</td><td>${v}</td><td>${m30}</td><td>${m60}</td><td>${m120}</td>
+            <td><b>${(m60/m30).toFixed(2)}</b></td><td><b>${(m120/m60).toFixed(2)}</b></td>
+            <td class="no-print"><button onclick="this.parentElement.parentElement.remove()" style="color:var(--erro);background:none;border:none;cursor:pointer;">✖</button></td>
+        </tr>`;
+        document.getElementById('corpoMeg').insertAdjacentHTML('beforeend', row);
+        ['m30','m60','m120'].forEach(id => document.getElementById(id).value = "");
     }
 
-    // MICROOHMÍMETRO
+    // MICROOHMÍMETRO LÓGICA
     function addMicroTable() {
         const p = document.getElementById('pontoMicro').value;
         const c = document.getElementById('currMicro').value;
         const r = document.getElementById('resMicro').value;
         if(!p || !r) return alert("Preencha os dados!");
         const row = `<tr><td>${p}</td><td>${c}</td><td>${r}</td><td class="no-print"><button onclick="this.parentElement.parentElement.remove()" style="color:var(--erro);background:none;border:none;cursor:pointer;">✖</button></td></tr>`;
-        document.getElementById('corpoMicro').innerHTML += row;
-        document.getElementById('pontoMicro').value = "";
-        document.getElementById('resMicro').value = "";
+        document.getElementById('corpoMicro').insertAdjacentHTML('beforeend', row);
+        ['pontoMicro','resMicro'].forEach(id => document.getElementById(id).value = "");
     }
 
-    // TTR - MANTIDO CONFORME ORIGINAL
+    // TTR - MOTOR ORIGINAL (NÃO ALTERAR)
     const REGRAS = {
         "Ydn1_11_X0": { f: (u1, u2) => (u1 * 1.73205) / u2, h: ["H1-H3", "H1-H2", "H3-H1"], x: ["X1-X0", "X2-X0", "X3-X0"] },
         "Dyn1_11_X0": { f: (u1, u2) => (u1 * 1.73205) / u2, h: ["H1-H3", "H2-H1", "H3-H2"], x: ["X1-X0", "X2-X0", "X3-X0"] },
@@ -252,8 +283,8 @@
             if(med && vTeo) {
                 const erro = ((med - vTeo) / vTeo) * 100;
                 linha.querySelector('.desvio-fase').innerText = erro.toFixed(3) + "%";
-                const ok = Math.abs(erro) <= 0.5;
                 const badge = linha.querySelector('.status-badge');
+                const ok = Math.abs(erro) <= 0.5;
                 badge.innerText = ok ? "OK" : "FORA";
                 badge.className = "status-badge " + (ok ? "satisfatorio" : "reprovado");
                 soma += Math.abs(erro); qtd++;
@@ -262,7 +293,7 @@
         if(qtd > 0) document.getElementById('desvioTTR').innerText = "DESVIO MÉDIO: " + (soma/qtd).toFixed(3) + "%";
     }
 
-    // GERAL
+    // GESTÃO CONFIG
     function toggleMenu() {
         const g = document.getElementById('gaveta');
         g.classList.toggle('ativa');
@@ -286,5 +317,5 @@
     window.onload = carregarDropdowns;
 </script>
 </body>
-                </html>
-                
+    </html>
+    
