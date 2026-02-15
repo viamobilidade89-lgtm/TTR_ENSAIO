@@ -3,39 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALPHA HUB v12 - PRECISÃO TOTAL</title>
+    <title>ALPHA HUB - TTR PRO</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root { --fundo: #0f172a; --card: #1e293b; --primaria: #38bdf8; --texto: #f8fafc; --erro: #ff4d4d; --sucesso: #00e676; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--fundo); color: var(--texto); margin: 0; padding: 15px; }
-        .container { max-width: 900px; margin: auto; }
+        .container { max-width: 1000px; margin: auto; }
         .card { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid #334155; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h1, h2 { color: var(--primaria); text-align: center; text-transform: uppercase; letter-spacing: 1px; }
-        .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9em; color: var(--primaria); }
-        input, select { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 8px; box-sizing: border-box; font-size: 1em; }
-        .info-teorica { background: rgba(56, 189, 248, 0.1); padding: 20px; border-radius: 12px; border: 1px dashed var(--primaria); margin: 20px 0; text-align: center; }
-        .btn-calc { background: var(--primaria); color: #0f172a; width: 100%; padding: 18px; font-weight: bold; border: none; border-radius: 10px; cursor: pointer; font-size: 1.1em; transition: 0.3s; }
-        .btn-calc:hover { background: #7dd3fc; transform: scale(1.02); }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: rgba(0,0,0,0.2); }
-        th, td { border: 1px solid #334155; padding: 12px; text-align: center; }
+        h1, h2 { color: var(--primaria); text-align: center; text-transform: uppercase; margin-bottom: 20px; }
+        .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.85em; color: var(--primaria); text-transform: uppercase; }
+        input, select { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 8px; box-sizing: border-box; }
+        .info-teorica { background: rgba(56, 189, 248, 0.1); padding: 15px; border-radius: 12px; border: 1px solid var(--primaria); margin: 20px 0; text-align: center; }
+        .btn-calc { background: var(--primaria); color: #0f172a; width: 100%; padding: 15px; font-weight: bold; border: none; border-radius: 10px; cursor: pointer; font-size: 1.1em; transition: 0.2s; }
+        .btn-calc:hover { background: #7dd3fc; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #334155; padding: 10px; text-align: center; font-size: 0.9em; }
         th { background: #334155; color: var(--primaria); }
-        .status-badge { padding: 5px 10px; border-radius: 5px; font-weight: bold; font-size: 0.85em; }
+        .status-badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; }
         .reprovado { background: var(--erro); color: white; }
         .satisfatorio { background: var(--sucesso); color: #0f172a; }
+        .secao-titulo { border-bottom: 1px solid #334155; margin-top: 20px; padding-bottom: 5px; color: var(--primaria); font-size: 0.9em; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="card">
-        <h1>ALPHA TTR - ESPECIALISTA</h1>
+        <h1>ALPHA TTR - SISTEMA INTEGRADO</h1>
         
-        <div class="grade">
+        <div class="secao-titulo">DADOS DO EQUIPAMENTO E OBRA</div>
+        <div class="grade" style="margin-top:10px">
+            <div><label>Técnico Resp.</label><input id="tec" type="text" placeholder="Nome"></div>
+            <div><label>Local / SE</label><input id="loc" type="text" placeholder="Subestação"></div>
+            <div><label>TAG / Prefixo</label><input id="tag" type="text" placeholder="TR-01"></div>
+            <div><label>Nº de Série</label><input id="serie" type="text" placeholder="000000"></div>
+        </div>
+
+        <div class="secao-titulo">PARÂMETROS DO ENSAIO</div>
+        <div class="grade" style="margin-top:10px">
             <div>
-                <label>Grupo Fasorial (Referência Técnica)</label>
+                <label>Grupo Fasorial</label>
                 <select id="selFas" onchange="atualizarInterface()">
-                    <option value="">-- SELECIONE O GRUPO --</option>
+                    <option value="">-- SELECIONE --</option>
                     <option value="Ydn1_11_X0">Ydn1/Ydn11 (C/ X0 Aparente)</option>
                     <option value="Ydn1_11_H0">Ydn1/Ydn11 (C/ H0 Aparente)</option>
                     <option value="Yd1_H0">Yd1 (S/ H0 Aparente)</option>
@@ -46,25 +56,32 @@
                     <option value="Dy11_X0">Dy11 (S/ X0 Aparente)</option>
                     <option value="Yyn0_H0">Yyn0 (S/ H0 Aparente)</option>
                     <option value="Ynyn0">Ynyn0 (C/ H0 e X0 Aparente)</option>
-                    <option value="Yyn0_Dd0">Yyn0 e Dd0 (Conexão Direta)</option>
+                    <option value="Yyn0_Dd0">Yyn0 e Dd0 (Direto)</option>
                 </select>
             </div>
-            <div style="display: flex; gap: 10px;">
-                <div style="flex: 1;"><label>U1 (Primário)</label><input id="u1" type="number" oninput="recalc()"></div>
-                <div style="flex: 1;"><label>U2 (Secundário)</label><input id="u2" type="number" oninput="recalc()"></div>
+            <div>
+                <label>Sentido da Injeção</label>
+                <select id="sentido" onchange="recalc()">
+                    <option value="normal">ALTA -> BAIXA (Normal)</option>
+                    <option value="inverso">BAIXA -> ALTA (Inverso)</option>
+                </select>
             </div>
+            <div><label>U1 (Nominal)</label><input id="u1" type="number" placeholder="Ex: 13800" oninput="recalc()"></div>
+            <div><label>U2 (Nominal)</label><input id="u2" type="number" placeholder="Ex: 220" oninput="recalc()"></div>
         </div>
 
         <div id="boxTeorico" class="info-teorica" style="display:none;">
-            Valor Teórico: <span id="valTeo" style="font-size: 1.5em; font-weight: bold;">0.0000</span><br>
-            <small id="faixaAceitacao" style="opacity: 0.8;"></small>
+            <b>VALOR TEÓRICO DE REFERÊNCIA:</b><br>
+            <span id="valTeo" style="font-size: 1.8em; font-weight: bold; color: var(--primaria);">0.0000</span><br>
+            <small id="faixa" style="color: #94a3b8;"></small>
         </div>
 
         <div id="secaoMedicao" style="display:none;">
+            <div class="secao-titulo">MEDIÇÕES DE CAMPO (VALORES LIDOS)</div>
             <table>
                 <thead>
                     <tr>
-                        <th>Conexão Bornes</th>
+                        <th>Bornes</th>
                         <th>Valor Medido</th>
                         <th>Desvio %</th>
                         <th>Status</th>
@@ -73,24 +90,24 @@
                 <tbody id="listaMedicoes"></tbody>
             </table>
             <br>
-            <button class="btn-calc" onclick="finalizarRelatorio()">FINALIZAR E VALIDAR ENSAIO</button>
+            <button class="btn-calc" onclick="window.print()">GERAR RELATÓRIO FINAL</button>
         </div>
     </div>
 </div>
 
 <script>
     const DB = {
-        "Ydn1_11_X0": { formula: (u1, u2) => (u1 * 1.732) / u2, h: ["H1-H3", "H1-H2", "H3-H1"], x: ["X1-X0", "X2-X0", "X3-X0"] },
-        "Ydn1_11_H0": { formula: (u1, u2) => u1 / (u2 * 1.732), h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X3", "X2-X1", "X3-X2"] },
-        "Yd1_H0":     { formula: (u1, u2) => 0.866 * (u1 / u2), h: ["H2-H1~H3", "H3-H2~H1", "H1-H3~H2"], x: ["X2-X3", "X3-X1", "X1-X2"] },
-        "Yd11_H0":    { formula: (u1, u2) => 0.866 * (u1 / u2), h: ["H1-H1~H3", "H2-H3~H1", "H3-H1~H2"], x: ["X1-X3", "X3-X1", "X3-X2"] },
-        "Dyn1_11_X0": { formula: (u1, u2) => (u1 * 1.732) / u2, h: ["H1-H3", "H2-H1", "H3-H2"], x: ["X1-X0", "X2-X0", "X3-X0"] },
-        "Dyn1_11_H0": { formula: (u1, u2) => u1 / (u2 * 1.732), h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X3", "X2-X1", "X3-X2"] },
-        "Dy1_X0":     { formula: (u1, u2) => u1 / (0.866 * u2), h: ["H2-H1", "H3-H2", "H1-H3"], x: ["X2-X1~X3", "X3-X2~X1", "X1-X3~X2"] },
-        "Dy11_X0":    { formula: (u1, u2) => u1 / (0.866 * u2), h: ["H1-H2", "H2-H3", "H3-H1"], x: ["X1-X2~X3", "X2-X3~X1", "X1-X3~X2"] },
-        "Yyn0_H0":    { formula: (u1, u2) => (u1 * 1.732) / (u2 * 0.866), h: ["H1-H2~H3", "H2-H3~H1", "H3-H1~H2"], x: ["X1-X0", "X2-X0", "X3-X0"] },
-        "Ynyn0":      { formula: (u1, u2) => u1 / u2, h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X0", "X2-X0", "X3-X0"] },
-        "Yyn0_Dd0":   { formula: (u1, u2) => u1 / u2, h: ["H1-H2", "H2-H3", "H3-H1"], x: ["X1-X2", "X2-X3", "X3-X1"] }
+        "Ydn1_11_X0": { f: (u1, u2) => (u1 * 1.732) / u2, h: ["H1-H3", "H1-H2", "H3-H1"], x: ["X1-X0", "X2-X0", "X3-X0"] },
+        "Ydn1_11_H0": { f: (u1, u2) => u1 / (u2 * 1.732), h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X3", "X2-X1", "X3-X2"] },
+        "Yd1_H0":     { f: (u1, u2) => 0.866 * (u1 / u2), h: ["H2-H1~H3", "H3-H2~H1", "H1-H3~H2"], x: ["X2-X3", "X3-X1", "X1-X2"] },
+        "Yd11_H0":    { f: (u1, u2) => 0.866 * (u1 / u2), h: ["H1-H1~H3", "H2-H3~H1", "H3-H1~H2"], x: ["X1-X3", "X3-X1", "X3-X2"] },
+        "Dyn1_11_X0": { f: (u1, u2) => (u1 * 1.732) / u2, h: ["H1-H3", "H2-H1", "H3-H2"], x: ["X1-X0", "X2-X0", "X3-X0"] },
+        "Dyn1_11_H0": { f: (u1, u2) => u1 / (u2 * 1.732), h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X3", "X2-X1", "X3-X2"] },
+        "Dy1_X0":     { f: (u1, u2) => u1 / (0.866 * u2), h: ["H2-H1", "H3-H2", "H1-H3"], x: ["X2-X1~X3", "X3-X2~X1", "X1-X3~X2"] },
+        "Dy11_X0":    { f: (u1, u2) => u1 / (0.866 * u2), h: ["H1-H2", "H2-H3", "H3-H1"], x: ["X1-X2~X3", "X2-X3~X1", "X1-X3~X2"] },
+        "Yyn0_H0":    { f: (u1, u2) => (u1 * 1.732) / (u2 * 0.866), h: ["H1-H2~H3", "H2-H3~H1", "H3-H1~H2"], x: ["X1-X0", "X2-X0", "X3-X0"] },
+        "Ynyn0":      { f: (u1, u2) => u1 / u2, h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X0", "X2-X0", "X3-X0"] },
+        "Yyn0_Dd0":   { f: (u1, u2) => u1 / u2, h: ["H1-H2", "H2-H3", "H3-H1"], x: ["X1-X2", "X2-X3", "X3-X1"] }
     };
 
     let teoricoFinal = 0;
@@ -98,21 +115,17 @@
     function atualizarInterface() {
         const fas = document.getElementById('selFas').value;
         if (!fas) return;
-        
         const conf = DB[fas];
         const lista = document.getElementById('listaMedicoes');
         lista.innerHTML = "";
-        
-        conf.h.forEach((bornH, i) => {
-            lista.innerHTML += `
-                <tr>
-                    <td style="font-size:0.85em">Alta: <b>${bornH}</b><br>Baixa: <b>${conf.x[i]}</b></td>
-                    <td><input type="number" step="any" class="input-med" oninput="analisarLinha(this)"></td>
-                    <td class="res-erro">-</td>
-                    <td><span class="status-badge">Aguardando</span></td>
-                </tr>`;
+        conf.h.forEach((bh, i) => {
+            lista.innerHTML += `<tr>
+                <td><b>${bh} / ${conf.x[i]}</b></td>
+                <td><input type="number" step="any" class="input-med" oninput="validar(this)"></td>
+                <td class="res-erro">-</td>
+                <td><span class="status-badge">Pendente</span></td>
+            </tr>`;
         });
-        
         document.getElementById('secaoMedicao').style.display = 'block';
         document.getElementById('boxTeorico').style.display = 'block';
         recalc();
@@ -122,46 +135,39 @@
         const u1 = parseFloat(document.getElementById('u1').value);
         const u2 = parseFloat(document.getElementById('u2').value);
         const fas = document.getElementById('selFas').value;
+        const sentido = document.getElementById('sentido').value;
         
         if (u1 && u2 && fas) {
-            teoricoFinal = DB[fas].formula(u1, u2);
-            document.getElementById('valTeo').innerText = teoricoFinal.toFixed(4);
-            document.getElementById('faixaAceitacao').innerText = 
-                `Tolerância ±0.5%: [ ${(teoricoFinal * 0.995).toFixed(4)} — ${(teoricoFinal * 1.005).toFixed(4)} ]`;
+            let res = DB[fas].f(u1, u2);
+            // Se inverteu a injeção, o valor teórico é o inverso da relação normal
+            teoricoFinal = (sentido === "inverso") ? (1 / res) : res;
             
-            // Revalida todas as linhas se mudar U1 ou U2
-            document.querySelectorAll('.input-med').forEach(inp => analisarLinha(inp));
+            document.getElementById('valTeo').innerText = teoricoFinal.toFixed(5);
+            document.getElementById('faixa').innerText = `Limites (0.5%): ${(teoricoFinal*0.995).toFixed(5)} a ${(teoricoFinal*1.005).toFixed(5)}`;
+            document.querySelectorAll('.input-med').forEach(inp => validar(inp));
         }
     }
 
-    function analisarLinha(input) {
+    function validar(input) {
         if (!teoricoFinal) return;
-        const medido = parseFloat(input.value);
+        const med = parseFloat(input.value);
         const linha = input.parentElement.parentElement;
-        const celulaErro = linha.querySelector('.res-erro');
-        const celulaStatus = linha.querySelector('.status-badge');
+        const cErro = linha.querySelector('.res-erro');
+        const cStat = linha.querySelector('.status-badge');
 
-        if (isNaN(medido)) {
-            celulaErro.innerText = "-";
-            celulaStatus.innerText = "Aguardando";
-            celulaStatus.className = "status-badge";
+        if (isNaN(med) || med === 0) {
+            cErro.innerText = "-"; cStat.innerText = "Pendente"; cStat.className = "status-badge";
             return;
         }
 
-        const erro = ((medido - teoricoFinal) / teoricoFinal) * 100;
-        celulaErro.innerText = erro.toFixed(3) + "%";
+        const erro = ((med - teoricoFinal) / teoricoFinal) * 100;
+        cErro.innerText = erro.toFixed(3) + "%";
 
         if (Math.abs(erro) <= 0.5) {
-            celulaStatus.innerText = "SATISFATÓRIO";
-            celulaStatus.className = "status-badge satisfatorio";
+            cStat.innerText = "SATISFATÓRIO"; cStat.className = "status-badge satisfatorio";
         } else {
-            celulaStatus.innerText = "REPROVADO";
-            celulaStatus.className = "status-badge reprovado";
+            cStat.innerText = "REPROVADO"; cStat.className = "status-badge reprovado";
         }
-    }
-
-    function finalizarRelatorio() {
-        alert("Ensaio validado com sucesso! Utilize o navegador para Imprimir ou Salvar em PDF.");
     }
 </script>
 </body>
