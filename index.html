@@ -9,36 +9,48 @@
         body { font-family: 'Segoe UI', sans-serif; background: var(--fundo); color: var(--texto); margin: 0; padding: 10px; min-height: 100vh; display: flex; flex-direction: column; }
         .container { max-width: 900px; margin: auto; width: 100%; flex: 1; }
         
-        header { text-align: center; border-bottom: 2px solid var(--primaria); padding-bottom: 15px; margin-bottom: 25px; position: relative; }
-        .titulo-principal { color: var(--primaria); margin: 0; font-size: 1.3em; text-transform: uppercase; letter-spacing: 2px; }
-        .btn-config { position: absolute; right: 0; top: 0; background: none; border: none; color: #475569; font-size: 1.2em; cursor: pointer; padding: 5px; }
-        .btn-voltar { position: absolute; left: 0; top: 0; background: none; border: 1px solid var(--primaria); color: var(--primaria); padding: 5px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; display: none; }
+        header { 
+            display: flex; align-items: center; justify-content: space-between; 
+            border-bottom: 2px solid var(--primaria); padding: 10px 0 15px 0; margin-bottom: 25px; min-height: 50px;
+        }
+        .header-left, .header-right { flex: 1; }
+        .header-center { flex: 2; text-align: center; }
+        .header-right { display: flex; justify-content: flex-end; }
+
+        .titulo-principal { color: var(--primaria); margin: 0; font-size: 1.1em; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-config { background: none; border: none; color: #475569; font-size: 1.5em; cursor: pointer; }
+        .btn-voltar { background: none; border: 1px solid var(--primaria); color: var(--primaria); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.8em; visibility: hidden; }
 
         #menuPrincipal { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 40px; }
-        .btn-modulo { background: var(--card); border: 1px solid #334155; padding: 40px 20px; border-radius: 15px; color: var(--texto); font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.3s; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 15px; }
-        .btn-modulo:hover { border-color: var(--primaria); transform: translateY(-5px); background: #263449; }
+        .btn-modulo { background: var(--card); border: 1px solid #334155; padding: 40px 20px; border-radius: 15px; color: var(--texto); font-size: 1.1em; font-weight: bold; cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .btn-modulo:hover { border-color: var(--primaria); background: #263449; }
         .btn-modulo span { font-size: 2.5em; }
 
-        .card { background: var(--card); padding: 25px; border-radius: 15px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.4); display: none; }
+        .card { background: var(--card); padding: 25px; border-radius: 15px; border: 1px solid #334155; display: none; margin-bottom: 20px; }
         .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.75em; color: var(--primaria); text-transform: uppercase; }
         input, select { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 6px; box-sizing: border-box; }
 
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { border: 1px solid #334155; padding: 12px; text-align: center; font-size: 0.85em; }
+        th, td { border: 1px solid #334155; padding: 10px; text-align: center; font-size: 0.85em; }
         th { background: #0f172a; color: var(--primaria); }
-        .status-badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.75em; }
-        .satisfatorio { background: var(--sucesso); color: #000; }
-        .reprovado { background: var(--erro); color: #fff; }
 
-        .gaveta { position: fixed; top: 0; right: -350px; width: 320px; height: 100%; background: #1e293b; border-left: 3px solid var(--primaria); z-index: 1000; transition: 0.4s; padding: 20px; box-sizing: border-box; overflow-y: auto; }
+        .btn-acao { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        .btn-add { background: var(--primaria); color: #000; margin-bottom: 20px; }
+        
+        .gaveta { position: fixed; top: 0; right: -350px; width: 320px; height: 100%; background: #1e293b; border-left: 3px solid var(--primaria); z-index: 1000; transition: 0.4s; padding: 20px; box-sizing: border-box; }
         .gaveta.ativa { right: 0; }
         .mascara { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 999; }
 
-        .btn-acao { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        footer { text-align: center; padding: 30px; color: var(--primaria); font-weight: bold; letter-spacing: 2px; font-size: 0.8em; text-transform: uppercase; opacity: 0.6; }
+        footer { text-align: center; padding: 20px; color: var(--primaria); font-weight: bold; font-size: 0.8em; opacity: 0.6; }
 
-        @media print { .btn-config, .btn-voltar, .gaveta, .mascara, button { display: none !important; } body { background: white; color: black; } .card { border: none; box-shadow: none; } th { background: #eee !important; color: #000 !important; } }
+        @media print { 
+            .btn-config, .btn-voltar, .gaveta, .mascara, button, .no-print { display: none !important; } 
+            body { background: white; color: black; }
+            .card { border: 1px solid #000; display: block !important; box-shadow: none; }
+            th { background: #eee !important; color: #000 !important; }
+            input, select { border: none; color: black; background: none; padding: 2px; }
+        }
     </style>
 </head>
 <body>
@@ -48,23 +60,85 @@
 <div class="gaveta" id="gaveta">
     <h3 style="color:var(--primaria)">⚙️ ADMIN ALPHA</h3>
     <label>Novo Técnico</label>
-    <input type="text" id="nT"><button onclick="salvarConfig('tecnicos', 'nT')" style="width:100%; margin-bottom:10px;">+</button>
+    <input type="text" id="nT"><button onclick="salvarConfig('tecnicos', 'nT')" class="btn-acao">+</button>
     <label>Novo Local</label>
-    <input type="text" id="nL"><button onclick="salvarConfig('locais', 'nL')" style="width:100%;">+</button>
-    <button onclick="localStorage.clear(); location.reload();" style="color:var(--erro); background:none; border:1px solid var(--erro); width:100%; cursor:pointer; margin-top:20px; font-size:0.7em;">LIMPAR TUDO</button>
+    <input type="text" id="nL"><button onclick="salvarConfig('locais', 'nL')" class="btn-acao">+</button>
+    <button onclick="localStorage.clear(); location.reload();" style="color:var(--erro); background:none; border:1px solid var(--erro); margin-top:30px;" class="btn-acao">LIMPAR TUDO</button>
 </div>
 
 <div class="container">
     <header>
-        <button id="btnVoltar" class="btn-voltar" onclick="voltarAoMenu()">⬅ VOLTAR</button>
-        <h1 id="tituloApp" class="titulo-principal">ALPHA HUB</h1>
-        <button class="btn-config" onclick="toggleMenu()">⚙️</button>
+        <div class="header-left"><button id="btnVoltar" class="btn-voltar" onclick="voltarAoMenu()">⬅ VOLTAR</button></div>
+        <div class="header-center"><h1 id="tituloApp" class="titulo-principal">ALPHA HUB</h1></div>
+        <div class="header-right"><button class="btn-config" onclick="toggleMenu()">⚙️</button></div>
     </header>
 
     <div id="menuPrincipal">
         <div class="btn-modulo" onclick="abrirModulo('TTR')"><span>⚡</span>ENSAIO DE TTR</div>
         <div class="btn-modulo" onclick="abrirModulo('MICRO')"><span>🔍</span>MICROOHMÍMETRO</div>
         <div class="btn-modulo" onclick="abrirModulo('MEGGER')"><span>🛡️</span>MEGÔMETRO</div>
+    </div>
+
+    <div id="modMEGGER" class="card">
+        <div class="grade">
+            <div><label>Técnico</label><select class="selTec"></select></div>
+            <div><label>Local</label><select class="selLoc"></select></div>
+            <div><label>Equipamento</label><input type="text" placeholder="Ex: Transf. 01"></div>
+        </div>
+        
+        <div class="no-print" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+            <label style="color: var(--sucesso)">Entrada de Dados (Megômetro)</label>
+            <div class="grade">
+                <div style="grid-column: span 2;"><label>Ponto/Enrolamento</label><input type="text" id="pontoMeg" placeholder="Ex: AT vs BT+TERRA"></div>
+                <div><label>V. Aplicado (V)</label><input type="number" id="vMeg"></div>
+            </div>
+            <div class="grade">
+                <div><label>30s (GΩ)</label><input type="number" id="m30" oninput="liveMeg()"></div>
+                <div><label>60s (GΩ)</label><input type="number" id="m60" oninput="liveMeg()"></div>
+                <div><label>120s (GΩ)</label><input type="number" id="m120" oninput="liveMeg()"></div>
+                <div style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
+                    <span id="iaLive" style="font-size: 0.7em; color: var(--primaria)">IA: -</span>
+                    <span id="ipLive" style="font-size: 0.7em; color: var(--primaria)">IP: -</span>
+                </div>
+            </div>
+            <button class="btn-acao btn-add" onclick="addMegTable()">➕ ADICIONAR AO RELATÓRIO</button>
+        </div>
+
+        <table id="tabMegFinal">
+            <thead>
+                <tr>
+                    <th>Ponto</th><th>V (V)</th><th>30s</th><th>60s</th><th>120s</th><th>IA</th><th>IP</th><th class="no-print">Ações</th>
+                </tr>
+            </thead>
+            <tbody id="corpoMeg"></tbody>
+        </table>
+        <button class="btn-acao" style="background:var(--primaria); color:#000; margin-top:20px;" onclick="window.print()">🖨️ IMPRIMIR RELATÓRIO</button>
+    </div>
+
+    <div id="modMICRO" class="card">
+        <div class="grade">
+            <div><label>Técnico</label><select class="selTec"></select></div>
+            <div><label>Local</label><select class="selLoc"></select></div>
+            <div><label>Equipamento</label><input type="text" placeholder="Ex: Disjuntor Geral"></div>
+        </div>
+
+        <div class="no-print" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+            <label style="color: var(--sucesso)">Entrada de Dados (Microohmímetro)</label>
+            <div class="grade">
+                <div style="grid-column: span 2;"><label>Ponto/Fase</label><input type="text" id="pontoMicro" placeholder="Ex: Fase A (Entrada/Saída)"></div>
+                <div><label>Corrente (A)</label><input type="number" id="currMicro" placeholder="Ex: 100"></div>
+                <div><label>Resistência (µΩ)</label><input type="number" id="resMicro"></div>
+            </div>
+            <button class="btn-acao btn-add" onclick="addMicroTable()">➕ ADICIONAR AO RELATÓRIO</button>
+        </div>
+
+        <table id="tabMicroFinal">
+            <thead>
+                <tr><th>Ponto/Fase</th><th>Corrente (A)</th><th>Resistência (µΩ)</th><th class="no-print">Ações</th></tr>
+            </thead>
+            <tbody id="corpoMicro"></tbody>
+        </table>
+        <button class="btn-acao" style="background:var(--primaria); color:#000; margin-top:20px;" onclick="window.print()">🖨️ IMPRIMIR RELATÓRIO</button>
     </div>
 
     <div id="modTTR" class="card">
@@ -96,91 +170,83 @@
         <button class="btn-acao" style="background:var(--primaria)" onclick="window.print()">🖨️ IMPRIMIR</button>
     </div>
 
-    <div id="modMICRO" class="card">
-        <div class="grade">
-            <div><label>Técnico</label><select class="selTec"></select></div>
-            <div><label>TAG Equipamento</label><input type="text"></div>
-        </div>
-        <table>
-            <thead><tr><th>Fase / Ponto</th><th>Resistência (µΩ)</th><th>Status</th></tr></thead>
-            <tbody>
-                <tr><td>Fase A</td><td><input type="number"></td><td>-</td></tr>
-                <tr><td>Fase B</td><td><input type="number"></td><td>-</td></tr>
-                <tr><td>Fase C</td><td><input type="number"></td><td>-</td></tr>
-            </tbody>
-        </table>
-        <button class="btn-acao" style="background:var(--primaria)" onclick="window.print()">🖨️ IMPRIMIR</button>
-    </div>
-
-    <div id="modMEGGER" class="card">
-        <div class="grade">
-            <div><label>Técnico</label><select class="selTec"></select></div>
-            <div><label>Tensão Aplicada (V)</label><input type="number"></div>
-        </div>
-        <table>
-            <thead><tr><th>Tempo</th><th>Leitura (GΩ)</th><th>Cálculos</th></tr></thead>
-            <tbody>
-                <tr><td>30s</td><td><input type="number" id="m30" oninput="calcMegger()"></td><td id="resIA" title="IA = 60s / 30s">IA (60/30): -</td></tr>
-                <tr><td>60s (1min)</td><td><input type="number" id="m60" oninput="calcMegger()"></td><td rowspan="2" id="resIP" title="IP = 120s / 60s">IP (120/60): -</td></tr>
-                <tr><td>120s (2min)</td><td><input type="number" id="m120" oninput="calcMegger()"></td></tr>
-            </tbody>
-        </table>
-        <button class="btn-acao" style="background:var(--primaria)" onclick="window.print()">🖨️ IMPRIMIR</button>
-    </div>
-
     <footer>Produced by EQUIPE ALPHA</footer>
 </div>
 
 <script>
+    // NAVEGAÇÃO
+    function abrirModulo(id) {
+        document.getElementById('menuPrincipal').style.display = 'none';
+        document.getElementById('btnVoltar').style.visibility = 'visible';
+        document.getElementById('mod' + id).style.display = 'block';
+        document.getElementById('tituloApp').innerText = id;
+    }
+
+    function voltarAoMenu() {
+        document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
+        document.getElementById('menuPrincipal').style.display = 'grid';
+        document.getElementById('btnVoltar').style.visibility = 'hidden';
+        document.getElementById('tituloApp').innerText = 'ALPHA HUB';
+    }
+
+    // MEGÔMETRO
+    function liveMeg() {
+        const m30 = parseFloat(document.getElementById('m30').value);
+        const m60 = parseFloat(document.getElementById('m60').value);
+        const m120 = parseFloat(document.getElementById('m120').value);
+        if(m30 && m60) document.getElementById('iaLive').innerText = "IA: " + (m60/m30).toFixed(2);
+        if(m60 && m120) document.getElementById('ipLive').innerText = "IP: " + (m120/m60).toFixed(2);
+    }
+
+    function addMegTable() {
+        const p = document.getElementById('pontoMeg').value;
+        const v = document.getElementById('vMeg').value;
+        const m30 = document.getElementById('m30').value;
+        const m60 = document.getElementById('m60').value;
+        const m120 = document.getElementById('m120').value;
+        if(!p || !m120) return alert("Preencha os dados!");
+        const row = `<tr><td>${p}</td><td>${v}</td><td>${m30}</td><td>${m60}</td><td>${m120}</td><td><b>${(m60/m30).toFixed(2)}</b></td><td><b>${(m120/m60).toFixed(2)}</b></td><td class="no-print"><button onclick="this.parentElement.parentElement.remove()" style="color:var(--erro);background:none;border:none;cursor:pointer;">✖</button></td></tr>`;
+        document.getElementById('corpoMeg').innerHTML += row;
+        ['pontoMeg','m30','m60','m120'].forEach(id => document.getElementById(id).value = "");
+    }
+
+    // MICROOHMÍMETRO
+    function addMicroTable() {
+        const p = document.getElementById('pontoMicro').value;
+        const c = document.getElementById('currMicro').value;
+        const r = document.getElementById('resMicro').value;
+        if(!p || !r) return alert("Preencha os dados!");
+        const row = `<tr><td>${p}</td><td>${c}</td><td>${r}</td><td class="no-print"><button onclick="this.parentElement.parentElement.remove()" style="color:var(--erro);background:none;border:none;cursor:pointer;">✖</button></td></tr>`;
+        document.getElementById('corpoMicro').innerHTML += row;
+        document.getElementById('pontoMicro').value = "";
+        document.getElementById('resMicro').value = "";
+    }
+
+    // TTR - MANTIDO CONFORME ORIGINAL
     const REGRAS = {
         "Ydn1_11_X0": { f: (u1, u2) => (u1 * 1.73205) / u2, h: ["H1-H3", "H1-H2", "H3-H1"], x: ["X1-X0", "X2-X0", "X3-X0"] },
         "Dyn1_11_X0": { f: (u1, u2) => (u1 * 1.73205) / u2, h: ["H1-H3", "H2-H1", "H3-H2"], x: ["X1-X0", "X2-X0", "X3-X0"] },
         "Ynyn0":      { f: (u1, u2) => u1 / u2, h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X0", "X2-X0", "X3-X0"] },
         "Yyn0_Dd0":   { f: (u1, u2) => u1 / u2, h: ["H1-H2", "H2-H3", "H3-H1"], x: ["X1-X2", "X2-X3", "X3-X1"] }
     };
-
     let vTeo = 0;
-
-    function abrirModulo(id) {
-        document.getElementById('menuPrincipal').style.display = 'none';
-        document.getElementById('btnVoltar').style.display = 'block';
-        document.getElementById('mod' + id).style.display = 'block';
-        document.getElementById('tituloApp').innerText = id === 'TTR' ? 'RELAÇÃO DE TRANSFORMAÇÃO' : (id === 'MICRO' ? 'MICROOHMÍMETRO' : 'MEGÔMETRO');
-    }
-
-    function voltarAoMenu() {
-        document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
-        document.getElementById('menuPrincipal').style.display = 'grid';
-        document.getElementById('btnVoltar').style.display = 'none';
-        document.getElementById('tituloApp').innerText = 'ALPHA HUB';
-    }
-
     function iniciarTTR() {
         const fas = document.getElementById('selFas').value;
         if(!fas) return;
-        const conf = REGRAS[fas];
-        const tbody = document.getElementById('corpoTTR');
-        tbody.innerHTML = conf.h.map((h, i) => `<tr><td><b>${h}/${conf.x[i]}</b></td><td><input type="number" class="in-ttr" oninput="validarTTR()" style="width:100px; text-align:center;"></td><td class="desvio-fase">-</td><td><span class="status-badge">...</span></td></tr>`).join("");
+        document.getElementById('corpoTTR').innerHTML = REGRAS[fas].h.map((h, i) => `<tr><td><b>${h}/${REGRAS[fas].x[i]}</b></td><td><input type="number" class="in-ttr" oninput="validarTTR()" style="width:100px; text-align:center;"></td><td class="desvio-fase">-</td><td><span class="status-badge">...</span></td></tr>`).join("");
         document.getElementById('tabTTR').style.display = 'table';
         document.getElementById('boxTTR').style.display = 'block';
         calcTTR();
     }
-
     function calcTTR() {
         const u1 = parseFloat(document.getElementById('u1').value);
         const u2 = parseFloat(document.getElementById('u2').value);
         const fas = document.getElementById('selFas').value;
-        if(u1 && u2 && fas) {
-            vTeo = REGRAS[fas].f(u1, u2);
-            document.getElementById('valTTR').innerText = vTeo.toFixed(5);
-            validarTTR();
-        }
+        if(u1 && u2 && fas) { vTeo = REGRAS[fas].f(u1, u2); document.getElementById('valTTR').innerText = vTeo.toFixed(5); validarTTR(); }
     }
-
     function validarTTR() {
-        const ins = document.querySelectorAll('.in-ttr');
         let soma = 0, qtd = 0;
-        ins.forEach(input => {
+        document.querySelectorAll('.in-ttr').forEach(input => {
             const med = parseFloat(input.value);
             const linha = input.closest('tr');
             if(med && vTeo) {
@@ -196,21 +262,12 @@
         if(qtd > 0) document.getElementById('desvioTTR').innerText = "DESVIO MÉDIO: " + (soma/qtd).toFixed(3) + "%";
     }
 
-    function calcMegger() {
-        const m30 = parseFloat(document.getElementById('m30').value);
-        const m60 = parseFloat(document.getElementById('m60').value);
-        const m120 = parseFloat(document.getElementById('m120').value);
-        
-        if(m30 && m60) document.getElementById('resIA').innerText = "IA (60/30): " + (m60/m30).toFixed(2);
-        if(m60 && m120) document.getElementById('resIP').innerText = "IP (120/60): " + (m120/m60).toFixed(2);
-    }
-
+    // GERAL
     function toggleMenu() {
         const g = document.getElementById('gaveta');
         g.classList.toggle('ativa');
         document.getElementById('mascara').style.display = g.classList.contains('ativa') ? 'block' : 'none';
     }
-
     function salvarConfig(chave, id) {
         const val = document.getElementById(id).value;
         if(!val) return;
@@ -220,15 +277,14 @@
         document.getElementById(id).value = "";
         carregarDropdowns();
     }
-
     function carregarDropdowns() {
-        const tecs = JSON.parse(localStorage.getItem('alpha_tecnicos') || "[]");
-        const locs = JSON.parse(localStorage.getItem('alpha_locais') || "[]");
-        document.querySelectorAll('.selTec').forEach(s => s.innerHTML = tecs.map(t => `<option>${t}</option>`).join(""));
-        document.querySelectorAll('.selLoc').forEach(s => s.innerHTML = locs.map(l => `<option>${l}</option>`).join(""));
+        ['tecnicos', 'locais'].forEach((chave, i) => {
+            const lista = JSON.parse(localStorage.getItem('alpha_'+chave) || "[]");
+            document.querySelectorAll(i===0?'.selTec':'.selLoc').forEach(s => s.innerHTML = lista.map(t => `<option>${t}</option>`).join(""));
+        });
     }
-
     window.onload = carregarDropdowns;
 </script>
 </body>
-</html>
+                </html>
+                
