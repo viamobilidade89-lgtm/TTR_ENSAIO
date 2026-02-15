@@ -3,49 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENSAIO DE RELAÇÃO DE TRANSFORMAÇÃO - ALPHA</title>
+    <title>RELAÇÃO DE TRANSFORMAÇÃO - ALPHA</title>
     <style>
         :root { --fundo: #0f172a; --card: #1e293b; --primaria: #38bdf8; --texto: #f8fafc; --erro: #ff4d4d; --sucesso: #00e676; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--fundo); color: var(--texto); margin: 0; padding: 10px; display: flex; flex-direction: column; min-height: 100vh; }
         .container { max-width: 900px; margin: auto; flex: 1; width: 100%; }
         
-        /* CABEÇALHO */
-        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primaria); padding-bottom: 15px; margin-bottom: 25px; }
-        .titulo-principal { color: var(--primaria); margin: 0; font-size: 1.4em; text-transform: uppercase; letter-spacing: 2px; }
-        .btn-config { background: none; border: 1px solid var(--primaria); color: var(--primaria); padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .btn-config:hover { background: var(--primaria); color: #000; }
+        /* CABEÇALHO CENTRALIZADO */
+        header { text-align: center; border-bottom: 2px solid var(--primaria); padding-bottom: 15px; margin-bottom: 25px; position: relative; }
+        .titulo-principal { color: var(--primaria); margin: 0; font-size: 1.3em; text-transform: uppercase; letter-spacing: 2px; padding: 0 40px; }
+        
+        /* ENGRENAGEM DISCRETA */
+        .btn-config { position: absolute; right: 0; top: 0; background: none; border: none; color: #475569; font-size: 1.2em; cursor: pointer; transition: 0.3s; padding: 5px; }
+        .btn-config:hover { color: var(--primaria); }
 
         .card { background: var(--card); padding: 25px; border-radius: 15px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
         .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.75em; color: var(--primaria); text-transform: uppercase; }
         input, select { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 6px; box-sizing: border-box; font-size: 0.9em; }
 
-        /* GAVETA LATERAL */
+        /* GAVETA E BUSCA */
         .gaveta { position: fixed; top: 0; right: -350px; width: 320px; height: 100%; background: #1e293b; border-left: 3px solid var(--primaria); z-index: 1000; transition: 0.4s; padding: 20px; box-sizing: border-box; overflow-y: auto; }
         .gaveta.ativa { right: 0; }
         .mascara { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 999; }
-        
-        /* TABELA E RESULTADOS */
+        .lista-historico { background: rgba(0,0,0,0.3); border-radius: 8px; margin-top: 10px; max-height: 200px; overflow-y: auto; }
+        .item-historico { padding: 8px; border-bottom: 1px solid #334155; cursor: pointer; font-size: 0.8em; }
+        .item-historico:hover { background: var(--primaria); color: #000; }
+
         .info-teorica { background: rgba(56, 189, 248, 0.1); padding: 15px; border-radius: 10px; border: 1px dashed var(--primaria); margin: 20px 0; text-align: center; }
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         th, td { border: 1px solid #334155; padding: 12px; text-align: center; font-size: 0.9em; }
-        th { background: #0f172a; color: var(--primaria); text-transform: uppercase; font-size: 0.75em; }
+        th { background: #0f172a; color: var(--primaria); text-transform: uppercase; }
         .status-badge { padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 0.8em; }
-        .reprovado { background: var(--erro); color: white; }
         .satisfatorio { background: var(--sucesso); color: #0f172a; }
+        .reprovado { background: var(--erro); color: white; }
 
-        /* RODAPÉ */
-        footer { text-align: center; padding: 30px 10px; color: var(--primaria); font-weight: bold; letter-spacing: 3px; font-size: 0.9em; text-transform: uppercase; opacity: 0.8; }
+        .btn-save { background: var(--sucesso); color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+        footer { text-align: center; padding: 30px; color: var(--primaria); font-weight: bold; letter-spacing: 3px; font-size: 0.8em; text-transform: uppercase; opacity: 0.6; }
 
-        @media print {
-            .btn-config, .gaveta, .mascara, .btn-add { display: none !important; }
-            body { background: white; color: black; }
-            .card { border: none; box-shadow: none; }
-            input, select { border: none; color: black; background: none; appearance: none; -webkit-appearance: none; }
-            th { background: #eee !important; color: black !important; }
-            .titulo-principal { color: black !important; border-bottom: 2px solid black; }
-            footer { color: black !important; margin-top: 50px; }
-        }
+        @media print { .btn-config, .gaveta, .mascara, .btn-save, button { display: none !important; } }
     </style>
 </head>
 <body>
@@ -53,45 +49,50 @@
 <div class="mascara" id="mascara" onclick="toggleMenu()"></div>
 
 <div class="gaveta" id="gaveta">
-    <h3 style="color:var(--primaria)">⚙️ ADMINISTRAÇÃO</h3>
-    <div style="background:rgba(0,0,0,0.2); padding:10px; border-radius:8px; margin-bottom:15px;">
-        <label>Cadastrar Técnico</label>
-        <input type="text" id="nT" placeholder="Nome">
-        <button onclick="salvarItem('tecnicos', 'nT')" style="width:100%; margin-top:5px; background:var(--sucesso); border:none; padding:8px; cursor:pointer; font-weight:bold;">+</button>
+    <h3 style="color:var(--primaria)">⚙️ GESTÃO ALPHA</h3>
+    
+    <div style="margin-bottom:20px;">
+        <label>Buscar Ensaios Salvos</label>
+        <div class="lista-historico" id="listaSalvos"></div>
     </div>
+
     <div style="background:rgba(0,0,0,0.2); padding:10px; border-radius:8px; margin-bottom:15px;">
-        <label>Cadastrar Local</label>
-        <input type="text" id="nL" placeholder="Subestação">
-        <button onclick="salvarItem('locais', 'nL')" style="width:100%; margin-top:5px; background:var(--sucesso); border:none; padding:8px; cursor:pointer; font-weight:bold;">+</button>
+        <label>Novo Técnico</label>
+        <input type="text" id="nT"><button onclick="salvarConfig('tecnicos', 'nT')" style="width:100%; margin-top:5px; background:var(--primaria); border:none; cursor:pointer;">+</button>
     </div>
-    <button onclick="localStorage.clear(); location.reload();" style="background:var(--erro); color:white; border:none; width:100%; padding:10px; border-radius:5px; cursor:pointer;">LIMPAR TUDO</button>
+    
+    <div style="background:rgba(0,0,0,0.2); padding:10px; border-radius:8px;">
+        <label>Novo Local</label>
+        <input type="text" id="nL"><button onclick="salvarConfig('locais', 'nL')" style="width:100%; margin-top:5px; background:var(--primaria); border:none; cursor:pointer;">+</button>
+    </div>
+    <br>
+    <button onclick="localStorage.clear(); location.reload();" style="color:var(--erro); background:none; border:1px solid var(--erro); width:100%; cursor:pointer; font-size:0.7em;">RESET TOTAL</button>
 </div>
 
 <div class="container">
     <header>
         <h1 class="titulo-principal">ENSAIO DE RELAÇÃO DE TRANSFORMAÇÃO</h1>
-        <button class="btn-config" onclick="toggleMenu()">CONFIG ⚙️</button>
+        <button class="btn-config" onclick="toggleMenu()">⚙️</button>
     </header>
 
     <div class="card">
         <div class="grade">
-            <div><label>Técnico Resp.</label><select id="selTec" class="select-dinamico"></select></div>
-            <div><label>Local / SE</label><select id="selLoc" class="select-dinamico"></select></div>
-            <div><label>TAG / Prefixo</label><input type="text" id="tag" placeholder="Ex: TR-01"></div>
+            <div><label>Técnico</label><select id="selTec"></select></div>
+            <div><label>Local</label><select id="selLoc"></select></div>
+            <div><label>TAG / Ativo</label><input type="text" id="tag" placeholder="Ex: TR-02"></div>
         </div>
 
         <div class="grade">
             <div><label>Grupo Fasorial</label>
                 <select id="selFas" onchange="iniciarEnsaio()">
                     <option value="">-- SELECIONE --</option>
-                    <option value="Ydn1_11_X0">Ydn1/Ydn11 (C/ X0 Aparente)</option>
-                    <option value="Dyn1_11_X0">Dyn1/Dyn11 (C/ X0 Aparente)</option>
+                    <option value="Ydn1_11_X0">Ydn1/Ydn11 (C/ X0)</option>
+                    <option value="Dyn1_11_X0">Dyn1/Dyn11 (C/ X0)</option>
                     <option value="Ynyn0">Ynyn0 (Direto)</option>
-                    <option value="Yyn0_Dd0">Yyn0 e Dd0 (Direto)</option>
                 </select>
             </div>
-            <div><label>U1 (Alta) kV</label><input type="number" id="u1" oninput="calc()"></div>
-            <div><label>U2 (Baixa) V</label><input type="number" id="u2" oninput="calc()"></div>
+            <div><label>U1 (kV)</label><input type="number" id="u1" oninput="calc()"></div>
+            <div><label>U2 (V)</label><input type="number" id="u2" oninput="calc()"></div>
         </div>
 
         <div id="boxReferencia" class="info-teorica" style="display:none;">
@@ -100,17 +101,11 @@
 
         <div id="tabelaDados" style="display:none;">
             <table>
-                <thead>
-                    <tr>
-                        <th>Conexão Bornes</th>
-                        <th>Valor Medido</th>
-                        <th>Desvio %</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>Conexão</th><th>Medido</th><th>Erro %</th><th>Status</th></tr></thead>
                 <tbody id="corpoTabela"></tbody>
             </table>
-            <button onclick="window.print()" style="width:100%; margin-top:20px; padding:15px; background:var(--primaria); border:none; border-radius:8px; font-weight:bold; cursor:pointer; color:#000;">GERAR RELATÓRIO FINAL</button>
+            <button class="btn-save" onclick="salvarEnsaioCompleto()">💾 SALVAR NO BANCO DE DADOS</button>
+            <button onclick="window.print()" style="width:100%; margin-top:10px; padding:12px; background:var(--primaria); border:none; border-radius:8px; font-weight:bold; cursor:pointer;">🖨️ IMPRIMIR RELATÓRIO</button>
         </div>
     </div>
 
@@ -118,11 +113,10 @@
 </div>
 
 <script>
-    const DB = {
+    const DB_REGRAS = {
         "Ydn1_11_X0": { f: (u1, u2) => (u1 * 1.732) / u2, h: ["H1-H3", "H1-H2", "H3-H1"], x: ["X1-X0", "X2-X0", "X3-X0"] },
         "Dyn1_11_X0": { f: (u1, u2) => (u1 * 1.732) / u2, h: ["H1-H3", "H2-H1", "H3-H2"], x: ["X1-X0", "X2-X0", "X3-X0"] },
-        "Ynyn0":      { f: (u1, u2) => u1 / u2, h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X0", "X2-X0", "X3-X0"] },
-        "Yyn0_Dd0":   { f: (u1, u2) => u1 / u2, h: ["H1-H2", "H2-H3", "H3-H1"], x: ["X1-X2", "X2-X3", "X3-X1"] }
+        "Ynyn0":      { f: (u1, u2) => u1 / u2, h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X0", "X2-X0", "X3-X0"] }
     };
 
     let vTeo = 0;
@@ -131,9 +125,10 @@
         const g = document.getElementById('gaveta');
         g.classList.toggle('ativa');
         document.getElementById('mascara').style.display = g.classList.contains('ativa') ? 'block' : 'none';
+        carregarHistorico();
     }
 
-    function salvarItem(chave, id) {
+    function salvarConfig(chave, id) {
         const val = document.getElementById(id).value;
         if(!val) return;
         let lista = JSON.parse(localStorage.getItem('alpha_'+chave) || "[]");
@@ -146,21 +141,21 @@
     function carregarDropdowns() {
         ['tecnicos', 'locais'].forEach((chave, i) => {
             const lista = JSON.parse(localStorage.getItem('alpha_'+chave) || "[]");
-            const select = document.querySelectorAll('.select-dinamico')[i];
-            select.innerHTML = '<option>-- SELECIONAR --</option>' + lista.map(item => `<option>${item}</option>`).join("");
+            const select = [document.getElementById('selTec'), document.getElementById('selLoc')][i];
+            select.innerHTML = '<option value="">--</option>' + lista.map(item => `<option>${item}</option>`).join("");
         });
     }
 
     function iniciarEnsaio() {
         const fas = document.getElementById('selFas').value;
         if(!fas) return;
-        const conf = DB[fas];
+        const conf = DB_REGRAS[fas];
         const tbody = document.getElementById('corpoTabela');
         tbody.innerHTML = "";
         conf.h.forEach((h, i) => {
             tbody.innerHTML += `<tr>
-                <td><b>${h} / ${conf.x[i]}</b></td>
-                <td><input type="number" step="any" oninput="validar(this)" style="width:120px; border:1px solid #475569; padding:5px; border-radius:4px; background:#0f172a; color:white; text-align:center;"></td>
+                <td><b>${h}/${conf.x[i]}</b></td>
+                <td><input type="number" step="any" class="med-input" oninput="validar(this)" style="width:100px; text-align:center;"></td>
                 <td class="erro">-</td>
                 <td><span class="status-badge">...</span></td>
             </tr>`;
@@ -175,8 +170,9 @@
         const u2 = parseFloat(document.getElementById('u2').value);
         const fas = document.getElementById('selFas').value;
         if(u1 && u2 && fas) {
-            vTeo = DB[fas].f(u1, u2);
+            vTeo = DB_REGRAS[fas].f(u1, u2);
             document.getElementById('valTeo').innerText = vTeo.toFixed(5);
+            document.querySelectorAll('.med-input').forEach(i => validar(i));
         }
     }
 
@@ -188,9 +184,50 @@
             linha.querySelector('.erro').innerText = erro.toFixed(3) + "%";
             const badge = linha.querySelector('.status-badge');
             const ok = Math.abs(erro) <= 0.5;
-            badge.innerText = ok ? "SATISFATÓRIO" : "REPROVADO";
+            badge.innerText = ok ? "OK" : "ERRO";
             badge.className = "status-badge " + (ok ? "satisfatorio" : "reprovado");
         }
+    }
+
+    // LÓGICA DO BANCO DE DADOS DE ENSAIOS
+    function salvarEnsaioCompleto() {
+        const tag = document.getElementById('tag').value || "S-TAG";
+        const dados = {
+            tag: tag,
+            data: new Date().toLocaleString(),
+            tec: document.getElementById('selTec').value,
+            loc: document.getElementById('selLoc').value,
+            fas: document.getElementById('selFas').value,
+            u1: document.getElementById('u1').value,
+            u2: document.getElementById('u2').value,
+            medidas: Array.from(document.querySelectorAll('.med-input')).map(i => i.value)
+        };
+        let historico = JSON.parse(localStorage.getItem('alpha_ensaios') || "[]");
+        historico.push(dados);
+        localStorage.setItem('alpha_ensaios', JSON.stringify(historico));
+        alert("Ensaio do " + tag + " salvo com sucesso!");
+    }
+
+    function carregarHistorico() {
+        const historico = JSON.parse(localStorage.getItem('alpha_ensaios') || "[]");
+        const lista = document.getElementById('listaSalvos');
+        lista.innerHTML = historico.map((e, i) => `
+            <div class="item-historico" onclick="restaurarEnsaio(${i})">
+                ${e.data} - <b>${e.tag}</b> (${e.loc})
+            </div>
+        `).reverse().join("");
+    }
+
+    function restaurarEnsaio(idx) {
+        const e = JSON.parse(localStorage.getItem('alpha_ensaios'))[idx];
+        document.getElementById('tag').value = e.tag;
+        document.getElementById('u1').value = e.u1;
+        document.getElementById('u2').value = e.u2;
+        document.getElementById('selFas').value = e.fas;
+        iniciarEnsaio();
+        const inputs = document.querySelectorAll('.med-input');
+        e.medidas.forEach((m, i) => { if(inputs[i]) { inputs[i].value = m; validar(inputs[i]); } });
+        toggleMenu();
     }
 
     window.onload = carregarDropdowns;
