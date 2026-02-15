@@ -18,9 +18,14 @@
         label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.75em; color: var(--primaria); text-transform: uppercase; }
         input, select { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 6px; box-sizing: border-box; }
 
-        .gaveta { position: fixed; top: 0; right: -350px; width: 320px; height: 100%; background: #1e293b; border-left: 3px solid var(--primaria); z-index: 1000; transition: 0.4s; padding: 20px; box-sizing: border-box; overflow-y: auto; }
+        .gaveta { position: fixed; top: 0; right: -350px; width: 340px; height: 100%; background: #1e293b; border-left: 3px solid var(--primaria); z-index: 1000; transition: 0.4s; padding: 20px; box-sizing: border-box; overflow-y: auto; }
         .gaveta.ativa { right: 0; }
         .mascara { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 999; }
+
+        /* ESTILO HISTÓRICO */
+        .item-hist { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #444; font-size: 0.85em; }
+        .item-hist span { cursor: pointer; flex: 1; }
+        .btn-del-item { color: var(--erro); background: none; border: none; cursor: pointer; font-weight: bold; padding: 5px 10px; margin-left: 10px; }
 
         .info-teorica { background: rgba(56, 189, 248, 0.1); padding: 15px; border-radius: 10px; border: 1px dashed var(--primaria); margin: 15px 0; text-align: center; }
         .desvio-medio { background: #0f172a; color: var(--primaria); padding: 10px; border-radius: 8px; margin-top: 10px; font-weight: bold; text-align: right; border: 1px solid #334155; }
@@ -33,17 +38,12 @@
         .satisfatorio { background: var(--sucesso); color: #000; }
         .reprovado { background: var(--erro); color: #fff; }
 
-        .btn-acao { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-acao { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        .btn-acao:hover { opacity: 0.8; }
+        
         footer { text-align: center; padding: 30px; color: var(--primaria); font-weight: bold; letter-spacing: 2px; font-size: 0.8em; text-transform: uppercase; opacity: 0.6; }
 
-        @media print { 
-            .btn-config, .gaveta, .mascara, button { display: none !important; }
-            body { background: white; color: black; }
-            .card { border: none; box-shadow: none; }
-            input, select { border: 1px solid #ccc; color: black; background: none; }
-            th { background: #eee !important; color: black !important; }
-            .desvio-medio { border: 1px solid black; color: black; }
-        }
+        @media print { .btn-config, .gaveta, .mascara, button, .btn-acao { display: none !important; } }
     </style>
 </head>
 <body>
@@ -52,7 +52,7 @@
 
 <div class="gaveta" id="gaveta">
     <h3 style="color:var(--primaria)">⚙️ GESTÃO ALPHA</h3>
-    <label>Ensaios Salvos (Por Data)</label>
+    <label>Ensaios Salvos</label>
     <div id="listaSalvos" style="background:rgba(0,0,0,0.3); border-radius:8px; margin-bottom:20px; max-height:250px; overflow-y:auto;"></div>
     
     <label>Novo Técnico</label>
@@ -61,7 +61,7 @@
     <label>Novo Local</label>
     <input type="text" id="nL"><button onclick="salvarConfig('locais', 'nL')" style="width:100%;">+</button>
     <br><br>
-    <button onclick="if(confirm('Limpar banco de dados?')) {localStorage.clear(); location.reload();}" style="background:none; border:1px solid var(--erro); color:var(--erro); width:100%; font-size:0.7em; cursor:pointer;">REDEFINIR SISTEMA</button>
+    <button onclick="if(confirm('Isso apagará técnicos e locais. Confirmar?')) {localStorage.clear(); location.reload();}" style="background:none; border:1px solid var(--erro); color:var(--erro); width:100%; font-size:0.7em; cursor:pointer; padding:5px;">REDEFINIR TUDO</button>
 </div>
 
 <div class="container">
@@ -109,7 +109,10 @@
             </table>
             <div id="divDesvioMedio" class="desvio-medio">DESVIO MÉDIO GERAL: -</div>
             
-            <button class="btn-acao" style="background:var(--sucesso); color:#000;" onclick="salvarEnsaio()">💾 SALVAR NO HISTÓRICO</button>
+            <div class="grade" style="margin-top:20px; grid-template-columns: 1fr 1fr;">
+                <button class="btn-acao" style="background:var(--sucesso); color:#000;" onclick="salvarEnsaio()">💾 SALVAR</button>
+                <button class="btn-acao" style="background:#475569; color:#fff;" onclick="limparTelaNovoEnsaio()">✨ NOVO ENSAIO</button>
+            </div>
             <button class="btn-acao" style="background:var(--primaria); color:#000;" onclick="window.print()">🖨️ IMPRIMIR RELATÓRIO</button>
         </div>
     </div>
@@ -190,9 +193,7 @@
 
     function validar() {
         const inputs = document.querySelectorAll('.med-input');
-        let somaErros = 0;
-        let contagem = 0;
-
+        let somaErros = 0, contagem = 0;
         inputs.forEach(input => {
             const med = parseFloat(input.value);
             const linha = input.closest('tr');
@@ -203,25 +204,17 @@
                 const ok = Math.abs(erro) <= 0.5;
                 badge.innerText = ok ? "OK" : "FORA";
                 badge.className = "status-badge " + (ok ? "satisfatorio" : "reprovado");
-                
                 somaErros += Math.abs(erro);
                 contagem++;
             }
         });
-
-        if(contagem > 0) {
-            const media = somaErros / contagem;
-            document.getElementById('divDesvioMedio').innerText = "DESVIO MÉDIO GERAL: " + media.toFixed(3) + "%";
-        }
+        if(contagem > 0) document.getElementById('divDesvioMedio').innerText = "DESVIO MÉDIO GERAL: " + (somaErros/contagem).toFixed(3) + "%";
     }
 
     function salvarEnsaio() {
-        const dataAtual = new Date();
-        const dataFormatada = dataAtual.toLocaleDateString('pt-BR');
-        
         const dados = {
             tag: document.getElementById('tag').value || "S-TAG",
-            data: dataFormatada,
+            data: new Date().toLocaleDateString('pt-BR'),
             tec: document.getElementById('selTec').value,
             loc: document.getElementById('selLoc').value,
             fas: document.getElementById('selFas').value,
@@ -232,17 +225,38 @@
         let hist = JSON.parse(localStorage.getItem('alpha_ensaios') || "[]");
         hist.push(dados);
         localStorage.setItem('alpha_ensaios', JSON.stringify(hist));
-        alert("Ensaio salvo com sucesso!");
+        alert("Salvo!");
     }
 
     function carregarHistorico() {
         const hist = JSON.parse(localStorage.getItem('alpha_ensaios') || "[]");
         const lista = document.getElementById('listaSalvos');
         lista.innerHTML = hist.map((e, i) => `
-            <div style="padding:10px; border-bottom:1px solid #444; cursor:pointer; font-size:0.85em;" onclick="restaurar(${i})">
-                📅 ${e.data} - <b>${e.tag}</b>
+            <div class="item-hist">
+                <span onclick="restaurar(${i})">📅 ${e.data} - ${e.tag}</span>
+                <button class="btn-del-item" onclick="excluirIndividual(${i})">✕</button>
             </div>
         `).reverse().join("");
+    }
+
+    function excluirIndividual(idx) {
+        if(confirm("Excluir este ensaio?")) {
+            let hist = JSON.parse(localStorage.getItem('alpha_ensaios') || "[]");
+            hist.splice(idx, 1);
+            localStorage.setItem('alpha_ensaios', JSON.stringify(hist));
+            carregarHistorico();
+        }
+    }
+
+    function limparTelaNovoEnsaio() {
+        if(confirm("Limpar dados da tela para um novo ensaio?")) {
+            document.getElementById('tag').value = "";
+            document.getElementById('u1').value = "";
+            document.getElementById('u2').value = "";
+            document.getElementById('selFas').value = "";
+            document.getElementById('tabelaDados').style.display = 'none';
+            document.getElementById('boxReferencia').style.display = 'none';
+        }
     }
 
     function restaurar(idx) {
