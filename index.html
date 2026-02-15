@@ -6,43 +6,60 @@
     <title>ENSAIOS ALPHA</title>
     <style>
         :root { --fundo: #0f172a; --card: #1e293b; --primaria: #38bdf8; --texto: #f8fafc; --erro: #ff4d4d; --sucesso: #00e676; }
-        body { font-family: sans-serif; background: var(--fundo); color: var(--texto); margin: 0; padding: 10px; }
-        .container { max-width: 800px; margin: auto; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--fundo); color: var(--texto); margin: 0; padding: 10px; }
+        .container { max-width: 900px; margin: auto; }
         
-        header { border-bottom: 2px solid var(--primaria); padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-        .titulo-principal { color: var(--primaria); margin: 0; font-size: 1.2em; }
+        header { border-bottom: 2px solid var(--primaria); padding: 10px 0; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .titulo-principal { color: var(--primaria); margin: 0; font-size: 1.4em; letter-spacing: 1px; }
 
-        .btn-menu { background: var(--card); border: 1px solid #334155; padding: 20px; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; text-align: center; }
-        #menuPrincipal { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        #menuPrincipal { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .btn-menu { background: var(--card); border: 1px solid #334155; padding: 20px 10px; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; text-align: center; transition: 0.3s; }
+        .btn-menu:hover { border-color: var(--primaria); background: #263449; }
 
-        .card { background: var(--card); padding: 15px; border-radius: 12px; display: none; }
-        .grade { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .card { background: var(--card); padding: 20px; border-radius: 15px; display: none; margin-bottom: 20px; border: 1px solid #334155; }
+        .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 15px; }
         
-        label { display: block; font-size: 0.7em; color: var(--primaria); margin-bottom: 4px; text-transform: uppercase; }
+        label { display: block; font-size: 0.75em; color: var(--primaria); margin-bottom: 5px; text-transform: uppercase; font-weight: bold; }
         input, select { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 6px; box-sizing: border-box; }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.8em; }
-        th, td { border: 1px solid #334155; padding: 8px; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #161e2d; border-radius: 8px; overflow: hidden; }
+        th, td { border: 1px solid #334155; padding: 10px; text-align: center; font-size: 0.85em; }
         th { background: #0f172a; color: var(--primaria); }
 
         .btn-acao { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; background: var(--primaria); color: #000; }
-        .btn-voltar { background: none; border: 1px solid var(--primaria); color: var(--primaria); padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+        .btn-voltar { background: none; border: 1px solid var(--primaria); color: var(--primaria); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; }
         
-        .status-badge { padding: 2px 5px; border-radius: 4px; font-size: 0.8em; }
+        .status-badge { padding: 3px 8px; border-radius: 4px; font-weight: bold; }
         .satisfatorio { background: var(--sucesso); color: #000; }
         .reprovado { background: var(--erro); color: #fff; }
 
-        @media print { .no-print { display: none !important; } .card { display: block !important; background: white; color: black; } }
+        .secao-relatorio { margin-top: 30px; border-top: 1px solid var(--primaria); padding-top: 20px; }
+
+        @media print { 
+            .no-print { display: none !important; } 
+            .card { display: block !important; background: white !important; color: black !important; border: 1px solid #000; box-shadow: none; }
+            input, select { border: none !important; color: black !important; background: none !important; appearance: none; font-weight: bold; }
+            th { background: #ddd !important; color: black !important; }
+            td { color: black !important; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <button id="btnVoltar" class="btn-voltar no-print" onclick="voltar()" style="display:none;">⬅ VOLTAR</button>
-        <h1 id="mainTitle" class="titulo-principal">ENSAIOS ALPHA</h1>
-        <button class="no-print" onclick="abrirConfig()" style="background:none; border:none; color:white; font-size:1.5em;">⚙️</button>
+        <button id="btnVoltar" class="btn-voltar no-print" onclick="voltar()" style="visibility: hidden;">⬅ VOLTAR</button>
+        <h1 class="titulo-principal">ENSAIOS ALPHA</h1>
+        <button class="no-print" onclick="abrirConfig()" style="background:none; border:none; color:white; font-size:1.5em; cursor:pointer;">⚙️</button>
     </header>
+
+    <div class="card" style="display: block; margin-bottom: 10px;" id="cabecalhoGeral">
+        <div class="grade">
+            <div><label>Técnico Responsável</label><select id="mainTec" class="selTec"></select></div>
+            <div><label>Local / Subestação</label><select id="mainLoc" class="selLoc"></select></div>
+            <div><label>Data do Ensaio</label><input type="date" id="mainData"></div>
+        </div>
+    </div>
 
     <div id="menuPrincipal">
         <div class="btn-menu" onclick="abrirModulo('TTR')">⚡ TTR</div>
@@ -51,77 +68,97 @@
         <div class="btn-menu" onclick="abrirModulo('HISTORICO')" style="border-color: #fbbf24; color: #fbbf24;">📜 HISTÓRICO</div>
     </div>
 
-    <div id="modCONFIG" class="card">
-        <label>Novo Técnico</label>
-        <input type="text" id="cfgTec">
-        <button class="btn-acao" onclick="salvarItem('tecnicos', 'cfgTec')">Adicionar Técnico</button>
-        <br><br>
-        <label>Novo Local</label>
-        <input type="text" id="cfgLoc">
-        <button class="btn-acao" onclick="salvarItem('locais', 'cfgLoc')">Adicionar Local</button>
-        <button class="btn-acao" onclick="resetar()" style="background:var(--erro); margin-top:30px; color:white;">APAGAR TUDO</button>
+    <div id="modTTR" class="card">
+        <div class="grade">
+            <div><label>U1 (Primário)</label><input type="number" id="u1" oninput="calcTTR()"></div>
+            <div><label>U2 (Secundário)</label><input type="number" id="u2" oninput="calcTTR()"></div>
+            <div>
+                <label>Fasorial</label>
+                <select id="selFas" onchange="iniciarTTR()">
+                    <option value="">-- SELECIONE --</option>
+                    <option value="Ydn1_11_X0">Ydn1/Ydn11 (C/ X0)</option>
+                    <option value="Dyn1_11_X0">Dyn1/Dyn11 (C/ X0)</option>
+                    <option value="Ynyn0">Ynyn0 (Direto)</option>
+                    <option value="Yyn0_Dd0">Yyn0 ou Dd0</option>
+                </select>
+            </div>
+        </div>
+        <div id="resTeo" style="text-align:center; padding:15px; font-weight:bold; color:var(--primaria); font-size:1.2em;"></div>
+        <table id="tabTTR">
+            <thead><tr><th>Bornes (H/X)</th><th>Medido</th><th>Desvio %</th><th>Status</th></tr></thead>
+            <tbody id="corpoTTR"></tbody>
+        </table>
     </div>
 
     <div id="modMEGGER" class="card">
         <div class="grade">
-            <div><label>Técnico</label><select class="selTec"></select></div>
-            <div><label>Local</label><select class="selLoc"></select></div>
-        </div>
-        <div class="grade">
-            <div style="grid-column: span 2;">
-                <label>Ponto de Medição</label>
-                <select id="pontoMeg">
-                    <option>PRIMÁRIO X SECUNDÁRIO</option>
-                    <option>PRIMÁRIO X CARCAÇA</option>
-                    <option>SECUNDÁRIO X CARCAÇA</option>
-                    <option>ENTRADA X SAÍDA</option>
-                    <option>ENTRADA X CARCAÇA</option>
-                    <option>SAÍDA X CARCAÇA</option>
+            <div>
+                <label>Tipo Equipamento</label>
+                <select id="tipoEqpMeg" onchange="atualizarPontosMeg()">
+                    <option value="TRANSFORMADOR">TRANSFORMADOR</option>
+                    <option value="DISJUNTOR">DISJUNTOR</option>
+                    <option value="OUTROS">OUTROS</option>
                 </select>
             </div>
+            <div><label>Ponto de Medição</label><select id="pontoMeg"></select></div>
+            <div><label>Tensão Aplicada (V)</label><input type="number" id="vMeg" value="5000"></div>
         </div>
         <div class="grade">
             <div><label>30s (GΩ)</label><input type="number" id="m30"></div>
             <div><label>60s (GΩ)</label><input type="number" id="m60"></div>
             <div><label>120s (GΩ)</label><input type="number" id="m120"></div>
         </div>
-        <button class="btn-acao no-print" onclick="addMeg()">➕ ADICIONAR MEDIÇÃO</button>
-        <table id="tabMeg">
-            <thead><tr><th>Ponto</th><th>30s</th><th>60s</th><th>120s</th><th>IA</th><th>IP</th></tr></thead>
+        <button class="btn-acao" onclick="addMeg()">➕ ADICIONAR AO RELATÓRIO</button>
+        <table id="relMeg">
+            <thead><tr><th>Ponto</th><th>V</th><th>30s</th><th>60s</th><th>120s</th><th>IA</th><th>IP</th></tr></thead>
             <tbody id="corpoMeg"></tbody>
         </table>
-        <button class="btn-acao no-print" onclick="salvarEnsaio('MEGGER')" style="background:#fbbf24;">💾 SALVAR ENSAIO</button>
     </div>
 
-    <div id="modTTR" class="card">
+    <div id="modMICRO" class="card">
         <div class="grade">
-            <div><label>U1 (V)</label><input type="number" id="u1" oninput="calcTTR()"></div>
-            <div><label>U2 (V)</label><input type="number" id="u2" oninput="calcTTR()"></div>
+            <div><label>Ponto/Fase</label><input type="text" id="pMicro" placeholder="Ex: A-B"></div>
+            <div><label>Corrente (A)</label><input type="number" id="iMicro" value="100"></div>
+            <div><label>R. Medida (µΩ)</label><input type="number" id="rMicro"></div>
         </div>
-        <label>Fasorial</label>
-        <select id="selFas" onchange="iniciarTTR()">
-            <option value="">-- SELECIONE --</option>
-            <option value="Ydn1_11_X0">Ydn1/Ydn11 (C/ X0)</option>
-            <option value="Dyn1_11_X0">Dyn1/Dyn11 (C/ X0)</option>
-            <option value="Ynyn0">Ynyn0 (Direto)</option>
-            <option value="Yyn0_Dd0">Yyn0 ou Dd0 (Direto)</option>
-        </select>
-        <div id="resTeo" style="text-align:center; padding:10px; color:var(--primaria); font-weight:bold;"></div>
-        <table id="tabTTR">
-            <thead><tr><th>Bornes</th><th>Medido</th><th>Desvio %</th></tr></thead>
-            <tbody id="corpoTTR"></tbody>
+        <div class="grade">
+            <div><label>Temp. Enrol. (°C)</label><input type="number" id="tMed" value="25"></div>
+            <div><label>Temp. Ref. (°C)</label><input type="number" id="tRef" value="75"></div>
+            <div><label>Material</label><select id="matMicro"><option value="234.5">Cobre (234.5)</option><option value="225">Alumínio (225)</option></select></div>
+        </div>
+        <button class="btn-acao" onclick="addMicro()">➕ ADICIONAR AO RELATÓRIO</button>
+        <table id="relMicro">
+            <thead><tr><th>Ponto</th><th>I (A)</th><th>R. Medida</th><th>R @ Ref.</th></tr></thead>
+            <tbody id="corpoMicro"></tbody>
         </table>
-        <button class="btn-acao no-print" onclick="salvarEnsaio('TTR')" style="background:#fbbf24;">💾 SALVAR ENSAIO</button>
+    </div>
+
+    <div id="acoesRelatorio" style="margin-top:20px;">
+        <button class="btn-acao" style="background:#fbbf24;" onclick="salvarNoHist()">💾 SALVAR NO HISTÓRICO</button>
+        <button class="btn-acao" style="background:var(--sucesso); color:#000;" onclick="window.print()">🖨️ GERAR RELATÓRIO PDF</button>
+    </div>
+
+    <div id="modCONFIG" class="card">
+        <label>Adicionar Técnico</label>
+        <input type="text" id="cfgTec">
+        <button class="btn-acao" onclick="salvarConfig('tecnicos', 'cfgTec')">Salvar Técnico</button>
+        <br><br>
+        <label>Adicionar Local</label>
+        <input type="text" id="cfgLoc">
+        <button class="btn-acao" onclick="salvarConfig('locais', 'cfgLoc')">Salvar Local</button>
+        <button class="btn-acao" onclick="limparTudo()" style="background:var(--erro); color:white; margin-top:40px;">LIMPAR TUDO</button>
     </div>
 
     <div id="modHISTORICO" class="card">
         <div id="listaHist"></div>
     </div>
 
+    <footer style="text-align:center; padding:20px; font-size:0.8em; opacity:0.5;">EQUIPE ALPHA - 2026</footer>
 </div>
 
 <script>
-    const REGRAS = {
+    // MOTOR TTR ORIGINAL
+    const REGRAS_TTR = {
         "Ydn1_11_X0": { f: (u1, u2) => (u1 * 1.73205) / u2, h: ["H1-H3", "H1-H2", "H3-H1"], x: ["X1-X0", "X2-X0", "X3-X0"] },
         "Dyn1_11_X0": { f: (u1, u2) => (u1 * 1.73205) / u2, h: ["H1-H3", "H2-H1", "H3-H2"], x: ["X1-X0", "X2-X0", "X3-X0"] },
         "Ynyn0":      { f: (u1, u2) => u1 / u2, h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X0", "X2-X0", "X3-X0"] },
@@ -130,99 +167,167 @@
 
     function abrirModulo(id) {
         document.getElementById('menuPrincipal').style.display = 'none';
-        document.getElementById('btnVoltar').style.display = 'block';
-        document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
+        document.getElementById('btnVoltar').style.visibility = 'visible';
+        document.querySelectorAll('.card').forEach(c => { if(c.id !== 'cabecalhoGeral') c.style.display = 'none'; });
         document.getElementById('mod' + id).style.display = 'block';
-        if(id === 'HISTORICO') renderizarHist();
+        if(id === 'HISTORICO') renderHist();
+        if(id === 'MEGGER') atualizarPontosMeg();
     }
 
     function voltar() {
+        document.querySelectorAll('.card').forEach(c => { if(c.id !== 'cabecalhoGeral') c.style.display = 'none'; });
         document.getElementById('menuPrincipal').style.display = 'grid';
-        document.getElementById('btnVoltar').style.display = 'none';
-        document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
+        document.getElementById('btnVoltar').style.visibility = 'hidden';
     }
 
     function abrirConfig() { abrirModulo('CONFIG'); }
 
-    // --- MEGOMETRO ---
-    function addMeg() {
-        const p = document.getElementById('pontoMeg').value;
-        const m30 = parseFloat(document.getElementById('m30').value) || 0;
-        const m60 = parseFloat(document.getElementById('m60').value) || 0;
-        const m120 = parseFloat(document.getElementById('m120').value) || 0;
-        const ia = m30 > 0 ? (m60/m30).toFixed(2) : "-";
-        const ip = m60 > 0 ? (m120/m60).toFixed(2) : "-";
-        
-        const tr = `<tr><td>${p}</td><td>${m30}</td><td>${m60}</td><td>${m120}</td><td>${ia}</td><td>${ip}</td></tr>`;
-        document.getElementById('corpoMeg').innerHTML += tr;
-    }
-
-    // --- TTR ---
+    // LÓGICA TTR
     let vTeo = 0;
     function iniciarTTR() {
         const fas = document.getElementById('selFas').value;
         if(!fas) return;
-        document.getElementById('corpoTTR').innerHTML = REGRAS[fas].h.map((h, i) => 
-            `<tr><td>${h}/${REGRAS[fas].x[i]}</td><td><input type="number" class="in-ttr" oninput="calcTTR()" style="width:80px"></td><td class="desv">-</td></tr>`
-        ).join("");
+        document.getElementById('corpoTTR').innerHTML = REGRAS_TTR[fas].h.map((h, i) => `
+            <tr>
+                <td><b>${h}/${REGRAS_TTR[fas].x[i]}</b></td>
+                <td><input type="number" class="in-ttr" oninput="calcTTR()" style="width:100px;"></td>
+                <td class="desv-ttr">-</td>
+                <td><span class="status-badge">...</span></td>
+            </tr>
+        `).join("");
         calcTTR();
     }
+
     function calcTTR() {
         const u1 = parseFloat(document.getElementById('u1').value);
         const u2 = parseFloat(document.getElementById('u2').value);
         const fas = document.getElementById('selFas').value;
         if(u1 && u2 && fas) {
-            vTeo = REGRAS[fas].f(u1, u2);
+            vTeo = REGRAS_TTR[fas].f(u1, u2);
             document.getElementById('resTeo').innerText = "TEÓRICO: " + vTeo.toFixed(5);
             document.querySelectorAll('.in-ttr').forEach(input => {
                 const med = parseFloat(input.value);
+                const tr = input.closest('tr');
                 if(med) {
-                    const d = ((med - vTeo)/vTeo*100).toFixed(3);
-                    input.closest('tr').querySelector('.desv').innerText = d + "%";
+                    const erro = ((med - vTeo)/vTeo)*100;
+                    tr.querySelector('.desv-ttr').innerText = erro.toFixed(3) + "%";
+                    const badge = tr.querySelector('.status-badge');
+                    const ok = Math.abs(erro) <= 0.5;
+                    badge.innerText = ok ? "OK" : "FORA";
+                    badge.className = "status-badge " + (ok ? "satisfatorio" : "reprovado");
                 }
             });
         }
     }
 
-    // --- BANCO DE DADOS ---
-    function salvarItem(chave, idInput) {
-        const val = document.getElementById(idInput).value;
+    // LÓGICA MEGÔMETRO
+    function atualizarPontosMeg() {
+        const tipo = document.getElementById('tipoEqpMeg').value;
+        const pontos = {
+            "TRANSFORMADOR": ["PRIMÁRIO X SECUNDÁRIO", "PRIMÁRIO X CARCAÇA", "SECUNDÁRIO X CARCAÇA"],
+            "DISJUNTOR": ["ENTRADA X SAÍDA", "ENTRADA X CARCAÇA", "SAÍDA X CARCAÇA"],
+            "OUTROS": ["ENTRADA X SAÍDA"]
+        };
+        document.getElementById('pontoMeg').innerHTML = pontos[tipo].map(p => `<option value="${p}">${p}</option>`).join("");
+    }
+
+    function addMeg() {
+        const p = document.getElementById('pontoMeg').value;
+        const v = document.getElementById('vMeg').value;
+        const m30 = parseFloat(document.getElementById('m30').value);
+        const m60 = parseFloat(document.getElementById('m60').value);
+        const m120 = parseFloat(document.getElementById('m120').value);
+        if(!m30 || !m60) return alert("Preencha ao menos 30s e 60s");
+        const ia = (m60/m30).toFixed(2);
+        const ip = m120 ? (m120/m60).toFixed(2) : "-";
+        const tr = `<tr><td>${p}</td><td>${v}</td><td>${m30}</td><td>${m60}</td><td>${m120 || '-'}</td><td>${ia}</td><td>${ip}</td></tr>`;
+        document.getElementById('corpoMeg').innerHTML += tr;
+    }
+
+    // LÓGICA MICROOHMÍMETRO
+    function addMicro() {
+        const p = document.getElementById('pMicro').value;
+        const i = document.getElementById('iMicro').value;
+        const rMed = parseFloat(document.getElementById('rMicro').value);
+        const tMed = parseFloat(document.getElementById('tMed').value);
+        const tRef = parseFloat(document.getElementById('tRef').value);
+        const k = parseFloat(document.getElementById('matMicro').value);
+
+        if(!rMed) return;
+        // Fórmula de Correção de Temperatura
+        const rCorr = rMed * ((k + tRef) / (k + tMed));
+        
+        const tr = `<tr><td>${p}</td><td>${i}</td><td>${rMed} µΩ</td><td><b>${rCorr.toFixed(2)} µΩ</b></td></tr>`;
+        document.getElementById('corpoMicro').innerHTML += tr;
+    }
+
+    // BANCO DE DADOS E CONFIG
+    function salvarConfig(chave, id) {
+        const val = document.getElementById(id).value;
         if(!val) return;
-        let lista = JSON.parse(localStorage.getItem(chave) || "[]");
+        let lista = JSON.parse(localStorage.getItem('alpha_'+chave) || "[]");
         lista.push(val);
-        localStorage.setItem(chave, JSON.stringify(lista));
-        document.getElementById(idInput).value = "";
-        carregarSelects();
+        localStorage.setItem('alpha_'+chave, JSON.stringify(lista));
+        document.getElementById(id).value = "";
+        carregarDropdowns();
     }
 
-    function carregarSelects() {
-        const tecs = JSON.parse(localStorage.getItem('tecnicos') || '["EQUIPE ALPHA"]');
-        const locs = JSON.parse(localStorage.getItem('locais') || '["SEDE"]');
-        document.querySelectorAll('.selTec').forEach(s => s.innerHTML = tecs.map(t => `<option>${t}</option>`).join(""));
-        document.querySelectorAll('.selLoc').forEach(s => s.innerHTML = locs.map(l => `<option>${l}</option>`).join(""));
+    function carregarDropdowns() {
+        ['tecnicos', 'locais'].forEach((chave, i) => {
+            const lista = JSON.parse(localStorage.getItem('alpha_'+chave) || "[]");
+            document.querySelectorAll(i===0?'.selTec':'.selLoc').forEach(s => {
+                s.innerHTML = lista.map(t => `<option value="${t}">${t}</option>`).join("");
+            });
+        });
     }
 
-    function salvarEnsaio(tipo) {
-        const hist = JSON.parse(localStorage.getItem('alpha_hist') || "[]");
-        const dados = { id: Date.now(), tipo, data: new Date().toLocaleString() };
-        hist.push(dados);
-        localStorage.setItem('alpha_hist', JSON.stringify(hist));
-        alert("Ensaio salvo com sucesso!");
+    function salvarNoHist() {
+        const rel = {
+            id: Date.now(),
+            tecnico: document.getElementById('mainTec').value,
+            local: document.getElementById('mainLoc').value,
+            data: document.getElementById('mainData').value,
+            ttr: document.getElementById('corpoTTR').innerHTML,
+            megger: document.getElementById('corpoMeg').innerHTML,
+            micro: document.getElementById('corpoMicro').innerHTML
+        };
+        let hist = JSON.parse(localStorage.getItem('alpha_hist_v2') || "[]");
+        hist.push(rel);
+        localStorage.setItem('alpha_hist_v2', JSON.stringify(hist));
+        alert("Ensaio salvo no histórico!");
     }
 
-    function renderizarHist() {
-        const hist = JSON.parse(localStorage.getItem('alpha_hist') || "[]");
-        const lista = document.getElementById('listaHist');
-        lista.innerHTML = hist.reverse().map(e => `
-            <div style="background:#0f172a; padding:10px; margin-bottom:10px; border-radius:8px; border-left:4px solid var(--primaria);">
-                <b>${e.tipo}</b> <br> <small>${e.data}</small>
+    function renderHist() {
+        const hist = JSON.parse(localStorage.getItem('alpha_hist_v2') || "[]");
+        const container = document.getElementById('listaHist');
+        container.innerHTML = hist.reverse().map(e => `
+            <div style="background:#0f172a; padding:15px; margin-bottom:10px; border-radius:10px; border-left:4px solid #fbbf24; display:flex; justify-content:space-between; align-items:center;">
+                <div><b>${e.local}</b><br><small>Data: ${e.data.split('-').reverse().join('/')} | Técnico: ${e.tecnico}</small></div>
+                <button onclick="carregarRelatorio(${e.id})" style="background:var(--primaria); border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">ABRIR</button>
             </div>
         `).join("");
     }
 
-    function resetar() { if(confirm("Apagar tudo?")) { localStorage.clear(); location.reload(); } }
+    function carregarRelatorio(id) {
+        const hist = JSON.parse(localStorage.getItem('alpha_hist_v2') || "[]");
+        const e = hist.find(x => x.id === id);
+        if(!e) return;
+        document.getElementById('mainTec').value = e.tecnico;
+        document.getElementById('mainLoc').value = e.local;
+        document.getElementById('mainData').value = e.data;
+        document.getElementById('corpoTTR').innerHTML = e.ttr;
+        document.getElementById('corpoMeg').innerHTML = e.megger;
+        document.getElementById('corpoMicro').innerHTML = e.micro;
+        voltar();
+        alert("Dados carregados!");
+    }
 
-    window.onload = carregarSelects;
+    function limparTudo() { if(confirm("Deseja apagar todos os dados?")) { localStorage.clear(); location.reload(); } }
+
+    window.onload = () => {
+        carregarDropdowns();
+        document.getElementById('mainData').valueAsDate = new Date();
+    };
 </script>
 </body>
 </html>
