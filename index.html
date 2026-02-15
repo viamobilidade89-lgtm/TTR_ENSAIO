@@ -3,32 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENSAIOS ALPHA - RELATÓRIO FINAL</title>
+    <title>ENSAIOS ALPHA - DASHBOARD</title>
     <style>
         :root {
             --bg: #0f172a; --card: #1e293b; --primary: #38bdf8; --success: #10b981; --error: #f43f5e; --text: #f1f5f9;
         }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; }
-        .container { max-width: 950px; margin: 0 auto; }
+        .container { max-width: 900px; margin: 0 auto; }
         
+        /* Cabeçalho do App */
         header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
         .titulo-app { font-size: 1.8rem; font-weight: 900; color: var(--primary); letter-spacing: 2px; }
-        .glass { background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
-        
-        .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
-        .nav-item { background: var(--card); padding: 15px; border-radius: 10px; text-align: center; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); font-weight: bold; transition: 0.2s; }
-        .nav-item:hover { border-color: var(--primary); background: rgba(56, 189, 248, 0.1); }
 
-        .grid-inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
-        label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--primary); margin-bottom: 5px; text-transform: uppercase; }
+        /* Dashboard de Ícones */
+        .dashboard-menu { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+        .icon-card { 
+            background: var(--card); border: 2px solid rgba(255,255,255,0.1); border-radius: 15px; 
+            padding: 20px 10px; text-align: center; cursor: pointer; transition: 0.3s;
+        }
+        .icon-card:hover { border-color: var(--primary); transform: translateY(-5px); background: rgba(56, 189, 248, 0.1); }
+        .icon-card i { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+        .icon-card span { font-weight: bold; font-size: 0.8rem; text-transform: uppercase; color: var(--primary); }
+
+        /* Estilo das Seções */
+        .glass { background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        .section { display: none; }
+        .active { display: block; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Formulários e Tabelas */
+        .grid-inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+        label { display: block; font-size: 0.7rem; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
         input, select { width: 100%; padding: 12px; background: #0a0f18; border: 1px solid #334155; color: white; border-radius: 8px; box-sizing: border-box; }
         
-        .section { display: none; }
-        .active { display: block; }
-
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { border: 1px solid #334155; padding: 12px; text-align: center; }
-        th { background: #0f172a; color: var(--primary); font-size: 0.8rem; }
+        th, td { border: 1px solid #334155; padding: 12px; text-align: center; font-size: 0.9rem; }
+        th { background: #0f172a; color: var(--primary); }
         
         .status { padding: 4px 8px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; }
         .ok { background: rgba(16, 185, 129, 0.2); color: var(--success); }
@@ -38,19 +48,20 @@
         .btn-primary { background: var(--primary); color: #000; }
         .btn-success { background: var(--success); color: #000; }
 
-        /* IMPRESSÃO PDF */
+        /* REGRAS DE IMPRESSÃO (PDF) */
         @media print {
             .no-print { display: none !important; }
-            .section { display: block !important; margin-bottom: 30px; }
+            .section { display: block !important; margin-bottom: 40px; }
             body { background: white !important; color: black !important; padding: 0; }
-            .glass { display: block !important; background: white !important; color: black !important; border: none !important; box-shadow: none !important; }
+            .glass { display: block !important; background: white !important; color: black !important; border: none !important; }
             table { border: 1px solid #000 !important; color: black !important; }
-            th { background: #f0f0f0 !important; color: black !important; border: 1px solid #000 !important; }
+            th { background: #eee !important; color: black !important; border: 1px solid #000 !important; }
             td { border: 1px solid #000 !important; }
-            .titulo-app { color: black !important; text-align: center; border-bottom: 2px solid black; }
-            input, select { border: none !important; background: transparent !important; color: black !important; font-weight: bold; }
+            .titulo-app { color: black !important; text-align: center; border-bottom: 2px solid #000; }
+            input, select { border: none !important; background: transparent !important; color: black !important; font-weight: bold; padding: 0; }
+            .section-header { background: #f0f0f0; padding: 5px; border: 1px solid #000; margin-top: 10px; }
         }
-        .section-header { color: var(--primary); font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; border-left: 4px solid var(--primary); padding-left: 10px; }
+        .section-header { color: var(--primary); font-weight: bold; border-left: 4px solid var(--primary); padding-left: 10px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -58,43 +69,54 @@
 <div class="container">
     <header>
         <div class="titulo-app">ENSAIOS ALPHA</div>
-        <button class="no-print nav-item" style="padding: 5px 10px;" onclick="abrirS('CONFIG')">⚙️</button>
+        <div class="no-print" style="cursor:pointer" onclick="abrirS('CONFIG')">⚙️</div>
     </header>
 
-    <div class="glass">
+    <div class="glass" id="cabecalho">
         <div class="grid-inputs">
             <div><label>Técnico</label><select id="regTec" class="setTec"></select></div>
-            <div><label>Localização</label><select id="regLoc" class="setLoc"></select></div>
-            <div><label>TAG Equipamento</label><input type="text" id="regTag"></div>
+            <div><label>Subestação</label><select id="regLoc" class="setLoc"></select></div>
+            <div><label>TAG Equipamento</label><input type="text" id="regTag" placeholder="Ex: TR-01"></div>
             <div><label>Data</label><input type="date" id="regData"></div>
         </div>
     </div>
 
-    <div class="nav-grid no-print">
-        <div class="nav-item" onclick="abrirS('TTR')">⚡<br>TTR</div>
-        <div class="nav-item" onclick="abrirS('MEG')">🛡️<br>MEGÔMETRO</div>
-        <div class="nav-item" onclick="abrirS('MIC')">🔍<br>MICRO</div>
-        <div class="nav-item" onclick="abrirS('HIST')" style="border-color: var(--primary);">📜<br>HISTÓRICO</div>
+    <div class="dashboard-menu no-print">
+        <div class="icon-card" onclick="abrirS('TTR')">
+            <i>⚡</i>
+            <span>TTR</span>
+        </div>
+        <div class="icon-card" onclick="abrirS('MEG')">
+            <i>🛡️</i>
+            <span>Megômetro</span>
+        </div>
+        <div class="icon-card" onclick="abrirS('MIC')">
+            <i>🔍</i>
+            <span>Micro</span>
+        </div>
+        <div class="icon-card" onclick="abrirS('HIST')">
+            <i>📜</i>
+            <span>Histórico</span>
+        </div>
     </div>
 
     <div id="secTTR" class="glass section active">
-        <div class="section-header">RELAÇÃO DE TRANSFORMAÇÃO (TTR)</div>
+        <div class="section-header">ENSAIO DE TTR (RELAÇÃO)</div>
         <div class="grid-inputs no-print">
-            <div><label>U1 (V)</label><input type="number" id="u1" oninput="calcTTR()"></div>
-            <div><label>U2 (V)</label><input type="number" id="u2" oninput="calcTTR()"></div>
+            <div><label>Tensão U1 (V)</label><input type="number" id="u1" oninput="calcTTR()"></div>
+            <div><label>Tensão U2 (V)</label><input type="number" id="u2" oninput="calcTTR()"></div>
             <div><label>Fasorial</label>
                 <select id="fasTTR" onchange="initTTR()">
-                    <option value="">-- Selecione --</option>
+                    <option value="">Selecione...</option>
                     <option value="Ydn11">Ydn11</option><option value="Ydn1">Ydn1</option>
                     <option value="Dyn11">Dyn11</option><option value="Dyn1">Dyn1</option>
                     <option value="Ynyn0">Ynyn0</option><option value="Yyn0">Yyn0</option>
-                    <option value="Dd0">Dd0</option><option value="Dz1">Dz1</option>
                 </select>
             </div>
         </div>
-        <div id="teoLabel" style="font-weight:bold; color:var(--primary); margin:10px 0;"></div>
+        <div id="teoLabel" style="font-weight:bold; color:var(--primary); margin: 15px 0;"></div>
         <table>
-            <thead><tr><th>BORNES</th><th>MEDIDO</th><th>DESVIO %</th><th>STATUS</th></tr></thead>
+            <thead><tr><th>BORNES</th><th>VALOR LIDO</th><th>DESVIO %</th><th>STATUS</th></tr></thead>
             <tbody id="corpoTTR"></tbody>
         </table>
     </div>
@@ -102,19 +124,19 @@
     <div id="secMEG" class="glass section">
         <div class="section-header">RESISTÊNCIA DE ISOLAÇÃO (MEGÔMETRO)</div>
         <div class="grid-inputs no-print">
-            <div><label>Ponto Medição</label>
+            <div><label>Ponto Medido</label>
                 <select id="megP">
                     <option>PRIMÁRIO x SECUNDÁRIO</option><option>PRIMÁRIO x TERRA</option><option>SECUNDÁRIO x TERRA</option>
                 </select>
             </div>
-            <div><label>Ref. Mínima (GΩ)</label><input type="number" id="megRef" value="2.0"></div>
-            <div><label>V. Medido</label><input type="number" id="megV"></div>
-            <div><label>Unidade</label><select id="megU"><option value="GΩ">GΩ</option><option value="MΩ">MΩ</option></select></div>
+            <div><label>Mínimo Aceitável (GΩ)</label><input type="number" id="megRef" value="2.0"></div>
+            <div><label>Valor Lido</label><input type="number" id="megV"></div>
+            <div><label>Escala</label><select id="megU"><option value="GΩ">GΩ</option><option value="MΩ">MΩ</option></select></div>
             <div><label>Tempo</label><select id="megT"><option>30s</option><option>60s</option><option>120s</option></select></div>
         </div>
-        <button class="btn-full btn-primary no-print" onclick="addMeg()">➕ ADICIONAR MEDIÇÃO</button>
+        <button class="btn-full btn-primary no-print" onclick="addMeg()">ADICIONAR MEDIÇÃO</button>
         <table>
-            <thead><tr><th>PONTO</th><th>TEMPO</th><th>VALOR</th><th>REFERÊNCIA</th><th>STATUS</th></tr></thead>
+            <thead><tr><th>PONTO</th><th>TEMPO</th><th>LEITURA</th><th>REF. MÍN</th><th>STATUS</th></tr></thead>
             <tbody id="corpoMeg"></tbody>
         </table>
     </div>
@@ -132,26 +154,26 @@
                     </optgroup>
                 </select>
             </div>
-            <div><label>R. Lida (µΩ)</label><input type="number" id="micR"></div>
-            <div><label>Temp. Medida (°C)</label><input type="number" id="micTM" value="25"></div>
+            <div><label>Leitura (µΩ)</label><input type="number" id="micR"></div>
+            <div><label>Temp. Enrol. (°C)</label><input type="number" id="micTM" value="25"></div>
         </div>
-        <button class="btn-full btn-primary no-print" onclick="addMic()">➕ ADICIONAR MEDIÇÃO</button>
+        <button class="btn-full btn-primary no-print" onclick="addMic()">ADICIONAR MEDIÇÃO</button>
         <table>
-            <thead><tr><th>BORNES</th><th>LIDO (µΩ)</th><th>CORRIGIDO 75°C (µΩ)</th><th>STATUS</th></tr></thead>
+            <thead><tr><th>BORNES</th><th>LIDO</th><th>@ 75°C (FINAL)</th><th>STATUS</th></tr></thead>
             <tbody id="corpoMic"></tbody>
         </table>
     </div>
 
-    <div class="no-print" style="margin-top:20px; display:flex; gap:10px;">
+    <div class="no-print" style="display:flex; gap:10px; margin-top:20px;">
         <button class="btn-full btn-success" onclick="salvarTag()">💾 SALVAR NO TAG</button>
-        <button class="btn-full" style="background:white; color:black;" onclick="window.print()">🖨️ GERAR PDF</button>
+        <button class="btn-full" style="background:#fff; color:#000" onclick="window.print()">🖨️ GERAR PDF</button>
     </div>
 
-    <div id="secHIST" class="glass section"><h3>HISTÓRICO</h3><div id="listaHist"></div></div>
+    <div id="secHIST" class="glass section"><h3>HISTÓRICO DE TAGS</h3><div id="listaHist"></div></div>
     <div id="secCONFIG" class="glass section">
         <div class="grid-inputs">
-            <div><label>Add Técnico</label><input type="text" id="cfgT"><button class="btn-full btn-primary" onclick="saveCfg('tecnicos','cfgT')">Add</button></div>
-            <div><label>Add Local</label><input type="text" id="cfgL"><button class="btn-full btn-primary" onclick="saveCfg('locais','cfgL')">Add</button></div>
+            <div><label>Nome Técnico</label><input type="text" id="cfgT"><button onclick="saveCfg('tecnicos','cfgT')">Add</button></div>
+            <div><label>Unidade/Local</label><input type="text" id="cfgL"><button onclick="saveCfg('locais','cfgL')">Add</button></div>
         </div>
     </div>
 </div>
@@ -163,9 +185,7 @@
         "Dyn11": { f: (u1, u2) => (u1 * 1.73205) / u2, p: ["H1-H3/X1-X0", "H2-H1/X2-X0", "H3-H2/X3-X0"] },
         "Dyn1": { f: (u1, u2) => (u1 * 1.73205) / u2, p: ["H1-H3/X1-X0", "H1-H2/X2-X0", "H3-H1/X3-X0"] },
         "Ynyn0": { f: (u1, u2) => u1 / u2, p: ["H1-H0/X1-X0", "H2-H0/X2-X0", "H3-H0/X3-X0"] },
-        "Yyn0": { f: (u1, u2) => u1 / u2, p: ["H1-H2/X1-X2", "H2-H3/X2-X3", "H3-H1/X3-X1"] },
-        "Dd0": { f: (u1, u2) => u1 / u2, p: ["H1-H2/X1-X2", "H2-H3/X2-X3", "H3-H1/X3-X1"] },
-        "Dz1": { f: (u1, u2) => (u1 * 1.73205) / (u2 * 1.5), p: ["H1-H3/X1-X0", "H2-H1/X2-X0", "H3-H2/X3-X0"] }
+        "Yyn0": { f: (u1, u2) => u1 / u2, p: ["H1-H2/X1-X2", "H2-H3/X2-X3", "H3-H1/X3-X1"] }
     };
 
     function abrirS(id) {
@@ -174,10 +194,11 @@
         if(id === 'HIST') renderHist();
     }
 
+    // Lógica TTR
     function initTTR() {
         const f = document.getElementById('fasTTR').value;
         if(!f) return;
-        document.getElementById('corpoTTR').innerHTML = TTR_RULES[f].p.map(p => `<tr><td>${p}</td><td><input type="number" class="in-ttr" oninput="calcTTR()" style="width:100px;"></td><td class="d-ttr">-</td><td class="s-ttr">-</td></tr>`).join('');
+        document.getElementById('corpoTTR').innerHTML = TTR_RULES[f].p.map(p => `<tr><td>${p}</td><td><input type="number" class="in-ttr" oninput="calcTTR()" style="width:80px"></td><td class="d-ttr">-</td><td class="s-ttr">-</td></tr>`).join('');
     }
 
     function calcTTR() {
@@ -186,7 +207,7 @@
         const f = document.getElementById('fasTTR').value;
         if(u1 && u2 && f) {
             let teo = TTR_RULES[f].f(u1, u2);
-            document.getElementById('teoLabel').innerText = "RELAÇÃO TEÓRICA: " + teo.toFixed(5);
+            document.getElementById('teoLabel').innerText = "Relação Teórica: " + teo.toFixed(5);
             document.querySelectorAll('.in-ttr').forEach(inp => {
                 const med = parseFloat(inp.value);
                 if(med) {
@@ -199,6 +220,7 @@
         }
     }
 
+    // Lógica Megômetro
     function addMeg() {
         const p = document.getElementById('megP').value;
         const ref = parseFloat(document.getElementById('megRef').value);
@@ -206,49 +228,51 @@
         const u = document.getElementById('megU').value;
         const t = document.getElementById('megT').value;
         if(!v) return;
-        let comp = (u === 'MΩ') ? v / 1000 : v;
-        const ok = comp >= ref;
+        let vComp = (u === 'MΩ') ? v / 1000 : v;
+        const ok = vComp >= ref;
         document.getElementById('corpoMeg').innerHTML += `<tr><td>${p}</td><td>${t}</td><td>${v} ${u}</td><td>${ref} GΩ</td><td><span class="status ${ok?'ok':'nok'}">${ok?'OK':'NOK'}</span></td></tr>`;
     }
 
+    // Lógica Micro (REVISADA)
     function addMic() {
         const p = document.getElementById('micP').value;
         const r = parseFloat(document.getElementById('micR').value);
         const tm = parseFloat(document.getElementById('micTM').value);
         if(!r || !tm) return;
         const fator = (235 + 75) / (235 + tm);
-        let r75 = r * fator;
-        if(p.startsWith('H')) r75 = r75 * 1.5;
-        document.getElementById('corpoMic').innerHTML += `<tr><td>${p}</td><td>${r} µΩ</td><td>${r75.toFixed(2)} µΩ</td><td><span class="status ok">OK</span></td></tr>`;
+        let rFinal = r * fator;
+        if(p.startsWith('H')) rFinal = rFinal * 1.5;
+        document.getElementById('corpoMic').innerHTML += `<tr><td>${p}</td><td>${r} µΩ</td><td>${rFinal.toFixed(2)} µΩ</td><td><span class="status ok">OK</span></td></tr>`;
     }
 
+    // Banco de Dados
     function salvarTag() {
         const tag = document.getElementById('regTag').value;
-        if(!tag) return alert("Erro: Defina o TAG.");
+        if(!tag) return alert("Insira o TAG!");
         const data = {
             tag, tec: document.getElementById('regTec').value, loc: document.getElementById('regLoc').value, dt: document.getElementById('regData').value,
             u1: document.getElementById('u1').value, u2: document.getElementById('u2').value, fas: document.getElementById('fasTTR').value,
             tB: document.getElementById('corpoTTR').innerHTML, mB: document.getElementById('corpoMeg').innerHTML, miB: document.getElementById('corpoMic').innerHTML
         };
-        let h = JSON.parse(localStorage.getItem('alpha_v7') || "[]");
+        let h = JSON.parse(localStorage.getItem('alpha_v8') || "[]");
         const idx = h.findIndex(x => x.tag === tag);
         if(idx >= 0) h[idx] = data; else h.push(data);
-        localStorage.setItem('alpha_v7', JSON.stringify(h));
-        alert("TAG " + tag + " salvo!");
+        localStorage.setItem('alpha_v8', JSON.stringify(h));
+        alert("Salvo com sucesso!");
     }
 
     function renderHist() {
-        const h = JSON.parse(localStorage.getItem('alpha_v7') || "[]");
+        const h = JSON.parse(localStorage.getItem('alpha_v8') || "[]");
         document.getElementById('listaHist').innerHTML = h.reverse().map(e => `
-            <div class="glass" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                <div><b>${e.tag}</b><br><small>${e.loc} | ${e.dt}</small></div>
-                <button class="nav-item" style="padding:10px;" onclick="loadTag('${e.tag}')">CARREGAR</button>
+            <div class="glass" style="display:flex; justify-content:space-between;">
+                <div><b>${e.tag}</b> - ${e.loc}</div>
+                <button onclick="loadTag('${e.tag}')">Carregar</button>
             </div>
         `).join('');
     }
 
     function loadTag(tag) {
-        const h = JSON.parse(localStorage.getItem('alpha_v7') || "[]");
+        const h = JSON.parse(localStorage.getItem('alpha_v8') || "[]");
         const e = h.find(x => x.tag === tag);
         document.getElementById('regTag').value = e.tag;
         document.getElementById('regTec').value = e.tec;
@@ -265,7 +289,6 @@
 
     function saveCfg(k, id) {
         const v = document.getElementById(id).value;
-        if(!v) return;
         let l = JSON.parse(localStorage.getItem('alpha_cfg_'+k) || "[]");
         l.push(v);
         localStorage.setItem('alpha_cfg_'+k, JSON.stringify(l));
@@ -273,7 +296,7 @@
     }
 
     window.onload = () => {
-        const t = JSON.parse(localStorage.getItem('alpha_cfg_tecnicos') || '["TECNICO ALPHA"]');
+        const t = JSON.parse(localStorage.getItem('alpha_cfg_tecnicos') || '["TECNICO"]');
         const l = JSON.parse(localStorage.getItem('alpha_cfg_locais') || '["SUBESTAÇÃO"]');
         document.querySelectorAll('.setTec').forEach(s => s.innerHTML = t.map(x => `<option>${x}</option>`).join(''));
         document.querySelectorAll('.setLoc').forEach(s => s.innerHTML = l.map(x => `<option>${x}</option>`).join(''));
