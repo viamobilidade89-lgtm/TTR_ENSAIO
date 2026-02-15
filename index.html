@@ -21,36 +21,39 @@
         .btn-config { background: none; border: none; color: #475569; font-size: 1.5em; cursor: pointer; }
         .btn-voltar { background: none; border: 1px solid var(--primaria); color: var(--primaria); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.8em; visibility: hidden; }
 
-        #menuPrincipal { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
-        .btn-modulo { background: var(--card); border: 1px solid #334155; padding: 30px 15px; border-radius: 12px; color: var(--texto); font-size: 1em; font-weight: bold; cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: 0.2s; }
+        #menuPrincipal { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-top: 20px; }
+        .btn-modulo { background: var(--card); border: 1px solid #334155; padding: 25px 10px; border-radius: 12px; color: var(--texto); font-size: 0.9em; font-weight: bold; cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .btn-modulo:hover { border-color: var(--primaria); background: #263449; }
         .btn-modulo span { font-size: 2em; }
 
-        .card { background: var(--card); padding: 25px; border-radius: 15px; border: 1px solid #334155; display: none; margin-bottom: 20px; }
-        .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.75em; color: var(--primaria); text-transform: uppercase; }
-        input, select { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 6px; box-sizing: border-box; }
+        .card { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #334155; display: none; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.7em; color: var(--primaria); text-transform: uppercase; }
+        input, select { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 6px; box-sizing: border-box; font-size: 0.9em; }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { border: 1px solid #334155; padding: 10px; text-align: center; font-size: 0.85em; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #161e2d; }
+        th, td { border: 1px solid #334155; padding: 8px; text-align: center; font-size: 0.8em; }
         th { background: #0f172a; color: var(--primaria); }
 
-        .btn-acao { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
-        .btn-add { background: var(--primaria); color: #000; margin-bottom: 20px; }
+        .btn-acao { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-add { background: var(--primaria); color: #000; margin-bottom: 15px; }
         
-        /* GAVETA */
-        .gaveta { position: fixed; top: 0; right: -350px; width: 320px; height: 100%; background: #1e293b; border-left: 3px solid var(--primaria); z-index: 1000; transition: 0.4s; padding: 20px; box-sizing: border-box; }
+        .status-badge { padding: 3px 6px; border-radius: 4px; font-size: 0.7em; font-weight: bold; }
+        .satisfatorio { background: var(--sucesso); color: #000; }
+        .reprovado { background: var(--erro); color: #fff; }
+
+        .gaveta { position: fixed; top: 0; right: -350px; width: 300px; height: 100%; background: #1e293b; border-left: 3px solid var(--primaria); z-index: 1000; transition: 0.4s; padding: 20px; box-sizing: border-box; }
         .gaveta.ativa { right: 0; }
         .mascara { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 999; }
 
-        footer { text-align: center; padding: 20px; color: var(--primaria); font-weight: bold; font-size: 0.8em; opacity: 0.6; }
+        footer { text-align: center; padding: 20px; color: var(--primaria); font-weight: bold; font-size: 0.7em; opacity: 0.5; }
 
         @media print { 
             .btn-config, .btn-voltar, .gaveta, .mascara, button, .no-print { display: none !important; } 
-            body { background: white; color: black; }
-            .card { border: 1px solid #000; display: block !important; box-shadow: none; }
+            body { background: white; color: black; padding: 0; }
+            .card { border: 1px solid #000; display: block !important; box-shadow: none; margin: 0; }
             th { background: #eee !important; color: #000 !important; }
-            input, select { border: none !important; color: black !important; background: none !important; }
+            input, select { border: none !important; color: black !important; background: none !important; appearance: none; }
         }
     </style>
 </head>
@@ -59,12 +62,12 @@
 <div class="mascara" id="mascara" onclick="toggleMenu()"></div>
 
 <div class="gaveta" id="gaveta">
-    <h3 style="color:var(--primaria)">⚙️ ADMIN ALPHA</h3>
+    <h3 style="color:var(--primaria)">⚙️ CONFIG ALPHA</h3>
     <label>Novo Técnico</label>
-    <input type="text" id="nT"><button onclick="salvarConfig('tecnicos', 'nT')" class="btn-acao">+</button>
-    <label>Novo Local</label>
-    <input type="text" id="nL"><button onclick="salvarConfig('locais', 'nL')" class="btn-acao">+</button>
-    <button onclick="limparTudo()" style="color:var(--erro); background:none; border:1px solid var(--erro); margin-top:30px;" class="btn-acao">LIMPAR TUDO</button>
+    <input type="text" id="nT"><button onclick="salvarConfig('tecnicos', 'nT')" class="btn-acao">ADICIONAR</button>
+    <label style="margin-top:15px;">Novo Local</label>
+    <input type="text" id="nL"><button onclick="salvarConfig('locais', 'nL')" class="btn-acao">ADICIONAR</button>
+    <button onclick="limparTudo()" style="color:var(--erro); background:none; border:1px solid var(--erro); margin-top:40px;" class="btn-acao">RESETAR SISTEMA</button>
 </div>
 
 <div class="container">
@@ -81,46 +84,6 @@
         <div class="btn-modulo" onclick="abrirModulo('HISTORICO')" style="border-color: #fbbf24; color: #fbbf24;"><span>📜</span>HISTÓRICO</div>
     </div>
 
-    <div id="modMEGGER" class="card">
-        <div class="grade">
-            <div><label>Técnico</label><select id="tecMeg" class="selTec"></select></div>
-            <div><label>Local</label><select id="locMeg" class="selLoc"></select></div>
-            <div>
-                <label>Tipo Equip.</label>
-                <select id="tipoEqpMeg" onchange="atualizarSugestoesMeg()">
-                    <option value="TRANSFORMADOR">TRANSFORMADOR</option>
-                    <option value="DISJUNTOR">DISJUNTOR</option>
-                    <option value="OUTROS">OUTROS</option>
-                </select>
-            </div>
-        </div>
-        
-        <div class="no-print" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-            <div class="grade">
-                <div style="grid-column: span 2;"><label>Ponto de Medição</label><div id="containerPontoMeg"></div></div>
-                <div><label>V. Aplicado (V)</label><input type="number" id="vMeg" placeholder="5000"></div>
-            </div>
-            <div class="grade">
-                <div><label>30s (GΩ)</label><input type="number" id="m30" oninput="liveMeg()"></div>
-                <div><label>60s (GΩ)</label><input type="number" id="m60" oninput="liveMeg()"></div>
-                <div><label>120s (GΩ)</label><input type="number" id="m120" oninput="liveMeg()"></div>
-                <div id="resLiveMeg" style="display:flex; flex-direction:column; justify-content:center; font-size:0.8em; color:var(--primaria); font-weight:bold;">IA: -<br>IP: -</div>
-            </div>
-            <button class="btn-acao btn-add" onclick="addMedicao('MEGGER')">➕ ADICIONAR AO ENSAIO</button>
-        </div>
-
-        <table id="tabMegFinal">
-            <thead><tr><th>Ponto</th><th>V (V)</th><th>30s</th><th>60s</th><th>120s</th><th>IA</th><th>IP</th><th class="no-print">Ações</th></tr></thead>
-            <tbody id="corpoMeg"></tbody>
-        </table>
-        <button class="btn-acao" style="background:var(--primaria); color:#000;" onclick="window.print()">🖨️ IMPRIMIR</button>
-    </div>
-
-    <div id="modHISTORICO" class="card">
-        <h3 style="color:var(--primaria); margin-top:0;">Ensaios Salvos</h3>
-        <div id="listaHistorico"></div>
-    </div>
-
     <div id="modTTR" class="card">
         <div class="grade">
             <div><label>Técnico</label><select id="tecTTR" class="selTec"></select></div>
@@ -128,190 +91,79 @@
             <div><label>TAG</label><input type="text" id="tagTTR"></div>
         </div>
         <div class="grade">
-            <div style="grid-column: span 2;"><label>Fasorial</label><select id="selFas" onchange="iniciarTTR()"><option value="">-- SELECIONE --</option><option value="Ydn1_11_X0">Ydn1/Ydn11</option><option value="Dyn1_11_X0">Dyn1/Dyn11</option><option value="Ynyn0">Ynyn0</option><option value="Yyn0_Dd0">Yyn0 ou Dd0</option></select></div>
+            <div style="grid-column: span 2;"><label>Fasorial</label><select id="selFas" onchange="iniciarTTR()"><option value="">-- SELECIONE --</option><option value="Ydn1_11_X0">Ydn1/Ydn11 (C/ X0)</option><option value="Dyn1_11_X0">Dyn1/Dyn11 (C/ X0)</option><option value="Ynyn0">Ynyn0 (Direto)</option><option value="Yyn0_Dd0">Yyn0 ou Dd0</option></select></div>
             <div><label>U1</label><input type="number" id="u1" oninput="calcTTR()"></div>
             <div><label>U2</label><input type="number" id="u2" oninput="calcTTR()"></div>
         </div>
-        <div id="boxTTR" style="display:none; text-align:center; padding:10px; border:1px dashed var(--primaria); margin:10px 0;">TEÓRICO: <span id="valTTR" style="font-size:1.5em; font-weight:bold; color:var(--primaria)">0.00000</span></div>
+        <div id="boxTTR" style="display:none; text-align:center; padding:10px; border:1px dashed var(--primaria); margin:10px 0;">TEÓRICO: <span id="valTTR" style="font-size:1.2em; font-weight:bold; color:var(--primaria)">0.00000</span></div>
         <table id="tabTTR" style="display:none;">
             <thead><tr><th>Bornes</th><th>Medido</th><th>Desvio %</th><th>Status</th></tr></thead>
             <tbody id="corpoTTR"></tbody>
         </table>
-        <div id="desvioTTR" style="text-align:right; margin-top:10px; font-weight:bold; color:var(--primaria);"></div>
-        <button class="btn-acao btn-add no-print" onclick="salvarEnsaioTTR()">💾 SALVAR NO HISTÓRICO</button>
-        <button class="btn-acao" style="background:var(--primaria); color:#000;" onclick="window.print()">🖨️ IMPRIMIR</button>
+        <div id="desvioTTR" style="text-align:right; margin-top:10px; font-weight:bold; color:var(--primaria); font-size:0.8em;"></div>
+        <button class="btn-add btn-acao no-print" onclick="salvarEnsaio('TTR')">💾 SALVAR ENSAIO</button>
+        <button class="btn-acao" style="background:#475569; color:white;" onclick="window.print()">🖨️ IMPRIMIR</button>
+    </div>
+
+    <div id="modMEGGER" class="card">
+        <div class="grade">
+            <div><label>Técnico</label><select id="tecMeg" class="selTec"></select></div>
+            <div><label>Local</label><select id="locMeg" class="selLoc"></select></div>
+            <div><label>Equipamento</label><select id="tipoEqpMeg" onchange="atualizarSugestoesMeg()"><option value="TRANSFORMADOR">TRANSFORMADOR</option><option value="DISJUNTOR">DISJUNTOR</option><option value="OUTROS">OUTROS</option></select></div>
+        </div>
+        <div class="no-print" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+            <div class="grade">
+                <div style="grid-column: span 2;"><label>Ponto</label><div id="containerPontoMeg"></div></div>
+                <div><label>Voltagem (V)</label><input type="number" id="vMeg" value="5000"></div>
+            </div>
+            <div class="grade">
+                <div><label>30s (GΩ)</label><input type="number" id="m30" oninput="liveMeg()"></div>
+                <div><label>60s (GΩ)</label><input type="number" id="m60" oninput="liveMeg()"></div>
+                <div><label>120s (GΩ)</label><input type="number" id="m120" oninput="liveMeg()"></div>
+                <div id="resLiveMeg" style="display:flex; flex-direction:column; justify-content:center; font-size:0.7em; color:var(--primaria); font-weight:bold; line-height:1.2;">IA: -<br>IP: -</div>
+            </div>
+            <button class="btn-add btn-acao" onclick="addLinhaMeg()">➕ ADICIONAR MEDIÇÃO</button>
+        </div>
+        <table id="tabMegFinal">
+            <thead><tr><th>Ponto</th><th>V(V)</th><th>30s</th><th>60s</th><th>120s</th><th>IA</th><th>IP</th><th class="no-print">X</th></tr></thead>
+            <tbody id="corpoMeg"></tbody>
+        </table>
+        <button class="btn-add btn-acao no-print" style="margin-top:20px;" onclick="salvarEnsaio('MEGGER')">💾 SALVAR NO HISTÓRICO</button>
+        <button class="btn-acao" style="background:#475569; color:white;" onclick="window.print()">🖨️ IMPRIMIR</button>
     </div>
 
     <div id="modMICRO" class="card">
         <div class="grade">
-            <div><label>Técnico</label><select class="selTec"></select></div>
-            <div><label>Local</label><select class="selLoc"></select></div>
-            <div><label>Equipamento</label><input type="text" id="eqpMicro"></div>
+            <div><label>Técnico</label><select id="tecMicro" class="selTec"></select></div>
+            <div><label>Local</label><select id="locMicro" class="selLoc"></select></div>
+            <div><label>Equipamento</label><input type="text" id="eqpMicro" placeholder="Ex: Disjuntor 01"></div>
         </div>
-        <table id="tabMicro"><thead><tr><th>Ponto</th><th>I(A)</th><th>R(µΩ)</th></tr></thead><tbody id="corpoMicro"></tbody></table>
-        <button class="btn-acao" style="background:var(--primaria); color:#000;" onclick="window.print()">🖨️ IMPRIMIR</button>
+        <div class="no-print" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+            <div class="grade">
+                <div style="grid-column: span 2;"><label>Ponto/Fase</label><input type="text" id="pontoMicro" placeholder="Ex: Fase A"></div>
+                <div><label>Corrente (A)</label><input type="number" id="currMicro" value="100"></div>
+                <div><label>Resist. (µΩ)</label><input type="number" id="resMicro"></div>
+            </div>
+            <button class="btn-add btn-acao" onclick="addLinhaMicro()">➕ ADICIONAR MEDIÇÃO</button>
+        </div>
+        <table id="tabMicroFinal">
+            <thead><tr><th>Ponto</th><th>I(A)</th><th>R(µΩ)</th><th class="no-print">X</th></tr></thead>
+            <tbody id="corpoMicro"></tbody>
+        </table>
+        <button class="btn-add btn-acao no-print" style="margin-top:20px;" onclick="salvarEnsaio('MICRO')">💾 SALVAR NO HISTÓRICO</button>
+        <button class="btn-acao" style="background:#475569; color:white;" onclick="window.print()">🖨️ IMPRIMIR</button>
+    </div>
+
+    <div id="modHISTORICO" class="card">
+        <h3 style="color:var(--primaria); margin:0 0 15px 0; font-size:1em;">HISTÓRICO DE ENSAIOS</h3>
+        <div id="listaHistorico"></div>
     </div>
 
     <footer>Produced by EQUIPE ALPHA</footer>
 </div>
 
 <script>
-    // --- GERENCIAMENTO DE DADOS ---
-    let bancoEnsaios = JSON.parse(localStorage.getItem('alpha_ensaios') || "[]");
-
-    function salvarNoBanco(tipo, dados) {
-        const novoEnsaio = {
-            id: Date.now(),
-            data: new Date().toLocaleString('pt-BR'),
-            tipo: tipo,
-            local: dados.local,
-            tecnico: dados.tecnico,
-            payload: dados.payload
-        };
-        bancoEnsaios.push(novoEnsaio);
-        localStorage.setItem('alpha_ensaios', JSON.stringify(bancoEnsaios));
-    }
-
-    // --- MEGÔMETRO ---
-    const PONTOS_SUGERIDOS = {
-        "TRANSFORMADOR": ["PRIMÁRIO X SECUNDÁRIO", "PRIMÁRIO X CARCAÇA", "SECUNDÁRIO X CARCAÇA"],
-        "DISJUNTOR": ["ENTRADA X SAÍDA", "ENTRADA X CARCAÇA", "SAÍDA X CARCAÇA"],
-        "OUTROS": ["ENTRADA X SAÍDA"]
-    };
-
-    function atualizarSugestoesMeg() {
-        const tipo = document.getElementById('tipoEqpMeg').value;
-        const container = document.getElementById('containerPontoMeg');
-        if (tipo === "OUTROS") container.innerHTML = `<input type="text" id="pontoMegInput">`;
-        else container.innerHTML = `<select id="pontoMegSelect">${PONTOS_SUGERIDOS[tipo].map(p => `<option value="${p}">${p}</option>`).join("")}</select>`;
-    }
-
-    function liveMeg() {
-        const m30 = parseFloat(document.getElementById('m30').value);
-        const m60 = parseFloat(document.getElementById('m60').value);
-        const m120 = parseFloat(document.getElementById('m120').value);
-        let txt = "";
-        if(m30 && m60) txt += `IA: ${(m60/m30).toFixed(2)} | `;
-        if(m60 && m120) txt += `IP: ${(m120/m60).toFixed(2)}`;
-        document.getElementById('resLiveMeg').innerText = txt || "IA: - | IP: -";
-    }
-
-    function addMedicao(modulo) {
-        if(modulo === 'MEGGER') {
-            const tipo = document.getElementById('tipoEqpMeg').value;
-            const ponto = tipo === "OUTROS" ? document.getElementById('pontoMegInput').value : document.getElementById('pontoMegSelect').value;
-            const v = document.getElementById('vMeg').value;
-            const m30 = document.getElementById('m30').value;
-            const m60 = document.getElementById('m60').value;
-            const m120 = document.getElementById('m120').value;
-            
-            const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${ponto}</td><td>${v}</td><td>${m30}</td><td>${m60}</td><td>${m120}</td><td>${(m60/m30).toFixed(2)}</td><td>${(m120/m60).toFixed(2)}</td><td class="no-print"><button onclick="this.parentElement.parentElement.remove()">✖</button></td>`;
-            document.getElementById('corpoMeg').appendChild(tr);
-            
-            // Salva estado atual
-            salvarEstadoMegger();
-        }
-    }
-
-    function salvarEstadoMegger() {
-        const rows = Array.from(document.querySelectorAll('#corpoMeg tr')).map(tr => {
-            const tds = tr.querySelectorAll('td');
-            return { p: tds[0].innerText, v: tds[1].innerText, m30: tds[2].innerText, m60: tds[3].innerText, m120: tds[4].innerText };
-        });
-        const dados = {
-            tecnico: document.getElementById('tecMeg').value,
-            local: document.getElementById('locMeg').value,
-            payload: rows
-        };
-        salvarNoBanco('MEGÔMETRO', dados);
-    }
-
-    // --- TTR (MANTIDO) ---
-    const REGRAS = {
-        "Ydn1_11_X0": { f: (u1, u2) => (u1 * 1.73205) / u2, h: ["H1-H3", "H1-H2", "H3-H1"], x: ["X1-X0", "X2-X0", "X3-X0"] },
-        "Dyn1_11_X0": { f: (u1, u2) => (u1 * 1.73205) / u2, h: ["H1-H3", "H2-H1", "H3-H2"], x: ["X1-X0", "X2-X0", "X3-X0"] },
-        "Ynyn0":      { f: (u1, u2) => u1 / u2, h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X0", "X2-X0", "X3-X0"] },
-        "Yyn0_Dd0":   { f: (u1, u2) => u1 / u2, h: ["H1-H2", "H2-H3", "H3-H1"], x: ["X1-X2", "X2-X3", "X3-X1"] }
-    };
-    let vTeo = 0;
-    function iniciarTTR() {
-        const fas = document.getElementById('selFas').value;
-        if(!fas) return;
-        document.getElementById('corpoTTR').innerHTML = REGRAS[fas].h.map((h, i) => `<tr><td><b>${h}/${REGRAS[fas].x[i]}</b></td><td><input type="number" class="in-ttr" oninput="validarTTR()" style="width:80px;"></td><td class="desvio-fase">-</td><td><span class="status-badge">...</span></td></tr>`).join("");
-        document.getElementById('tabTTR').style.display = 'table';
-        document.getElementById('boxTTR').style.display = 'block';
-        calcTTR();
-    }
-    function calcTTR() {
-        const u1 = parseFloat(document.getElementById('u1').value);
-        const u2 = parseFloat(document.getElementById('u2').value);
-        const fas = document.getElementById('selFas').value;
-        if(u1 && u2 && fas) { vTeo = REGRAS[fas].f(u1, u2); document.getElementById('valTTR').innerText = vTeo.toFixed(5); validarTTR(); }
-    }
-    function validarTTR() {
-        document.querySelectorAll('.in-ttr').forEach(input => {
-            const med = parseFloat(input.value);
-            const linha = input.closest('tr');
-            if(med && vTeo) {
-                const erro = ((med - vTeo) / vTeo) * 100;
-                linha.querySelector('.desvio-fase').innerText = erro.toFixed(3) + "%";
-                linha.querySelector('.status-badge').className = "status-badge " + (Math.abs(erro) <= 0.5 ? "satisfatorio" : "reprovado");
-                linha.querySelector('.status-badge').innerText = Math.abs(erro) <= 0.5 ? "OK" : "FORA";
-            }
-        });
-    }
-
-    function salvarEnsaioTTR() {
-        const meds = Array.from(document.querySelectorAll('.in-ttr')).map(i => i.value);
-        salvarNoBanco('TTR', {
-            tecnico: document.getElementById('tecTTR').value,
-            local: document.getElementById('locTTR').value,
-            payload: { meds: meds, u1: document.getElementById('u1').value, u2: document.getElementById('u2').value, fas: document.getElementById('selFas').value }
-        });
-        alert("Ensaio salvo no histórico!");
-    }
-
-    // --- HISTÓRICO ---
-    function carregarHistorico() {
-        const lista = document.getElementById('listaHistorico');
-        lista.innerHTML = bancoEnsaios.length ? "" : "Nenhum ensaio salvo.";
-        bancoEnsaios.reverse().forEach(e => {
-            const div = document.createElement('div');
-            div.style = "background:#0f172a; padding:15px; border-radius:8px; margin-bottom:10px; border-left:4px solid var(--primaria); display:flex; justify-content:space-between; align-items:center;";
-            div.innerHTML = `<div><b>${e.tipo}</b> - ${e.local}<br><small>${e.data} | Técnico: ${e.tecnico}</small></div>
-            <div>
-                <button onclick="retomarEnsaio(${e.id})" style="background:var(--sucesso); color:#000; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">ABRIR</button>
-                <button onclick="excluirEnsaio(${e.id})" style="background:var(--erro); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-left:5px;">✖</button>
-            </div>`;
-            lista.appendChild(div);
-        });
-    }
-
-    function retomarEnsaio(id) {
-        const e = bancoEnsaios.find(x => x.id === id);
-        if(!e) return;
-        abrirModulo(e.tipo === 'MEGÔMETRO' ? 'MEGGER' : e.tipo);
-        if(e.tipo === 'MEGÔMETRO') {
-            document.getElementById('corpoMeg').innerHTML = e.payload.map(p => `<tr><td>${p.p}</td><td>${p.v}</td><td>${p.m30}</td><td>${p.m60}</td><td>${p.m120}</td><td>${(p.m60/p.m30).toFixed(2)}</td><td>${(p.m120/p.m60).toFixed(2)}</td><td class="no-print"><button onclick="this.parentElement.parentElement.remove()">✖</button></td></tr>`).join("");
-        } else if(e.tipo === 'TTR') {
-            document.getElementById('u1').value = e.payload.u1;
-            document.getElementById('u2').value = e.payload.u2;
-            document.getElementById('selFas').value = e.payload.fas;
-            iniciarTTR();
-            const inputs = document.querySelectorAll('.in-ttr');
-            e.payload.meds.forEach((m, i) => { if(inputs[i]) inputs[i].value = m; });
-            validarTTR();
-        }
-    }
-
-    function excluirEnsaio(id) {
-        bancoEnsaios = bancoEnsaios.filter(x => x.id !== id);
-        localStorage.setItem('alpha_ensaios', JSON.stringify(bancoEnsaios));
-        carregarHistorico();
-    }
-
-    // --- NAVEGAÇÃO E BASE ---
+    // --- NAVEGAÇÃO BÁSICA ---
     function abrirModulo(id) {
         document.getElementById('menuPrincipal').style.display = 'none';
         document.getElementById('btnVoltar').style.visibility = 'visible';
@@ -329,20 +181,131 @@
         document.getElementById('tituloApp').innerText = 'ALPHA HUB';
     }
 
-    function toggleMenu() {
-        const g = document.getElementById('gaveta');
-        g.classList.toggle('ativa');
-        document.getElementById('mascara').style.display = g.classList.contains('ativa') ? 'block' : 'none';
+    // --- TTR (MANTIDO) ---
+    const REGRAS = {
+        "Ydn1_11_X0": { f: (u1, u2) => (u1 * 1.73205) / u2, h: ["H1-H3", "H1-H2", "H3-H1"], x: ["X1-X0", "X2-X0", "X3-X0"] },
+        "Dyn1_11_X0": { f: (u1, u2) => (u1 * 1.73205) / u2, h: ["H1-H3", "H2-H1", "H3-H2"], x: ["X1-X0", "X2-X0", "X3-X0"] },
+        "Ynyn0":      { f: (u1, u2) => u1 / u2, h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X0", "X2-X0", "X3-X0"] },
+        "Yyn0_Dd0":   { f: (u1, u2) => u1 / u2, h: ["H1-H2", "H2-H3", "H3-H1"], x: ["X1-X2", "X2-X3", "X3-X1"] }
+    };
+    let vTeo = 0;
+    function iniciarTTR() {
+        const fas = document.getElementById('selFas').value;
+        if(!fas) return;
+        document.getElementById('corpoTTR').innerHTML = REGRAS[fas].h.map((h, i) => `<tr><td><b>${h}/${REGRAS[fas].x[i]}</b></td><td><input type="number" class="in-ttr" oninput="validarTTR()" style="width:70px;"></td><td class="desvio-fase">-</td><td><span class="status-badge">...</span></td></tr>`).join("");
+        document.getElementById('tabTTR').style.display = 'table';
+        document.getElementById('boxTTR').style.display = 'block';
+        calcTTR();
+    }
+    function calcTTR() {
+        const u1 = parseFloat(document.getElementById('u1').value);
+        const u2 = parseFloat(document.getElementById('u2').value);
+        const fas = document.getElementById('selFas').value;
+        if(u1 && u2 && fas) { vTeo = REGRAS[fas].f(u1, u2); document.getElementById('valTTR').innerText = vTeo.toFixed(5); validarTTR(); }
+    }
+    function validarTTR() {
+        let soma = 0, qtd = 0;
+        document.querySelectorAll('.in-ttr').forEach(input => {
+            const med = parseFloat(input.value);
+            const linha = input.closest('tr');
+            if(med && vTeo) {
+                const erro = ((med - vTeo) / vTeo) * 100;
+                linha.querySelector('.desvio-fase').innerText = erro.toFixed(3) + "%";
+                const badge = linha.querySelector('.status-badge');
+                const ok = Math.abs(erro) <= 0.5;
+                badge.innerText = ok ? "OK" : "FORA";
+                badge.className = "status-badge " + (ok ? "satisfatorio" : "reprovado");
+                soma += Math.abs(erro); qtd++;
+            }
+        });
+        if(qtd > 0) document.getElementById('desvioTTR').innerText = "DESVIO MÉDIO: " + (soma/qtd).toFixed(3) + "%";
     }
 
-    function salvarConfig(chave, id) {
-        const val = document.getElementById(id).value;
-        if(!val) return;
-        let lista = JSON.parse(localStorage.getItem('alpha_'+chave) || "[]");
-        lista.push(val);
-        localStorage.setItem('alpha_'+chave, JSON.stringify(lista));
-        document.getElementById(id).value = "";
-        carregarDropdowns();
+    // --- MEGÔMETRO ---
+    function atualizarSugestoesMeg() {
+        const tipo = document.getElementById('tipoEqpMeg').value;
+        const container = document.getElementById('containerPontoMeg');
+        const pontos = {
+            "TRANSFORMADOR": ["PRIMÁRIO X SECUNDÁRIO", "PRIMÁRIO X CARCAÇA", "SECUNDÁRIO X CARCAÇA"],
+            "DISJUNTOR": ["ENTRADA X SAÍDA", "ENTRADA X CARCAÇA", "SAÍDA X CARCAÇA"],
+            "OUTROS": ["ENTRADA X SAÍDA"]
+        };
+        if (tipo === "OUTROS") container.innerHTML = `<input type="text" id="pontoMegInput">`;
+        else container.innerHTML = `<select id="pontoMegSelect">${pontos[tipo].map(p => `<option value="${p}">${p}</option>`).join("")}</select>`;
     }
 
-    function carreg
+    function liveMeg() {
+        const m30 = parseFloat(document.getElementById('m30').value);
+        const m60 = parseFloat(document.getElementById('m60').value);
+        const m120 = parseFloat(document.getElementById('m120').value);
+        let ia = (m30 && m60) ? (m60/m30).toFixed(2) : "-";
+        let ip = (m60 && m120) ? (m120/m60).toFixed(2) : "-";
+        document.getElementById('resLiveMeg').innerHTML = `IA: ${ia}<br>IP: ${ip}`;
+    }
+
+    function addLinhaMeg() {
+        const tipo = document.getElementById('tipoEqpMeg').value;
+        const p = tipo === "OUTROS" ? document.getElementById('pontoMegInput').value : document.getElementById('pontoMegSelect').value;
+        const v = document.getElementById('vMeg').value;
+        const m30 = document.getElementById('m30').value;
+        const m60 = document.getElementById('m60').value;
+        const m120 = document.getElementById('m120').value;
+        if(!p || !m30) return alert("Preencha o ponto e os 30s!");
+        const row = `<tr><td>${p}</td><td>${v}</td><td>${m30}</td><td>${m60}</td><td>${m120}</td><td>${(m60/m30).toFixed(2)}</td><td>${(m120/m60).toFixed(2)}</td><td class="no-print"><button onclick="this.parentElement.parentElement.remove()" style="color:red;border:none;background:none;">✖</button></td></tr>`;
+        document.getElementById('corpoMeg').insertAdjacentHTML('beforeend', row);
+        ['m30','m60','m120'].forEach(id => document.getElementById(id).value = "");
+    }
+
+    // --- MICRO ---
+    function addLinhaMicro() {
+        const p = document.getElementById('pontoMicro').value;
+        const c = document.getElementById('currMicro').value;
+        const r = document.getElementById('resMicro').value;
+        if(!p || !r) return alert("Dados incompletos!");
+        const row = `<tr><td>${p}</td><td>${c}</td><td>${r}</td><td class="no-print"><button onclick="this.parentElement.parentElement.remove()" style="color:red;border:none;background:none;">✖</button></td></tr>`;
+        document.getElementById('corpoMicro').insertAdjacentHTML('beforeend', row);
+        document.getElementById('pontoMicro').value = "";
+        document.getElementById('resMicro').value = "";
+    }
+
+    // --- HISTÓRICO E SALVAMENTO ---
+    function salvarEnsaio(tipo) {
+        let payload = {};
+        let local = "", tecnico = "";
+
+        if(tipo === 'TTR') {
+            local = document.getElementById('locTTR').value;
+            tecnico = document.getElementById('tecTTR').value;
+            const meds = Array.from(document.querySelectorAll('.in-ttr')).map(i => i.value);
+            payload = { u1: document.getElementById('u1').value, u2: document.getElementById('u2').value, fas: document.getElementById('selFas').value, meds: meds };
+        } else if(tipo === 'MEGGER') {
+            local = document.getElementById('locMeg').value;
+            tecnico = document.getElementById('tecMeg').value;
+            payload = Array.from(document.querySelectorAll('#corpoMeg tr')).map(tr => {
+                const tds = tr.querySelectorAll('td');
+                return { p: tds[0].innerText, v: tds[1].innerText, m30: tds[2].innerText, m60: tds[3].innerText, m120: tds[4].innerText };
+            });
+        } else if(tipo === 'MICRO') {
+            local = document.getElementById('locMicro').value;
+            tecnico = document.getElementById('tecMicro').value;
+            payload = Array.from(document.querySelectorAll('#corpoMicro tr')).map(tr => {
+                const tds = tr.querySelectorAll('td');
+                return { p: tds[0].innerText, i: tds[1].innerText, r: tds[2].innerText };
+            });
+        }
+
+        const ensaios = JSON.parse(localStorage.getItem('alpha_hist') || "[]");
+        ensaios.push({ id: Date.now(), tipo, local, tecnico, data: new Date().toLocaleString(), payload });
+        localStorage.setItem('alpha_hist', JSON.stringify(ensaios));
+        alert("Ensaio salvo com sucesso!");
+    }
+
+    function carregarHistorico() {
+        const h = JSON.parse(localStorage.getItem('alpha_hist') || "[]");
+        const lista = document.getElementById('listaHistorico');
+        lista.innerHTML = h.length ? "" : "Sem registros.";
+        h.reverse().forEach(e => {
+            const item = document.createElement('div');
+            item.style = "background:#0f172a; padding:12px; border-radius:8px; margin-bottom:10px; border-left:4px solid var(--primaria); display:flex; justify-content:space-between; align-items:center;";
+            item.innerHTML = `<div><b style="color:var(--primaria)">${e.tipo}</b> - ${e.local}<br><small>${e.data}</small></div>
+           
