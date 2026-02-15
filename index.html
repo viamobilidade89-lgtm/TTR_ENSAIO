@@ -3,256 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALPHA TTR - ESPECIALISTA EM ENSAIOS</title>
+    <title>ALPHA HUB v12 - PRECISÃO TOTAL</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-
     <style>
-        :root { 
-            --cor-fundo: #0f172a; --cor-card: rgba(30, 41, 59, 0.98); --cor-primaria: #38bdf8; 
-            --cor-texto: #f8fafc; --fonte-tam: 14px;
-        }
-
-        body { 
-            font-family: 'Segoe UI', sans-serif; font-size: var(--fonte-tam);
-            background: var(--cor-fundo); color: var(--cor-texto); margin: 0; padding: 15px;
-            background-image: radial-gradient(circle at top right, #1e293b, #0f172a);
-            background-attachment: fixed;
-        }
-        
+        :root { --fundo: #0f172a; --card: #1e293b; --primaria: #38bdf8; --texto: #f8fafc; --erro: #ff4d4d; --sucesso: #00e676; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--fundo); color: var(--texto); margin: 0; padding: 15px; }
         .container { max-width: 900px; margin: auto; }
-        .card { 
-            background: var(--cor-card); padding: 25px; border-radius: 20px; 
-            border: 1px solid rgba(255,255,255,0.1); position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); backdrop-filter: blur(10px);
-        }
-        
-        .tres-pontos { position: absolute; top: 20px; right: 20px; cursor: pointer; font-size: 28px; color: var(--cor-primaria); z-index: 10; }
-
-        .gaveta { 
-            position: fixed; top: 0; right: -350px; width: 320px; height: 100%; 
-            background: #1e293b; border-left: 3px solid var(--cor-primaria); 
-            z-index: 1000; transition: 0.4s; padding: 20px; overflow-y: auto; box-sizing: border-box;
-        }
-        .gaveta.ativa { right: 0; }
-        .mascara { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 999; }
-
-        .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px; }
-        
-        label { display: block; margin-top: 10px; font-weight: bold; font-size: 0.85em; color: var(--cor-primaria); text-transform: uppercase; }
-        input, select { 
-            width: 100%; padding: 12px; margin: 5px 0 10px; background: rgba(0,0,0,0.3); 
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: inherit; box-sizing: border-box;
-        }
-        
-        .info-conexao { 
-            background: rgba(56, 189, 248, 0.1); padding: 15px; border-radius: 10px; 
-            border-left: 5px solid var(--cor-primaria); margin-bottom: 20px; font-size: 0.9em;
-        }
-
-        button { padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        .btn-calc { background: var(--cor-primaria); color: #000; width: 100%; font-size: 1.1em; margin-top: 15px; }
-        
-        .res-caixa { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; border-top: 4px solid var(--cor-primaria); }
-        footer { text-align: center; margin-top: 30px; font-size: 0.8em; opacity: 0.5; letter-spacing: 2px; }
-
-        .config-item { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; margin-bottom: 10px; }
+        .card { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid #334155; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h1, h2 { color: var(--primaria); text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+        .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9em; color: var(--primaria); }
+        input, select { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 8px; box-sizing: border-box; font-size: 1em; }
+        .info-teorica { background: rgba(56, 189, 248, 0.1); padding: 20px; border-radius: 12px; border: 1px dashed var(--primaria); margin: 20px 0; text-align: center; }
+        .btn-calc { background: var(--primaria); color: #0f172a; width: 100%; padding: 18px; font-weight: bold; border: none; border-radius: 10px; cursor: pointer; font-size: 1.1em; transition: 0.3s; }
+        .btn-calc:hover { background: #7dd3fc; transform: scale(1.02); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: rgba(0,0,0,0.2); }
+        th, td { border: 1px solid #334155; padding: 12px; text-align: center; }
+        th { background: #334155; color: var(--primaria); }
+        .status-badge { padding: 5px 10px; border-radius: 5px; font-weight: bold; font-size: 0.85em; }
+        .reprovado { background: var(--erro); color: white; }
+        .satisfatorio { background: var(--sucesso); color: #0f172a; }
     </style>
 </head>
 <body>
 
-<div class="mascara" id="mascara" onclick="toggleMenu()"></div>
-
-<div class="gaveta" id="gaveta">
-    <h2 style="color:var(--cor-primaria)">⚙️ Configurações</h2>
-    
-    <div class="config-item">
-        <label>Técnico</label>
-        <div style="display:flex; gap:5px"><input type="text" id="nT" style="margin:0"><button onclick="addDB('tecnicos','nT')" style="background:var(--cor-primaria); color:#000">+</button></div>
-    </div>
-    <div class="config-item">
-        <label>Local</label>
-        <div style="display:flex; gap:5px"><input type="text" id="nL" style="margin:0"><button onclick="addDB('locais','nL')" style="background:var(--cor-primaria); color:#000">+</button></div>
-    </div>
-    <div class="config-item">
-        <label>Equipamento</label>
-        <div style="display:flex; gap:5px"><input type="text" id="nE" style="margin:0"><button onclick="addDB('equipamentos','nE')" style="background:var(--cor-primaria); color:#000">+</button></div>
-    </div>
-
-    <button onclick="limparTudo()" style="background:#ef4444; width:100%; margin-top:30px; color:white">LIMPAR DATABASE</button>
-</div>
-
 <div class="container">
     <div class="card">
-        <div class="tres-pontos" onclick="toggleMenu()">&#8942;</div>
+        <h1>ALPHA TTR - ESPECIALISTA</h1>
         
-        <header style="text-align: center; margin-bottom: 20px;">
-            <h1 style="color:var(--cor-primaria); margin: 0; font-size: 1.4em;">TESTE DE RELAÇÃO DE TRANSFORMAÇÃO</h1>
-            <p style="opacity: 0.6; font-size: 0.8em;">ALPHA TEAM ENGINEERING - CÁLCULO DE CAMPO</p>
-        </header>
-
         <div class="grade">
             <div>
-                <label>Grupo Fasorial</label>
-                <select id="selFasorial" onchange="configurarBornes()">
-                    <optgroup label="Delta-Estrela">
-                        <option value="Dyn1">Dyn1 (330°)</option>
-                        <option value="Dyn11" selected>Dyn11 (30°)</option>
-                    </optgroup>
-                    <optgroup label="Estrela-Delta">
-                        <option value="Ynd1">Ynd1 (330°)</option>
-                        <option value="Ynd11">Ynd11 (30°)</option>
-                    </optgroup>
-                    <optgroup label="Estrela-Estrela / Delta-Delta">
-                        <option value="Yyn0">Yyn0 (0°)</option>
-                        <option value="Ynyn0">Ynyn0 (0°)</option>
-                        <option value="Dd0">Dd0 (0°)</option>
-                    </optgroup>
+                <label>Grupo Fasorial (Referência Técnica)</label>
+                <select id="selFas" onchange="atualizarInterface()">
+                    <option value="">-- SELECIONE O GRUPO --</option>
+                    <option value="Ydn1_11_X0">Ydn1/Ydn11 (C/ X0 Aparente)</option>
+                    <option value="Ydn1_11_H0">Ydn1/Ydn11 (C/ H0 Aparente)</option>
+                    <option value="Yd1_H0">Yd1 (S/ H0 Aparente)</option>
+                    <option value="Yd11_H0">Yd11 (S/ H0 Aparente)</option>
+                    <option value="Dyn1_11_X0">Dyn1/Dyn11 (C/ X0 Aparente)</option>
+                    <option value="Dyn1_11_H0">Dyn1/Dyn11 (C/ H0 Aparente)</option>
+                    <option value="Dy1_X0">Dy1 (S/ X0 Aparente)</option>
+                    <option value="Dy11_X0">Dy11 (S/ X0 Aparente)</option>
+                    <option value="Yyn0_H0">Yyn0 (S/ H0 Aparente)</option>
+                    <option value="Ynyn0">Ynyn0 (C/ H0 e X0 Aparente)</option>
+                    <option value="Yyn0_Dd0">Yyn0 e Dd0 (Conexão Direta)</option>
                 </select>
             </div>
-            <div><label>Temperatura (°C)</label><input id="tempMed" type="number" value="25"></div>
+            <div style="display: flex; gap: 10px;">
+                <div style="flex: 1;"><label>U1 (Primário)</label><input id="u1" type="number" oninput="recalc()"></div>
+                <div style="flex: 1;"><label>U2 (Secundário)</label><input id="u2" type="number" oninput="recalc()"></div>
+            </div>
         </div>
 
-        <div class="info-conexao" id="infoConexao"></div>
-
-        <div class="grade">
-            <div><label>Técnico</label><select id="selTecnico"></select></div>
-            <div><label>Local</label><select id="selLocal"></select></div>
-            <div><label>Equipamento</label><select id="selEquip"></select></div>
+        <div id="boxTeorico" class="info-teorica" style="display:none;">
+            Valor Teórico: <span id="valTeo" style="font-size: 1.5em; font-weight: bold;">0.0000</span><br>
+            <small id="faixaAceitacao" style="opacity: 0.8;"></small>
         </div>
 
-        <div class="grade">
-            <section>
-                <h3 style="color:var(--cor-primaria); font-size: 0.9em; border-bottom: 1px solid #444;">ALTA TENSÃO (Ω)</h3>
-                <label id="lH1">H1-H3</label><input id="h1" type="number" step="any">
-                <label id="lH2">H2-H1</label><input id="h2" type="number" step="any">
-                <label id="lH3">H3-H2</label><input id="h3" type="number" step="any">
-            </section>
-            <section>
-                <h3 style="color:var(--cor-primaria); font-size: 0.9em; border-bottom: 1px solid #444;">BAIXA TENSÃO (mΩ)</h3>
-                <label id="lX1">X0-X1</label><input id="x1" type="number" step="any">
-                <label id="lX2">X0-X2</label><input id="x2" type="number" step="any">
-                <label id="lX3">X0-X3</label><input id="x3" type="number" step="any">
-            </section>
-        </div>
-
-        <button class="btn-calc" onclick="calcular()">CALCULAR E CORRIGIR (75°C)</button>
-        
-        <div style="display:flex; gap:10px; margin-top:10px;">
-            <button style="flex:1; background:#334155; color:white" onclick="location.reload()">REINICIAR</button>
-            <button style="flex:1; background:#4f46e5; color:white" onclick="gerarPDF()">EXPORTAR PDF</button>
+        <div id="secaoMedicao" style="display:none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Conexão Bornes</th>
+                        <th>Valor Medido</th>
+                        <th>Desvio %</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="listaMedicoes"></tbody>
+            </table>
+            <br>
+            <button class="btn-calc" onclick="finalizarRelatorio()">FINALIZAR E VALIDAR ENSAIO</button>
         </div>
     </div>
-
-    <div id="areaRes" class="grade" style="display:none; margin-top:20px;">
-        <div class="res-caixa"><b>Alta Tensão (Corrigida)</b><div id="reH" style="font-family:monospace; margin-top:10px;"></div></div>
-        <div class="res-caixa"><b>Baixa Tensão (Corrigida)</b><div id="reX" style="font-family:monospace; margin-top:10px;"></div></div>
-    </div>
-
-    <footer>PRODUCED BY ALPHA TEAM</footer>
 </div>
 
 <script>
-    let dadosSalvos = null;
-
-    // LÓGICA DE BORNES E FATORES DE CORREÇÃO (kH para Alta, kX para Baixa)
-    const configuracoes = {
-        "Dyn11": { info: "Alta: Delta (Fase-Fase) | Baixa: Estrela (Fase-Neutro)", h: ["H1-H3", "H2-H1", "H3-H2"], x: ["X0-X1", "X0-X2", "X0-X3"], kH: 1.5, kX: 1.0 },
-        "Dyn1":  { info: "Alta: Delta (Fase-Fase) | Baixa: Estrela (Fase-Neutro)", h: ["H1-H2", "H2-H3", "H3-H1"], x: ["X0-X1", "X0-X2", "X0-X3"], kH: 1.5, kX: 1.0 },
-        "Ynd11": { info: "Alta: Estrela (Fase-Neutro) | Baixa: Delta (Fase-Fase)", h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X3", "X2-X1", "X3-X2"], kH: 1.0, kX: 1.0 },
-        "Ynd1":  { info: "Alta: Estrela (Fase-Neutro) | Baixa: Delta (Fase-Fase)", h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X2", "X2-X3", "X3-X1"], kH: 1.0, kX: 1.0 },
-        "Yyn0":  { info: "Alta: Estrela (Fase-Neutro) | Baixa: Estrela (Fase-Neutro)", h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X0", "X2-X0", "X3-X0"], kH: 1.0, kX: 1.0 },
-        "Ynyn0": { info: "Alta: Estrela (Com Neutro) | Baixa: Estrela (Com Neutro)", h: ["H1-N", "H2-N", "H3-N"], x: ["X1-n", "X2-n", "X3-n"], kH: 1.0, kX: 1.0 },
-        "Dd0":   { info: "Alta: Delta (Fase-Fase) | Baixa: Delta (Fase-Fase)", h: ["H1-H3", "H2-H1", "H3-H2"], x: ["X1-X3", "X2-X1", "X3-X2"], kH: 1.5, kX: 1.0 }
+    const DB = {
+        "Ydn1_11_X0": { formula: (u1, u2) => (u1 * 1.732) / u2, h: ["H1-H3", "H1-H2", "H3-H1"], x: ["X1-X0", "X2-X0", "X3-X0"] },
+        "Ydn1_11_H0": { formula: (u1, u2) => u1 / (u2 * 1.732), h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X3", "X2-X1", "X3-X2"] },
+        "Yd1_H0":     { formula: (u1, u2) => 0.866 * (u1 / u2), h: ["H2-H1~H3", "H3-H2~H1", "H1-H3~H2"], x: ["X2-X3", "X3-X1", "X1-X2"] },
+        "Yd11_H0":    { formula: (u1, u2) => 0.866 * (u1 / u2), h: ["H1-H1~H3", "H2-H3~H1", "H3-H1~H2"], x: ["X1-X3", "X3-X1", "X3-X2"] },
+        "Dyn1_11_X0": { formula: (u1, u2) => (u1 * 1.732) / u2, h: ["H1-H3", "H2-H1", "H3-H2"], x: ["X1-X0", "X2-X0", "X3-X0"] },
+        "Dyn1_11_H0": { formula: (u1, u2) => u1 / (u2 * 1.732), h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X3", "X2-X1", "X3-X2"] },
+        "Dy1_X0":     { formula: (u1, u2) => u1 / (0.866 * u2), h: ["H2-H1", "H3-H2", "H1-H3"], x: ["X2-X1~X3", "X3-X2~X1", "X1-X3~X2"] },
+        "Dy11_X0":    { formula: (u1, u2) => u1 / (0.866 * u2), h: ["H1-H2", "H2-H3", "H3-H1"], x: ["X1-X2~X3", "X2-X3~X1", "X1-X3~X2"] },
+        "Yyn0_H0":    { formula: (u1, u2) => (u1 * 1.732) / (u2 * 0.866), h: ["H1-H2~H3", "H2-H3~H1", "H3-H1~H2"], x: ["X1-X0", "X2-X0", "X3-X0"] },
+        "Ynyn0":      { formula: (u1, u2) => u1 / u2, h: ["H1-H0", "H2-H0", "H3-H0"], x: ["X1-X0", "X2-X0", "X3-X0"] },
+        "Yyn0_Dd0":   { formula: (u1, u2) => u1 / u2, h: ["H1-H2", "H2-H3", "H3-H1"], x: ["X1-X2", "X2-X3", "X3-X1"] }
     };
 
-    function toggleMenu() {
-        const g = document.getElementById('gaveta');
-        g.classList.toggle('ativa');
-        document.getElementById('mascara').style.display = g.classList.contains('ativa') ? 'block' : 'none';
-    }
+    let teoricoFinal = 0;
 
-    function addDB(chave, id) {
-        const val = document.getElementById(id).value;
-        if(!val) return;
-        let l = JSON.parse(localStorage.getItem('alpha_db_'+chave) || "[]");
-        l.push(val);
-        localStorage.setItem('alpha_db_'+chave, JSON.stringify(l));
-        document.getElementById(id).value = "";
-        carregarSelects();
-    }
-
-    function carregarSelects() {
-        const f = (c, s) => {
-            const l = JSON.parse(localStorage.getItem('alpha_db_'+c) || "[]");
-            document.getElementById(s).innerHTML = '<option value="">---</option>' + l.map(i => `<option value="${i}">${i}</option>`).join("");
-        };
-        f('tecnicos','selTecnico'); f('locais','selLocal'); f('equipamentos','selEquip');
-    }
-
-    function configurarBornes() {
-        const fas = document.getElementById('selFasorial').value;
-        const c = configuracoes[fas];
-        document.getElementById('infoConexao').innerHTML = `<b>Esquema Técnico:</b> ${c.info}`;
-        ['H1','H2','H3'].forEach((id, i) => document.getElementById('l'+id).innerText = c.h[i]);
-        ['X1','X2','X3'].forEach((id, i) => document.getElementById('l'+id).innerText = c.x[i]);
-    }
-
-    function calcular() {
-        const t = parseFloat(document.getElementById('tempMed').value);
-        const fas = document.getElementById('selFasorial').value;
-        const c = configuracoes[fas];
-        const fatorT = (235 + 75) / (235 + t);
+    function atualizarInterface() {
+        const fas = document.getElementById('selFas').value;
+        if (!fas) return;
         
-        // ALTA TENSÃO: Valor * Fator Térmico * Fator de Ligação (1.5 ou 1.0)
-        const hVal = [
-            (parseFloat(document.getElementById('h1').value) || 0) * fatorT * c.kH,
-            (parseFloat(document.getElementById('h2').value) || 0) * fatorT * c.kH,
-            (parseFloat(document.getElementById('h3').value) || 0) * fatorT * c.kH
-        ];
-
-        // BAIXA TENSÃO: Valor * 0.001 (mΩ para Ω) * Fator Térmico (Sempre kX: 1.0)
-        const xVal = [
-            (parseFloat(document.getElementById('x1').value) || 0) * 0.001 * fatorT,
-            (parseFloat(document.getElementById('x2').value) || 0) * 0.001 * fatorT,
-            (parseFloat(document.getElementById('x3').value) || 0) * 0.001 * fatorT
-        ];
-
-        dadosSalvos = {
-            fas, tecnico: document.getElementById('selTecnico').value,
-            local: document.getElementById('selLocal').value,
-            equip: document.getElementById('selEquip').value,
-            temp: t, hVal, xVal, bH: c.h, bX: c.x
-        };
-
-        document.getElementById('areaRes').style.display = 'grid';
-        document.getElementById('reH').innerHTML = hVal.map((v, i) => `<span>${c.h[i]}:</span> <b>${v.toFixed(4)} Ω</b><br>`).join("");
-        document.getElementById('reX').innerHTML = xVal.map((v, i) => `<span>${c.x[i]}:</span> <b>${(v*1000).toFixed(4)} mΩ</b><br>`).join("");
-    }
-
-    function gerarPDF() {
-        if(!dadosSalvos) return alert("Calcule antes de exportar!");
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        doc.setFontSize(16); doc.text("RELATÓRIO TÉCNICO TTR - ALPHA", 10, 15);
-        doc.setFontSize(10);
-        doc.text(`Técnico: ${dadosSalvos.tecnico} | Local: ${dadosSalvos.local}`, 10, 25);
-        doc.text(`Grupo Fasorial: ${dadosSalvos.fas} | Equipamento: ${dadosSalvos.equip}`, 10, 30);
-        doc.text(`Temp. Ensaio: ${dadosSalvos.temp}°C | Corrigido para: 75°C`, 10, 35);
+        const conf = DB[fas];
+        const lista = document.getElementById('listaMedicoes');
+        lista.innerHTML = "";
         
-        let rows = [];
-        dadosSalvos.hVal.forEach((v, i) => rows.push(["ALTA " + dadosSalvos.bH[i], v.toFixed(4) + " Ω"]));
-        dadosSalvos.xVal.forEach((v, i) => rows.push(["BAIXA " + dadosSalvos.bX[i], (v*1000).toFixed(4) + " mΩ"]));
+        conf.h.forEach((bornH, i) => {
+            lista.innerHTML += `
+                <tr>
+                    <td style="font-size:0.85em">Alta: <b>${bornH}</b><br>Baixa: <b>${conf.x[i]}</b></td>
+                    <td><input type="number" step="any" class="input-med" oninput="analisarLinha(this)"></td>
+                    <td class="res-erro">-</td>
+                    <td><span class="status-badge">Aguardando</span></td>
+                </tr>`;
+        });
         
-        doc.autoTable({ startY: 40, head: [['Ponto de Medição', 'Resultado Corrigido']], body: rows });
-        doc.save(`Relatorio_TTR_${dadosSalvos.local}.pdf`);
+        document.getElementById('secaoMedicao').style.display = 'block';
+        document.getElementById('boxTeorico').style.display = 'block';
+        recalc();
     }
 
-    function limparTudo() {
-        if(confirm("Apagar todos os dados cadastrados?")) { localStorage.clear(); location.reload(); }
+    function recalc() {
+        const u1 = parseFloat(document.getElementById('u1').value);
+        const u2 = parseFloat(document.getElementById('u2').value);
+        const fas = document.getElementById('selFas').value;
+        
+        if (u1 && u2 && fas) {
+            teoricoFinal = DB[fas].formula(u1, u2);
+            document.getElementById('valTeo').innerText = teoricoFinal.toFixed(4);
+            document.getElementById('faixaAceitacao').innerText = 
+                `Tolerância ±0.5%: [ ${(teoricoFinal * 0.995).toFixed(4)} — ${(teoricoFinal * 1.005).toFixed(4)} ]`;
+            
+            // Revalida todas as linhas se mudar U1 ou U2
+            document.querySelectorAll('.input-med').forEach(inp => analisarLinha(inp));
+        }
     }
 
-    window.onload = () => { carregarSelects(); configurarBornes(); };
+    function analisarLinha(input) {
+        if (!teoricoFinal) return;
+        const medido = parseFloat(input.value);
+        const linha = input.parentElement.parentElement;
+        const celulaErro = linha.querySelector('.res-erro');
+        const celulaStatus = linha.querySelector('.status-badge');
+
+        if (isNaN(medido)) {
+            celulaErro.innerText = "-";
+            celulaStatus.innerText = "Aguardando";
+            celulaStatus.className = "status-badge";
+            return;
+        }
+
+        const erro = ((medido - teoricoFinal) / teoricoFinal) * 100;
+        celulaErro.innerText = erro.toFixed(3) + "%";
+
+        if (Math.abs(erro) <= 0.5) {
+            celulaStatus.innerText = "SATISFATÓRIO";
+            celulaStatus.className = "status-badge satisfatorio";
+        } else {
+            celulaStatus.innerText = "REPROVADO";
+            celulaStatus.className = "status-badge reprovado";
+        }
+    }
+
+    function finalizarRelatorio() {
+        alert("Ensaio validado com sucesso! Utilize o navegador para Imprimir ou Salvar em PDF.");
+    }
 </script>
 </body>
 </html>
