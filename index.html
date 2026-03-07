@@ -11,8 +11,9 @@
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; min-height: 100vh; }
         .container { max-width: 900px; margin: 0 auto; padding: 20px; }
         
-        header { text-align: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
-        .titulo-app { font-size: 2.2rem; font-weight: 900; color: var(--primary); letter-spacing: 4px; text-transform: uppercase; margin: 0; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
+        .titulo-app { font-size: 1.8rem; font-weight: 900; color: var(--primary); letter-spacing: 2px; text-transform: uppercase; margin: 0; }
+        .btn-config-top { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text); }
 
         .dashboard-menu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .icon-card { 
@@ -33,147 +34,129 @@
         input, select, textarea { width: 100%; padding: 10px; background: #0a0f18; border: 1px solid #334155; color: white; border-radius: 6px; font-size: 0.85rem; box-sizing: border-box; }
         
         .inf-group { display: flex; gap: 5px; }
-        .btn-inf { background: #334155; border: none; color: white; padding: 0 15px; border-radius: 6px; cursor: pointer; font-size: 1.2rem; }
+        .btn-inf { background: #334155; border: none; color: white; padding: 0 10px; border-radius: 6px; cursor: pointer; }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: rgba(0,0,0,0.2); }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { border: 1px solid #334155; padding: 12px; text-align: center; font-size: 0.8rem; }
-        th { background: #0f172a; color: var(--primary); font-weight: 900; }
+        th { background: #0f172a; color: var(--primary); }
         
         .status { padding: 3px 6px; border-radius: 4px; font-weight: 900; font-size: 0.65rem; }
-        .ok { background: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid var(--success); }
-        .nok { background: rgba(244, 63, 94, 0.1); color: var(--error); border: 1px solid var(--error); }
+        .ok { border: 1px solid var(--success); color: var(--success); }
         
         .btn-action { width: 100%; padding: 14px; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; margin-top: 10px; text-transform: uppercase; }
         .btn-primary { background: var(--primary); color: #000; }
         .btn-success { background: var(--success); color: #000; }
         .btn-back { background: transparent; color: white; border: 1px solid #334155; margin-bottom: 15px; padding: 8px 20px; cursor: pointer; border-radius: 4px; font-weight: bold; }
 
-        .print-header { display: none; text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; }
-        footer { text-align: center; padding: 40px; font-size: 0.7rem; opacity: 0.4; letter-spacing: 3px; font-weight: bold; }
+        .config-list { margin-top: 10px; list-style: none; padding: 0; }
+        .config-list li { display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #334155; font-size: 0.8rem; }
+        .btn-del { color: var(--error); cursor: pointer; font-weight: bold; }
 
         @media print {
-            .no-print, .btn-action, .btn-back, #botoesAcao, .dashboard-menu, .icon-card, button, .btn-inf { display: none !important; }
+            .no-print, .btn-action, .btn-back, .btn-config-top, .dashboard-menu, .icon-card, button, .btn-inf { display: none !important; }
             .section { display: block !important; }
-            .active { display: block !important; }
             body { background: white !important; color: black !important; }
-            .container { max-width: 100%; padding: 0; }
-            .glass { background: white !important; border: 1px solid #ccc !important; color: black !important; box-shadow: none; margin-bottom: 15px; }
-            table { border: 1px solid #000 !important; color: black !important; }
-            th { background: #f0f0f0 !important; color: black !important; border: 1px solid #000 !important; }
-            td { border: 1px solid #000 !important; color: black !important; }
-            .titulo-app { color: black !important; }
-            .print-header { display: block !important; }
-            input, select, textarea { border: none !important; background: transparent !important; color: black !important; font-weight: bold; appearance: none; padding: 2px; }
+            .glass { border: 1px solid #000 !important; color: black !important; }
+            input, select, textarea { border: none !important; color: black !important; font-weight: bold; }
             footer { opacity: 1; color: black !important; border-top: 1px solid #000; }
-            .status { border: 1px solid #000 !important; color: #000 !important; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="print-header">
-        <h1>RELATÓRIO TÉCNICO DE ENSAIOS EM TRANSFORMADORES</h1>
-        <p>EQUIPE ALPHA - ENGENHARIA E MANUTENÇÃO</p>
-    </div>
-
     <header class="no-print">
         <div class="titulo-app">ENSAIOS ALPHA</div>
+        <button class="btn-config-top" onclick="abrirS('CONFIG')">⚙️</button>
     </header>
 
     <div id="secHOME" class="dashboard-menu no-print active">
         <div class="icon-card" onclick="abrirS('TTR')"><i>⚡</i><span>TTR</span></div>
         <div class="icon-card" onclick="abrirS('MIC')"><i>📟</i><span>RESISTÊNCIA</span></div>
         <div class="icon-card" onclick="abrirS('MEG')"><i>💥</i><span>ISOLAÇÃO</span></div>
-        <div class="icon-card" onclick="location.reload()"><i>🔄</i><span>NOVO ENSAIO</span></div>
+        <div class="icon-card" onclick="abrirS('HIST')"><i>📜</i><span>HISTÓRICO</span></div>
     </div>
 
     <div id="dadosEquipamento" class="glass section">
-        <label style="font-size: 1rem; margin-bottom: 15px; display: block;">📋 IDENTIFICAÇÃO DO EQUIPAMENTO</label>
         <div class="grid-inputs">
-            <div><label>TAG</label><input type="text" id="regTag" placeholder="Ex: TR-01"></div>
-            <div><label>POTÊNCIA (kVA)</label><input type="text" id="regKva"></div>
-            <div><label>IMPEDÂNCIA (Z%)</label><input type="text" id="regZ"></div>
+            <div><label>TAG</label><input type="text" id="regTag"></div>
+            <div><label>TÉCNICO</label><select id="selTecnico"></select></div>
+            <div><label>LOCAL/UNIDADE</label><select id="selLocal"></select></div>
             <div><label>DATA</label><input type="date" id="regData"></div>
-            <div><label>LOCAL</label><input type="text" id="regLoc"></div>
-            <div><label>EQUIPE TÉCNICA</label><input type="text" id="regTec" placeholder="Nomes"></div>
         </div>
     </div>
 
     <div id="secTTR" class="section">
         <button class="btn-back no-print" onclick="voltarHome()">← VOLTAR</button>
         <div class="glass">
-            <label style="color:var(--primary); font-weight: bold;">⚡ RELAÇÃO DE TRANSFORMAÇÃO (TTR)</label>
-            <div class="grid-inputs no-print" style="margin-top:15px">
-                <div><label>U1 (Primário)</label><input type="number" id="u1" oninput="calcTTR()"></div>
-                <div><label>U2 (Secundário)</label><input type="number" id="u2" oninput="calcTTR()"></div>
-                <div><label>Fasorial</label>
-                    <select id="fasTTR" onchange="initTTR()">
-                        <option value="">-- Selecione --</option>
-                        <option value="Dyn1">Dyn1</option><option value="Dyn11">Dyn11</option>
-                        <option value="Yyn0">Yyn0</option>
-                    </select>
-                </div>
+            <label>⚡ RELAÇÃO DE TRANSFORMAÇÃO</label>
+            <div class="grid-inputs no-print" style="margin-top:10px">
+                <div><label>U1</label><input type="number" id="u1"></div>
+                <div><label>U2</label><input type="number" id="u2"></div>
             </div>
-            <div id="teoLabel" style="font-weight:bold; color:var(--primary); margin:10px 0; text-align: center;"></div>
-            <table>
-                <thead><tr><th>BUCHAS</th><th>LIDO</th><th>DESVIO %</th><th>STATUS</th></tr></thead>
-                <tbody id="corpoTTR"></tbody>
-            </table>
+            <table><thead><tr><th>BUCHAS</th><th>LIDO</th><th>STATUS</th></tr></thead><tbody id="corpoTTR"></tbody></table>
         </div>
     </div>
 
     <div id="secMEG" class="section">
         <button class="btn-back no-print" onclick="voltarHome()">← VOLTAR</button>
         <div class="glass">
-            <label style="color:var(--primary); font-weight: bold;">💥 RESISTÊNCIA DE ISOLAÇÃO (MEGGER)</label>
-            <div class="grid-inputs no-print" style="margin-top:15px">
-                <div><label>PONTO</label><select id="megP"><option>AT x BT</option><option>AT x TERRA</option><option>BT x TERRA</option></select></div>
-                <div><label>TENSÃO (kV)</label><select id="megT"><option>0.5 kV</option><option>1.0 kV</option><option>2.5 kV</option><option>5.0 kV</option></select></div>
-                <div><label>ESCALA</label><select id="megU"><option value="TΩ">TΩ</option><option value="GΩ">GΩ</option><option value="MΩ">MΩ</option></select></div>
+            <label>💥 ISOLAÇÃO (M/G/T)</label>
+            <div class="grid-inputs no-print" style="margin-top:10px">
+                <div><label>TENSÃO</label><select id="megT"><option>0.5kV</option><option>1.0kV</option><option>2.5kV</option><option>5.0kV</option></select></div>
+                <div><label>VALOR</label><input type="text" id="megV"></div>
+                <div><label>ESCALA</label><select id="megU"><option>TΩ</option><option>GΩ</option><option>MΩ</option></select></div>
             </div>
-            <div class="grid-inputs no-print">
-                <div><label>15s (IA)</label><input type="text" id="m15"></div>
-                <div><label>60s (IP)</label><input type="text" id="m60"></div>
-                <div><label>10 min</label>
-                    <div class="inf-group">
-                        <input type="text" id="m10" placeholder="Valor">
-                        <button class="btn-inf" onclick="document.getElementById('m10').value='∞'">∞</button>
-                    </div>
-                </div>
-            </div>
-            <button class="btn-action btn-primary no-print" onclick="addMeg()">REGISTRAR ISOLAÇÃO</button>
-            <table>
-                <thead><tr><th>PONTO</th><th>TENSÃO</th><th>1 MIN</th><th>10 MIN</th><th>IP / IA</th></tr></thead>
-                <tbody id="corpoMeg"></tbody>
-            </table>
+            <button class="btn-action btn-primary no-print" onclick="addMeg()">ADICIONAR</button>
+            <table><thead><tr><th>PONTO</th><th>TENSÃO</th><th>VALOR</th></tr></thead><tbody id="corpoMeg"></tbody></table>
         </div>
     </div>
 
-    <div id="secOBS" class="glass section">
-        <label>📝 OBSERVAÇÕES TÉCNICAS E CONCLUSÃO</label>
-        <textarea id="obsGerais" rows="4" placeholder="Descreva o estado das buchas, vedações, temperatura ambiente, etc..."></textarea>
+    <div id="secHIST" class="section">
+        <button class="btn-back no-print" onclick="voltarHome()">← VOLTAR</button>
+        <div class="glass">
+            <label>📜 ÚLTIMOS ENSAIOS SALVOS</label>
+            <table><thead><tr><th>DATA</th><th>TAG</th><th>TECNICO</th></tr></thead><tbody id="corpoHist"></tbody></table>
+        </div>
+    </div>
+
+    <div id="secCONFIG" class="section">
+        <button class="btn-back no-print" onclick="voltarHome()">← VOLTAR</button>
+        <div class="glass">
+            <label>👥 CADASTRAR TÉCNICOS</label>
+            <div class="inf-group">
+                <input type="text" id="newTec" placeholder="Nome do Técnico">
+                <button class="btn-inf" onclick="addCfg('tecnicos', 'newTec')">+</button>
+            </div>
+            <ul id="listaTec" class="config-list"></ul>
+        </div>
+        <div class="glass">
+            <label>📍 CADASTRAR LOCAIS</label>
+            <div class="inf-group">
+                <input type="text" id="newLoc" placeholder="Nome da Unidade">
+                <button class="btn-inf" onclick="addCfg('locais', 'newLoc')">+</button>
+            </div>
+            <ul id="listaLoc" class="config-list"></ul>
+        </div>
     </div>
 
     <div id="botoesAcao" class="section no-print">
-        <button class="btn-action btn-success" onclick="window.print()">🖨️ FINALIZAR E GERAR PDF</button>
+        <button class="btn-action btn-success" onclick="salvarEImprimir()">💾 SALVAR E IMPRIMIR</button>
     </div>
 </div>
 
 <footer>PRODUCED BY EQUIPE ALPHA</footer>
 
 <script>
-    const TTR_RULES = {
-        "Dyn1": { f: (u1, u2) => (u1 * 1.73205) / u2, p: ["H1-H3/X1-X0", "H2-H1/X2-X0", "H3-H2/X3-X0"] },
-        "Dyn11": { f: (u1, u2) => (u1 * 1.73205) / u2, p: ["H1-H3/X1-X0", "H2-H1/X2-X0", "H3-H2/X3-X0"] },
-        "Yyn0": { f: (u1, u2) => u1 / u2, p: ["H1-H2/X1-X2", "H2-H3/X2-X3", "H3-H1/X3-X1"] }
-    };
+    // Inicialização do "Banco de Dados" Local
+    let db = JSON.parse(localStorage.getItem('alpha_db')) || { tecnicos: [], locais: [], historico: [] };
 
     function abrirS(id) {
         document.querySelectorAll('.section, .dashboard-menu').forEach(s => s.classList.remove('active'));
         document.getElementById('sec'+id).classList.add('active');
-        document.getElementById('dadosEquipamento').classList.add('active');
-        document.getElementById('secOBS').classList.add('active');
+        if(id !== 'CONFIG' && id !== 'HIST') document.getElementById('dadosEquipamento').classList.add('active');
+        if(id === 'CONFIG') renderCfg();
+        if(id === 'HIST') renderHist();
         document.getElementById('botoesAcao').classList.add('active');
     }
 
@@ -182,46 +165,66 @@
         document.getElementById('secHOME').classList.add('active');
     }
 
-    function initTTR() {
-        const f = document.getElementById('fasTTR').value;
-        if(!f) return;
-        document.getElementById('corpoTTR').innerHTML = TTR_RULES[f].p.map(p => `<tr><td>${p}</td><td><input type="number" class="in-ttr" oninput="calcTTR()" style="width:90px"></td><td class="d-ttr">-</td><td class="s-ttr">-</td></tr>`).join('');
-    }
-
-    function calcTTR() {
-        const u1 = parseFloat(document.getElementById('u1').value);
-        const u2 = parseFloat(document.getElementById('u2').value);
-        const f = document.getElementById('fasTTR').value;
-        if(u1 && u2 && f) {
-            let teo = TTR_RULES[f].f(u1, u2);
-            document.getElementById('teoLabel').innerText = "K Teórico: " + teo.toFixed(5);
-            document.querySelectorAll('.in-ttr').forEach(inp => {
-                const med = parseFloat(inp.value);
-                if(med) {
-                    const d = ((med - teo)/teo*100).toFixed(3);
-                    const ok = Math.abs(d) <= 0.5;
-                    inp.closest('tr').querySelector('.d-ttr').innerText = d + "%";
-                    inp.closest('tr').querySelector('.s-ttr').innerHTML = `<span class="status ${ok?'ok':'nok'}">${ok?'OK':'ERRO'}</span>`;
-                }
-            });
+    function addCfg(tipo, inputId) {
+        const val = document.getElementById(inputId).value;
+        if(val) {
+            db[tipo].push(val);
+            saveDB();
+            renderCfg();
+            document.getElementById(inputId).value = '';
         }
     }
 
-    function addMeg() {
-        const p = document.getElementById('megP').value;
-        const t = document.getElementById('megT').value;
-        const u = document.getElementById('megU').value;
-        const v15 = document.getElementById('m15').value;
-        const v60 = document.getElementById('m60').value;
-        const v10 = document.getElementById('m10').value;
-        
-        let ip = (parseFloat(v10) / parseFloat(v60)).toFixed(2);
-        let ia = (parseFloat(v60) / parseFloat(v15)).toFixed(2);
-        
-        document.getElementById('corpoMeg').innerHTML += `<tr><td>${p}</td><td>${t}</td><td>${v60} ${u}</td><td>${v10} ${u}</td><td>IP: ${isNaN(ip)?'-':ip} / IA: ${isNaN(ia)?'-':ia}</td></tr>`;
+    function delCfg(tipo, index) {
+        db[tipo].splice(index, 1);
+        saveDB();
+        renderCfg();
     }
 
-    window.onload = () => { document.getElementById('regData').valueAsDate = new Date(); };
+    function saveDB() {
+        localStorage.setItem('alpha_db', JSON.stringify(db));
+        updateSelectors();
+    }
+
+    function updateSelectors() {
+        document.getElementById('selTecnico').innerHTML = db.tecnicos.map(t => `<option>${t}</option>`).join('');
+        document.getElementById('selLocal').innerHTML = db.locais.map(l => `<option>${l}</option>`).join('');
+    }
+
+    function renderCfg() {
+        document.getElementById('listaTec').innerHTML = db.tecnicos.map((t, i) => `<li>${t} <span class="btn-del" onclick="delCfg('tecnicos', ${i})">X</span></li>`).join('');
+        document.getElementById('listaLoc').innerHTML = db.locais.map((l, i) => `<li>${l} <span class="btn-del" onclick="delCfg('locais', ${i})">X</span></li>`).join('');
+    }
+
+    function renderHist() {
+        document.getElementById('corpoHist').innerHTML = db.historico.map(h => `<tr><td>${h.data}</td><td>${h.tag}</td><td>${h.tec}</td></tr>`).join('');
+    }
+
+    function addMeg() {
+        const v = document.getElementById('megV').value;
+        const t = document.getElementById('megT').value;
+        const u = document.getElementById('megU').value;
+        document.getElementById('corpoMeg').innerHTML += `<tr><td>${document.getElementById('megP').value}</td><td>${t}</td><td>${v} ${u}</td></tr>`;
+    }
+
+    function salvarEImprimir() {
+        const entry = {
+            data: document.getElementById('regData').value,
+            tag: document.getElementById('regTag').value,
+            tec: document.getElementById('selTecnico').value
+        };
+        if(entry.tag) {
+            db.historico.unshift(entry);
+            if(db.historico.length > 20) db.historico.pop();
+            saveDB();
+        }
+        window.print();
+    }
+
+    window.onload = () => {
+        updateSelectors();
+        document.getElementById('regData').valueAsDate = new Date();
+    };
 </script>
 </body>
 </html>
