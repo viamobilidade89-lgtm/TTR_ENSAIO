@@ -3,222 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENSAIOS ALPHA - GESTÃO DE ATIVOS</title>
+    <title>ALPHA ENTERPRISE - GESTÃO DE ENSAIOS</title>
     <style>
-        :root { 
-            --bg: #0b0f1a; --card: #161e2e; --primary: #38bdf8; --success: #10b981; 
-            --error: #f43f5e; --text: #e2e8f0; --border: #2d3748; 
-        }
-        body { font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 30px; }
+        :root { --p: #0ea5e9; --bg: #020617; --c: #1e293b; --t: #f8fafc; --s: #22c55e; --e: #ef4444; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--t); margin: 0; padding: 20px; line-height: 1.5; }
+        .container { max-width: 1100px; margin: 0 auto; }
         
-        /* Cabeçalho Profissional */
-        header { border-bottom: 4px solid var(--primary); padding-bottom: 20px; margin-bottom: 40px; display: flex; justify-content: space-between; align-items: flex-end; }
-        .logo-area h1 { font-size: 2.5rem; font-weight: 900; margin: 0; color: var(--primary); letter-spacing: -1px; }
-        .logo-area p { margin: 0; opacity: 0.7; font-size: 0.9rem; text-transform: uppercase; }
-
-        .btn-tool { background: var(--border); border: none; color: white; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .btn-tool:hover { background: var(--primary); color: #000; }
-
-        /* Dashboard e Seções */
-        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
-        .card-link { background: var(--card); padding: 30px; border-radius: 15px; border: 1px solid var(--border); text-align: center; cursor: pointer; transition: 0.3s; }
-        .card-link:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .card-link i { font-size: 2.5rem; display: block; margin-bottom: 15px; }
-
-        .glass-box { background: var(--card); border-radius: 12px; padding: 25px; border: 1px solid var(--border); margin-bottom: 30px; }
+        /* Identidade Visual */
+        header { border-left: 5px solid var(--p); padding-left: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
+        .titulo { font-size: 24px; font-weight: 900; letter-spacing: 2px; color: var(--p); text-transform: uppercase; }
+        
+        /* Estrutura de Cards */
+        .glass { background: var(--c); border-radius: 12px; padding: 25px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.5); }
         .section { display: none; }
-        .active { display: block; animation: fadeIn 0.4s ease; }
+        .active { display: block; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Formulários e Inputs */
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-        .input-group { margin-bottom: 15px; }
-        label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 8px; }
-        input, select, textarea { width: 100%; padding: 12px; background: #05070a; border: 1px solid var(--border); color: white; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box; }
+        /* Menu Principal */
+        .grid-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .card-btn { background: var(--c); padding: 30px; border-radius: 15px; text-align: center; cursor: pointer; border: 1px solid #334155; transition: 0.2s; }
+        .card-btn:hover { border-color: var(--p); background: #2d3a4f; }
+        .card-btn i { font-size: 30px; display: block; margin-bottom: 10px; font-style: normal; }
+
+        /* Formulários e Tabelas */
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 15px; }
+        label { display: block; font-size: 11px; font-weight: 800; color: var(--p); text-transform: uppercase; margin-bottom: 5px; }
+        input, select, textarea { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; color: white; border-radius: 8px; font-size: 14px; }
         
-        .multi-check { background: #05070a; border: 1px solid var(--border); border-radius: 8px; padding: 15px; max-height: 150px; overflow-y: auto; }
-        .multi-check label { color: white; text-transform: none; display: flex; align-items: center; gap: 10px; font-weight: 400; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #334155; text-align: center; font-size: 13px; }
+        th { background: #020617; color: var(--p); }
+        
+        .badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 10px; border: 1px solid transparent; }
+        .badge-s { background: rgba(34, 197, 94, 0.1); color: var(--s); border-color: var(--s); }
+        .badge-e { background: rgba(239, 68, 68, 0.1); color: var(--e); border-color: var(--e); }
 
-        /* Tabelas de Ensaio */
-        table { width: 100%; border-collapse: collapse; margin-top: 25px; background: rgba(0,0,0,0.3); }
-        th, td { padding: 16px; border: 1px solid var(--border); text-align: center; }
-        th { background: #0f172a; color: var(--primary); font-size: 0.8rem; }
-        .val-inf { display: flex; gap: 8px; }
-
-        .badge { padding: 4px 10px; border-radius: 4px; font-weight: 800; font-size: 0.7rem; }
-        .badge-ok { background: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid var(--success); }
-        .badge-error { background: rgba(244, 63, 94, 0.2); color: var(--error); border: 1px solid var(--error); }
-
-        /* Botões de Ação */
-        .action-bar { margin-top: 40px; display: flex; gap: 15px; }
-        .btn-main { flex: 1; padding: 20px; border-radius: 10px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 1rem; }
-        .btn-save { background: var(--success); color: #000; }
-        .btn-print { background: var(--primary); color: #000; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* Rodapé e Impressão */
+        .footer-tools { border-top: 1px solid #334155; padding-top: 20px; margin-top: 40px; text-align: center; }
+        .btn-main { padding: 15px 40px; border-radius: 8px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; margin: 5px; }
+        .btn-p { background: var(--p); color: #000; }
+        .btn-g { background: var(--s); color: #000; }
 
         @media print {
             .no-print { display: none !important; }
-            .section { display: block !important; }
-            body { background: white; color: black; }
-            .glass-box { border: 1px solid #000; background: white; color: black; }
-            th, td { border: 1px solid #000; color: black; }
-            .badge { border: 1px solid #000; color: black; background: transparent; }
-            header { border-bottom: 4px solid black; }
+            .section { display: block !important; opacity: 1 !important; }
+            body { background: white; color: black; padding: 0; }
+            .glass { border: 1px solid black; background: white; box-shadow: none; margin-bottom: 15px; }
+            th, td { border: 1px solid black; color: black; }
+            input, select { border: none; color: black; font-weight: bold; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <header>
-        <div class="logo-area">
-            <h1>ENSAIOS ALPHA</h1>
-            <p>Relatório Técnico de Comissionamento e Manutenção</p>
-        </div>
-        <button class="btn-tool no-print" onclick="abrirS('CONFIG')">⚙️ CONFIGURAÇÕES</button>
+    <header class="no-print">
+        <div class="titulo">ENSAIOS ALPHA <span style="font-size: 12px; opacity: 0.6;">v17.0</span></div>
+        <button onclick="abrirS('CONFIG')" style="background:none; border:1px solid var(--p); color:var(--p); padding:5px 15px; border-radius:5px; cursor:pointer;">CONFIGURAÇÕES</button>
     </header>
 
-    <div id="secHOME" class="dashboard no-print active">
-        <div class="card-link" onclick="abrirS('MEG')"><i>💥</i><span>MEGGER<br>(ISOLAÇÃO)</span></div>
-        <div class="card-link" onclick="abrirS('TTR')"><i>⚡</i><span>TTR<br>(RELAÇÃO)</span></div>
-        <div class="card-link" onclick="abrirS('MICRO')"><i>📟</i><span>MICROOHMÍMETRO<br>(RESISTÊNCIA)</span></div>
-        <div class="card-link" onclick="abrirS('HIST')"><i>📜</i><span>HISTÓRICO DE<br>ENSAIOS</span></div>
+    <div id="secHOME" class="grid-menu no-print active">
+        <div class="card-btn" onclick="abrirS('MEG')"><i>⚡</i><span>ISOLAÇÃO<br>(MEGGER)</span></div>
+        <div class="card-btn" onclick="abrirS('TTR')"><i>📊</i><span>RELAÇÃO<br>(TTR)</span></div>
+        <div class="card-btn" onclick="abrirS('MICRO')"><i>📟</i><span>RESISTÊNCIA<br>(MICRO)</span></div>
+        <div class="card-btn" onclick="window.print()"><i>🖨️</i><span>GERAR<br>LAUDO PDF</span></div>
     </div>
 
-    <div id="identAtivo" class="glass-box section">
-        <label>🔍 Identificação do Equipamento</label>
+    <div id="dadosAtivo" class="section glass">
+        <label>📝 Identificação Geral do Ativo</label>
         <div class="form-grid">
-            <div class="input-group"><label>Tag / Patrimônio</label><input type="text" id="tagTrafo" placeholder="Ex: TR-02"></div>
-            <div class="input-group"><label>Localidade</label><select id="selLocal"></select></div>
-            <div class="input-group"><label>Data do Ensaio</label><input type="date" id="dataEnsaio"></div>
-            <div class="input-group"><label>Temp. Ambiente (°C)</label><input type="number" id="tempAmb" value="25"></div>
+            <div><label>Tag/Identificação</label><input type="text" id="tagAtivo"></div>
+            <div><label>Local / SE</label><select id="localAtivo"></select></div>
+            <div><label>Data Ensaio</label><input type="date" id="dataAtivo"></div>
+            <div><label>Temp. Óleo (°C)</label><input type="number" id="tempOleo" value="25"></div>
         </div>
-        <div class="input-group">
-            <label>Equipe Técnica Responsável</label>
-            <div id="checkEquipe" class="multi-check"></div>
-        </div>
-    </div>
-
-    <div id="secMEG" class="section">
-        <div class="glass-box">
-            <label style="font-size: 1.1rem; color: var(--primary);">Ensaios de Resistência de Isolação</label>
-            <div class="form-grid no-print" style="margin-top: 20px;">
-                <div class="input-group">
-                    <label>Ponto de Teste</label>
-                    <select id="megPonto">
-                        <option>AT + BT x TERRA</option><option>AT x BT + TERRA</option>
-                        <option>BT x AT + TERRA</option><option>AT x BT</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>Tensão (kV)</label>
-                    <select id="megV">
-                        <option>0.5 kV</option><option>1.0 kV</option><option>2.5 kV</option><option>5.0 kV</option><option>10 kV</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>Escala</label>
-                    <select id="megU"><option>GΩ</option><option>MΩ</option><option>TΩ</option></select>
-                </div>
-            </div>
-            
-            <div class="form-grid no-print">
-                <div class="input-group"><label>Leitura 15s (IA)</label><input type="text" id="r15"></div>
-                <div class="input-group"><label>Leitura 1min (IP)</label><input type="text" id="r60"></div>
-                <div class="input-group"><label>Leitura 10min</label>
-                    <div class="val-inf">
-                        <input type="text" id="r10" placeholder="Valor">
-                        <button class="btn-tool" onclick="document.getElementById('r10').value='∞'">∞</button>
-                    </div>
-                </div>
-            </div>
-            <button class="btn-main btn-print no-print" onclick="calcularMegger()">REGISTRAR E ANALISAR ISOLAÇÃO</button>
-
-            <table>
-                <thead>
-                    <tr><th>Ponto</th><th>Tensão</th><th>R 60s</th><th>R 10min</th><th>IP</th><th>IA (DAR)</th><th>Status</th></tr>
-                </thead>
-                <tbody id="tabMegger"></tbody>
-            </table>
+        <div style="margin-top:20px;">
+            <label>Equipe Técnica (Selecionar Presentes)</label>
+            <div id="listaEquipe" style="background:#0f172a; padding:15px; border-radius:8px; display:grid; grid-template-columns: 1fr 1fr; gap:10px;"></div>
         </div>
     </div>
 
-    <div id="secCONFIG" class="section no-print">
-        <div class="glass-box">
-            <label>⚙️ Gerenciamento de Dados Locais</label>
-            <div class="form-grid">
-                <div class="input-group"><label>Nome do Técnico</label><input type="text" id="addT"><button class="btn-tool" onclick="addDB('tecnicos','addT')">Adicionar</button></div>
-                <div class="input-group"><label>Nova Localidade</label><input type="text" id="addL"><button class="btn-tool" onclick="addDB('locais','addL')">Adicionar</button></div>
+    <div id="secMEG" class="section glass">
+        <label style="color:var(--p); font-size: 16px;">⚡ Ensaio de Resistência de Isolação</label>
+        <div class="form-grid no-print">
+            <div><label>Ponto</label><select id="mPonto"><option>AT x BT+T</option><option>BT x AT+T</option><option>AT x BT</option></select></div>
+            <div><label>V (kV)</label><select id="mVolt"><option>0.5</option><option>1.0</option><option>2.5</option><option>5.0</option><option>10</option></select></div>
+            <div><label>Escala</label><select id="mUnit"><option>GΩ</option><option>MΩ</option><option>TΩ</option></select></div>
+        </div>
+        <div class="form-grid no-print">
+            <div><label>15 seg (IA)</label><input type="number" id="r15"></div>
+            <div><label>1 min (IP)</label><input type="number" id="r60"></div>
+            <div><label>10 min</label>
+                <div style="display:flex; gap:5px;"><input type="text" id="r10"><button onclick="document.getElementById('r10').value='∞'" class="btn-p" style="padding:0 10px;">∞</button></div>
             </div>
         </div>
-        <button class="btn-main btn-ghost" onclick="abrirS('secHOME')">Voltar ao Menu</button>
+        <button class="btn-main btn-p no-print" style="width:100%" onclick="addMegger()">REGISTRAR LEITURA</button>
+
+        <table>
+            <thead><tr><th>Ponto</th><th>Tensão</th><th>1 Min</th><th>10 Min</th><th>IP / IA</th><th>Status Técnico</th></tr></thead>
+            <tbody id="tabMegger"></tbody>
+        </table>
     </div>
 
-    <div id="botoesFinais" class="action-bar section no-print">
-        <button class="btn-main btn-save" onclick="salvarRelatorio()">💾 Salvar no Histórico</button>
-        <button class="btn-main btn-print" onclick="window.print()">🖨️ Gerar PDF do Relatório</button>
+    <div id="secCONFIG" class="section glass">
+        <button onclick="voltar()" class="btn-p" style="padding:5px 15px; margin-bottom:20px;">← VOLTAR</button>
+        <label>⚙️ Gerenciamento de Campo</label>
+        <div class="form-grid">
+            <div><label>Novo Técnico</label><input type="text" id="addTec"><button onclick="salvarCfg('tecnicos', 'addTec')" class="btn-main btn-p">Add</button></div>
+            <div><label>Nova SE/Local</label><input type="text" id="addLoc"><button onclick="salvarCfg('locais', 'addLoc')" class="btn-main btn-p">Add</button></div>
+        </div>
+    </div>
+
+    <div id="footerAcao" class="section footer-tools no-print">
+        <button class="btn-main btn-g" onclick="window.print()">FINALIZAR E GERAR LAUDO</button>
     </div>
 </div>
 
 <script>
-    // Banco de Dados Local (Simulado com localStorage)
-    let alphaData = JSON.parse(localStorage.getItem('alpha_v15_db')) || { tecnicos: [], locais: [], historico: [] };
+    let alphaDB = JSON.parse(localStorage.getItem('alpha_enterprise')) || { tecnicos: [], locais: [] };
 
     function abrirS(id) {
+        document.querySelectorAll('.section, #secHOME').forEach(s => s.classList.remove('active'));
+        document.getElementById('sec'+id).classList.add('active');
+        if(id !== 'CONFIG') {
+            document.getElementById('dadosAtivo').classList.add('active');
+            document.getElementById('footerAcao').classList.add('active');
+        }
+        render();
+    }
+
+    function voltar() {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.getElementById('secHOME').classList.remove('active');
-        document.getElementById(id).classList.add('active');
-        if(id !== 'CONFIG' && id !== 'HIST') {
-            document.getElementById('identAtivo').classList.add('active');
-            document.getElementById('botoesFinais').classList.add('active');
-        }
-        renderConfigs();
+        document.getElementById('secHOME').classList.add('active');
     }
 
-    function addDB(tipo, inputId) {
+    function salvarCfg(tipo, inputId) {
         const val = document.getElementById(inputId).value;
-        if(val) {
-            alphaData[tipo].push(val);
-            localStorage.setItem('alpha_v15_db', JSON.stringify(alphaData));
-            document.getElementById(inputId).value = '';
-            renderConfigs();
-        }
+        if(val) { alphaDB[tipo].push(val); localStorage.setItem('alpha_enterprise', JSON.stringify(alphaDB)); render(); document.getElementById(inputId).value=''; }
     }
 
-    function renderConfigs() {
-        document.getElementById('selLocal').innerHTML = alphaData.locais.map(l => `<option>${l}</option>`).join('');
-        document.getElementById('checkEquipe').innerHTML = alphaData.tecnicos.map(t => `<label><input type="checkbox" value="${t}"> ${t}</label>`).join('');
+    function render() {
+        document.getElementById('localAtivo').innerHTML = alphaDB.locais.map(l => `<option>${l}</option>`).join('');
+        document.getElementById('listaEquipe').innerHTML = alphaDB.tecnicos.map(t => `<label style="color:white; text-transform:none;"><input type="checkbox" value="${t}"> ${t}</label>`).join('');
     }
 
-    function calcularMegger() {
+    function addMegger() {
+        const p = document.getElementById('mPonto').value;
+        const v = document.getElementById('mVolt').value;
+        const u = document.getElementById('mUnit').value;
         const r15 = parseFloat(document.getElementById('r15').value);
         const r60 = parseFloat(document.getElementById('r60').value);
-        const r10val = document.getElementById('r10').value;
-        const esc = document.getElementById('megU').value;
-        
-        let ip = (r10val === '∞') ? 'IMENSURÁVEL' : (parseFloat(r10val) / r60).toFixed(2);
-        let ia = (r60 / r15).toFixed(2);
-        
-        let status = (ip === 'IMENSURÁVEL' || ip > 2.0) ? 'badge-ok' : 'badge-error';
-        let statusTxt = (status === 'badge-ok') ? 'APROVADO' : 'REVISAR';
+        const r10 = document.getElementById('r10').value;
 
-        const tr = `<tr>
-            <td>${document.getElementById('megPonto').value}</td>
-            <td>${document.getElementById('megV').value}</td>
-            <td>${r60} ${esc}</td>
-            <td>${r10val} ${esc}</td>
-            <td>${ip}</td>
-            <td>${ia}</td>
-            <td><span class="badge ${status}">${statusTxt}</span></td>
-        </tr>`;
-        document.getElementById('tabMegger').innerHTML += tr;
+        let ip = (r10 === '∞') ? 'EXC.' : (parseFloat(r10) / r60).toFixed(2);
+        let ia = (r60 / r15).toFixed(2);
+        let status = (ip === 'EXC.' || ip >= 1.5) ? 'badge-s' : 'badge-e';
+        let statusTxt = (status === 'badge-s') ? 'APROVADO' : 'CRÍTICO';
+
+        document.getElementById('tabMegger').innerHTML += `<tr><td>${p}</td><td>${v}kV</td><td>${r60}${u}</td><td>${r10}${u}</td><td>IP: ${ip}<br>IA: ${ia}</td><td><span class="badge ${status}">${statusTxt}</span></td></tr>`;
     }
 
-    window.onload = () => {
-        document.getElementById('dataEnsaio').valueAsDate = new Date();
-        renderConfigs();
-    };
+    window.onload = () => { render(); document.getElementById('dataAtivo').valueAsDate = new Date(); };
 </script>
 </body>
 </html>
