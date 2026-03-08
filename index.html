@@ -3,188 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALPHA - SISTEMA DE CAMPO</title>
+    <title>ENSAIOS ALPHA PRO</title>
     <style>
-        :root { --p: #0ea5e9; --bg: #0f172a; --c: #1e293b; --t: #f8fafc; --s: #22c55e; --e: #ef4444; }
-        body { font-family: sans-serif; background: var(--bg); color: var(--t); margin: 0; padding: 10px; }
+        :root { --p: #38bdf8; --bg: #0f172a; --c: #1e293b; --t: #f1f5f9; --s: #10b981; --e: #f43f5e; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--t); margin: 0; padding: 10px; }
+        header { background: var(--c); padding: 15px; border-radius: 8px; margin-bottom: 10px; border-bottom: 3px solid var(--p); display: flex; justify-content: space-between; align-items: center; }
         
-        /* Cabeçalho */
-        header { background: var(--c); padding: 15px; border-radius: 8px; margin-bottom: 15px; border-bottom: 3px solid var(--p); }
-        .titulo { font-weight: bold; font-size: 20px; color: var(--p); }
+        /* Menu */
+        .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn-menu { background: var(--c); border: 2px solid var(--p); padding: 25px 5px; border-radius: 12px; cursor: pointer; color: var(--p); font-weight: bold; text-align: center; text-transform: uppercase; font-size: 12px; }
 
-        /* Menu de Ícones (Dashboard) */
-        #menuPrincipal { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .botao-icone { 
-            background: var(--c); border: 1px solid var(--p); padding: 30px 10px; 
-            border-radius: 12px; text-align: center; cursor: pointer; color: var(--p);
-            font-weight: bold; font-size: 14px; text-transform: uppercase;
-        }
+        /* Telas */
+        .tela { display: none; background: var(--c); padding: 15px; border-radius: 12px; border: 1px solid #334155; margin-top: 10px; }
+        .ativa { display: block !important; }
 
-        /* Seções de Tela */
-        .tela { display: none; background: var(--c); padding: 15px; border-radius: 12px; margin-top: 10px; border: 1px solid #334155; }
-        .tela-ativa { display: block !important; }
-
-        /* Campos de Entrada */
-        .bloco { margin-bottom: 15px; }
-        label { display: block; font-size: 11px; color: var(--p); font-weight: bold; margin-bottom: 5px; }
-        input, select { width: 100%; padding: 12px; background: #020617; border: 1px solid #334155; color: white; border-radius: 8px; box-sizing: border-box; }
+        /* Inputs */
+        .bloco { margin-bottom: 12px; }
+        label { display: block; font-size: 10px; color: var(--p); font-weight: bold; margin-bottom: 4px; text-transform: uppercase; }
+        input, select { width: 100%; padding: 10px; background: #020617; border: 1px solid #334155; color: white; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
         
-        /* Tabelas */
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #020617; font-size: 12px; }
-        th, td { border: 1px solid #334155; padding: 10px; text-align: center; }
-        th { color: var(--p); background: #1e293b; }
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; }
 
-        /* Botões de Ação */
-        .btn { width: 100%; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .btn-add { background: var(--p); color: #000; }
-        .btn-voltar { background: #334155; color: white; width: auto; margin-bottom: 10px; padding: 8px 15px; }
+        /* Tabela */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 11px; background: #020617; }
+        th, td { border: 1px solid #475569; padding: 8px; text-align: center; }
+        th { background: #1e293b; color: var(--p); }
 
-        @media print {
-            .no-print { display: none !important; }
-            .tela { display: block !important; background: white; color: black; border: 1px solid black; }
-            th, td { border: 1px solid black; color: black; }
-        }
+        /* Status */
+        .status-ok { background: rgba(16, 185, 129, 0.2); color: var(--s); font-weight: bold; padding: 2px 5px; border-radius: 4px; }
+        .status-erro { background: rgba(244, 63, 94, 0.2); color: var(--e); font-weight: bold; padding: 2px 5px; border-radius: 4px; }
+
+        .btn-add { width: 100%; padding: 15px; background: var(--p); color: #000; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; margin-top: 10px; }
+        .btn-voltar { background: #475569; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 10px; font-weight: bold; }
+        
+        @media print { .no-print { display: none !important; } .tela { display: block !important; background: white; color: black; } th, td { border: 1px solid black; } }
     </style>
 </head>
 <body>
 
 <header class="no-print">
-    <div class="titulo">ENSAIOS ALPHA v17.5</div>
-    <button onclick="abrirTela('CONFIG')" style="float:right; margin-top:-25px; background:none; border:1px solid var(--p); color:var(--p); border-radius:4px; padding:4px 8px; cursor:pointer;">CONFIG</button>
+    <div><b style="font-size:18px">ENSAIOS ALPHA</b><br><small style="opacity:0.6">v18.0 - FIELD READY</small></div>
+    <button onclick="mudar('CONFIG')" style="background:none; border:1px solid var(--p); color:var(--p); border-radius:5px; padding:5px 10px;">CONFIG</button>
 </header>
 
-<div id="menuPrincipal" class="no-print">
-    <div class="botao-icone" onclick="abrirTela('MEGGER')">⚡<br>ISOLAÇÃO</div>
-    <div class="botao-icone" onclick="abrirTela('TTR')">📊<br>RELAÇÃO (TTR)</div>
-    <div class="botao-icone" onclick="window.print()">🖨️<br>GERAR PDF</div>
-    <div class="botao-icone" onclick="location.reload()">🔄<br>LIMPAR</div>
+<div id="menuHome" class="grid-menu no-print ativa">
+    <div class="btn-menu" onclick="mudar('MEG')">💥<br>ISOLAÇÃO</div>
+    <div class="btn-menu" onclick="mudar('TTR')">⚡<br>TTR</div>
+    <div class="btn-menu" onclick="mudar('MICRO')">📟<br>MICRO</div>
+    <div class="btn-menu" onclick="window.print()">🖨️<br>LAUDO PDF</div>
 </div>
 
-<div id="sessaoDados" class="tela">
-    <div class="bloco">
-        <label>TAG EQUIPAMENTO</label>
-        <input type="text" id="tagTrafo" placeholder="Ex: TR-01">
+<div id="blocoDados" class="tela">
+    <div class="row">
+        <div class="bloco"><label>Equipamento (TAG)</label><input type="text" id="tag"></div>
+        <div class="bloco"><label>Localidade</label><select id="listaLocais"></select></div>
     </div>
-    <div class="bloco">
-        <label>LOCAL / SUBESTAÇÃO</label>
-        <select id="selLocal"></select>
-    </div>
-    <div class="bloco">
-        <label>TÉCNICOS NO LOCAL</label>
-        <div id="listaCheckTec" style="background:#020617; padding:10px; border-radius:8px;"></div>
-    </div>
+    <div class="bloco"><label>Técnicos Presentes</label><div id="listaTecnicos" style="background:#020617; padding:10px; border-radius:8px; display:grid; grid-template-columns:1fr 1fr;"></div></div>
 </div>
 
-<div id="telaMEGGER" class="tela">
-    <button class="btn-voltar no-print" onclick="voltarMenu()">← VOLTAR</button>
-    <label style="font-size:16px; margin-bottom:15px;">ENSAIO DE ISOLAÇÃO</label>
+<div id="secMEG" class="tela">
+    <button class="btn-voltar no-print" onclick="voltar()">← VOLTAR</button>
+    <label style="font-size:14px; color:var(--p)">Teste de Resistência de Isolação</label>
     
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;" class="no-print">
-        <div class="bloco"><label>PONTO</label><select id="mPonto"><option>AT x BT+T</option><option>BT x AT+T</option><option>AT x BT</option></select></div>
-        <div class="bloco"><label>TENSÃO (kV)</label><select id="mKV"><option>0.5</option><option>1.0</option><option>2.5</option><option>5.0</option><option>10</option></select></div>
+    <div class="row no-print" style="margin-top:10px">
+        <div class="bloco">
+            <label>Ponto de Ensaio</label>
+            <select id="mPonto">
+                <option>ENTRADA x SAÍDA</option>
+                <option>ENTRADA x CARCAÇA</option>
+                <option>SAÍDA x CARCAÇA</option>
+            </select>
+        </div>
+        <div class="bloco">
+            <label>Tensão Aplicada</label>
+            <select id="mTensao"><option>500V</option><option>1kV</option><option>2.5kV</option><option>5kV</option></select>
+        </div>
     </div>
 
-    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:5px;" class="no-print">
-        <div class="bloco"><label>15s (IA)</label><input type="number" id="v15"></div>
-        <div class="bloco"><label>1min (IP)</label><input type="number" id="v60"></div>
-        <div class="bloco"><label>10min</label><input type="text" id="v10"></div>
+    <div class="row-3 no-print">
+        <div class="bloco"><label>30s</label><input type="text" id="r30"></div>
+        <div class="bloco"><label>60s</label><input type="text" id="r60"></div>
+        <div class="bloco"><label>120s (2m)</label>
+            <div style="display:flex; gap:2px"><input type="text" id="r120"><button onclick="document.getElementById('r120').value='∞'" style="background:#334155; color:white; border:none; border-radius:4px; padding:0 8px">∞</button></div>
+        </div>
     </div>
-    <button class="btn btn-add no-print" onclick="addLeituraMegger()">+ REGISTRAR NO LAUDO</button>
+
+    <div class="row no-print">
+        <div class="bloco"><label>Unidade</label><select id="mUnidade"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select></div>
+        <div class="bloco"><label>Ref. Mínima</label><input type="number" id="mRef" placeholder="Ex: 2000"></div>
+    </div>
+
+    <button class="btn-add no-print" onclick="addMegger()">REGISTRAR ENSAIO</button>
 
     <table>
-        <thead>
-            <tr><th>Ponto</th><th>kV</th><th>1 min</th><th>10 min</th><th>IP/IA</th></tr>
-        </thead>
-        <tbody id="tabResutMegger"></tbody>
+        <thead><tr><th>Ponto</th><th>Tensão</th><th>30s</th><th>60s</th><th>120s</th><th>Status</th></tr></thead>
+        <tbody id="tabMeg"></tbody>
     </table>
 </div>
 
-<div id="telaCONFIG" class="tela">
-    <button class="btn-voltar" onclick="voltarMenu()">← VOLTAR</button>
-    <div class="bloco">
-        <label>CADASTRAR TÉCNICO</label>
-        <input type="text" id="novoTec">
-        <button class="btn btn-add" onclick="salvarInfo('tecnicos', 'novoTec')">SALVAR TÉCNICO</button>
+<div id="secTTR" class="tela">
+    <button class="btn-voltar no-print" onclick="voltar()">← VOLTAR</button>
+    <label style="font-size:14px">Relação de Transformação (TTR)</label>
+    <div class="row-3 no-print" style="margin-top:10px">
+        <div class="bloco"><label>Fase A</label><input type="number" id="ttrA"></div>
+        <div class="bloco"><label>Fase B</label><input type="number" id="ttrB"></div>
+        <div class="bloco"><label>Fase C</label><input type="number" id="ttrC"></div>
     </div>
-    <div class="bloco">
-        <label>CADASTRAR LOCAL</label>
-        <input type="text" id="novoLoc">
-        <button class="btn btn-add" onclick="salvarInfo('locais', 'novoLoc')">SALVAR LOCAL</button>
+    <button class="btn-add no-print" onclick="addTTR()">CADASTRAR TTR</button>
+    <table id="tabTTR"><thead><tr><th>Fase A</th><th>Fase B</th><th>Fase C</th></tr></thead><tbody></tbody></table>
+</div>
+
+<div id="secMICRO" class="tela">
+    <button class="btn-voltar no-print" onclick="voltar()">← VOLTAR</button>
+    <label style="font-size:14px">Resistência Ôhmica (Microohmímetro)</label>
+    <div class="row-3 no-print" style="margin-top:10px">
+        <div class="bloco"><label>Ponto</label><input type="text" id="micP" placeholder="H1-H2"></div>
+        <div class="bloco"><label>Valor (mΩ)</label><input type="number" id="micV"></div>
+        <div class="bloco"><label>Temp (°C)</label><input type="number" id="micT" value="25"></div>
     </div>
+    <button class="btn-add no-print" onclick="addMicro()">CADASTRAR MICRO</button>
+    <table id="tabMicro"><thead><tr><th>Ponto</th><th>Leitura</th><th>Temp</th></tr></thead><tbody></tbody></table>
+</div>
+
+<div id="secCONFIG" class="tela">
+    <button class="btn-voltar" onclick="voltar()">← VOLTAR</button>
+    <div class="bloco"><label>Técnico</label><input type="text" id="cfgT"><button onclick="saveCfg('tecnicos','cfgT')" class="btn-add" style="padding:5px">Add</button></div>
+    <div class="bloco"><label>Local</label><input type="text" id="cfgL"><button onclick="saveCfg('locais','cfgL')" class="btn-add" style="padding:5px">Add</button></div>
 </div>
 
 <script>
-    // Banco de Dados Local
-    let banco = JSON.parse(localStorage.getItem('alpha_v17')) || { tecnicos: [], locais: [] };
+    let db = JSON.parse(localStorage.getItem('alpha_pro_db')) || { tecnicos: [], locais: [] };
 
-    // FUNÇÃO PARA TROCAR DE TELA (A que estava falhando antes)
-    function abrirTela(idTela) {
-        // Esconde o menu
-        document.getElementById('menuPrincipal').style.display = 'none';
-        
-        // Esconde todas as telas
-        const telas = document.getElementsByClassName('tela');
-        for (let i = 0; i < telas.length; i++) {
-            telas[i].classList.remove('tela-ativa');
-        }
-
-        // Mostra a tela escolhida
-        document.getElementById('tela' + idTela).classList.add('tela-ativa');
-        
-        // Se não for a tela de config, mostra os dados do equipamento
-        if(idTela !== 'CONFIG') {
-            document.getElementById('sessaoDados').classList.add('tela-ativa');
-        }
-        
-        carregarListas();
+    function mudar(tela) {
+        document.getElementById('menuHome').classList.remove('ativa');
+        document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
+        document.getElementById('sec' + tela).classList.add('ativa');
+        if(tela !== 'CONFIG') document.getElementById('blocoDados').classList.add('ativa');
+        render();
     }
 
-    function voltarMenu() {
-        document.getElementById('menuPrincipal').style.display = 'grid';
-        const telas = document.getElementsByClassName('tela');
-        for (let i = 0; i < telas.length; i++) {
-            telas[i].classList.remove('tela-ativa');
-        }
+    function voltar() {
+        document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
+        document.getElementById('menuHome').classList.add('ativa');
     }
 
-    function salvarInfo(tipo, inputId) {
-        const valor = document.getElementById(inputId).value;
-        if(valor) {
-            banco[tipo].push(valor);
-            localStorage.setItem('alpha_v17', JSON.stringify(banco));
-            document.getElementById(inputId).value = '';
-            carregarListas();
-            alert('Salvo com sucesso!');
-        }
+    function saveCfg(tipo, id) {
+        const v = document.getElementById(id).value;
+        if(v) { db[tipo].push(v); localStorage.setItem('alpha_pro_db', JSON.stringify(db)); render(); document.getElementById(id).value=''; }
     }
 
-    function carregarListas() {
-        // Carrega Locais no Select
-        const sel = document.getElementById('selLocal');
-        sel.innerHTML = banco.locais.map(l => `<option>${l}</option>`).join('');
-
-        // Carrega Técnicos com Checkbox
-        const divTec = document.getElementById('listaCheckTec');
-        divTec.innerHTML = banco.tecnicos.map(t => `<div style="margin-bottom:5px;"><input type="checkbox" value="${t}"> ${t}</div>`).join('');
+    function render() {
+        document.getElementById('listaLocais').innerHTML = db.locais.map(l => `<option>${l}</option>`).join('');
+        document.getElementById('listaTecnicos').innerHTML = db.tecnicos.map(t => `<label style="text-transform:none; font-size:12px; display:flex; gap:5px; margin-bottom:5px"><input type="checkbox" value="${t}">${t}</label>`).join('');
     }
 
-    function addLeituraMegger() {
+    function addMegger() {
         const p = document.getElementById('mPonto').value;
-        const kv = document.getElementById('mKV').value;
-        const r15 = parseFloat(document.getElementById('v15').value);
-        const r60 = parseFloat(document.getElementById('v60').value);
-        const r10 = document.getElementById('v10').value;
+        const v = document.getElementById('mTensao').value;
+        const r30 = document.getElementById('r30').value;
+        const r60 = document.getElementById('r60').value;
+        const r120 = document.getElementById('r120').value;
+        const uni = document.getElementById('mUnidade').value;
+        const ref = parseFloat(document.getElementById('mRef').value);
 
-        let ip = (r10 === '∞' || r10 === 'inf') ? 'EXC' : (parseFloat(r10)/r60).toFixed(2);
-        let ia = (r60/r15).toFixed(2);
+        // Validação Aprovado/Reprovado baseada no valor de 60s
+        let valorNum = (r60 === '∞') ? 99999999 : parseFloat(r60);
+        let status = (valorNum >= ref) ? '<span class="status-ok">APROVADO</span>' : '<span class="status-erro">REPROVADO</span>';
 
-        const html = `<tr><td>${p}</td><td>${kv}</td><td>${r60} GΩ</td><td>${r10} GΩ</td><td>IP: ${ip}<br>IA: ${ia}</td></tr>`;
-        document.getElementById('tabResutMegger').innerHTML += html;
+        const row = `<tr><td>${p}</td><td>${v}</td><td>${r30}${uni}</td><td>${r60}${uni}</td><td>${r120}${uni}</td><td>${status}</td></tr>`;
+        document.getElementById('tabMeg').innerHTML += row;
     }
 
-    // Inicia o sistema carregando dados salvos
-    window.onload = carregarListas;
-</script>
+    function addTTR() {
+        const row = `<tr><td>${document.getElementById('ttrA').value}</td><td>${document.getElementById('ttrB').value}</td><td>${document.getElementById('ttrC').value}</td></tr>`;
+        document.getElementById('tabTTR').querySelector('tbody').innerHTML += row;
+    }
 
+    function addMicro() {
+        const row = `<tr><td>${document.getElementById('micP').value}</td><td>${document.getElementById('micV').value} mΩ</td><td>${document.getElementById('micT').value}°C</td></tr>`;
+        document.getElementById('tabMicro').querySelector('tbody').innerHTML += row;
+    }
+
+    window.onload = render;
+</script>
 </body>
 </html>
