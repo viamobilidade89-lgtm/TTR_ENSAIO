@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENSAIO PRO EVOLUTION v29</title>
+    <title>ENSAIO PRO EVOLUTION v30</title>
     <style>
         :root { --p: #0284c7; --bg: #ffffff; --t: #000; --re: #dc2626; --ap: #16a34a; }
         body { font-family: sans-serif; background: var(--bg); color: var(--t); margin: 0; padding: 5px; }
         
         .main-title { text-align: center; color: var(--p); font-weight: 900; font-size: 18px; margin: 10px 0; text-transform: uppercase; }
         
-        header { display: flex; justify-content: space-between; align-items: center; padding: 5px 10px; background: #f1f5f9; border-radius: 8px; border: 1px solid #cbd5e1; }
-        #btnPDFGlobal { width: 100%; background: #000; color: #fff; border: none; border-radius: 8px; padding: 12px; font-weight: bold; margin: 8px 0; font-size: 14px; display: none; cursor: pointer; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 5px 10px; background: #f1f5f9; border-radius: 8px; border: 1px solid #cbd5e1; margin-bottom: 5px; }
+        
+        /* Botão PDF no Final */
+        #btnPDFGlobal { width: 100%; background: #000; color: #fff; border: none; border-radius: 8px; padding: 15px; font-weight: bold; margin: 20px 0; font-size: 14px; display: none; cursor: pointer; text-transform: uppercase; }
         
         .tela { display: none; padding: 10px; border: 1px solid #94a3b8; border-radius: 8px; margin-top: 5px; background: #fff; }
         .ativa { display: block !important; }
@@ -51,11 +53,9 @@
 
 <header class="no-print">
     <button onclick="voltar()" id="btnVoltar" style="display:none; background:#64748b; color:white; border:none; padding:8px 12px; border-radius:5px;">← VOLTAR</button>
-    <b>v29.0</b>
+    <b>v30.0</b>
     <button onclick="mudar('CONFIG')" style="background:#fff; border:1px solid #94a3b8; padding:8px; border-radius:6px;">⚙️</button>
 </header>
-
-<button onclick="window.print()" id="btnPDFGlobal" class="no-print">🖨️ GERAR RELATÓRIO PDF</button>
 
 <div id="menuHome" class="grid-menu no-print ativa">
     <div class="btn-menu" onclick="mudar('MEG')"><span>⚡</span> MEGGER</div>
@@ -96,7 +96,7 @@
         <div class="row-ensaio"><input type="text" id="r120" inputmode="decimal" placeholder="120s"><select id="u120"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select><button class="btn-inf" onclick="setInf('r120')">∞</button></div>
         <button class="btn-add" onclick="addMegger()">⚡ ADICIONAR AO LAUDO</button>
     </div>
-    <h3>⚡ ENSAIO DE ISOLAMENTO (MEGGER)</h3>
+    <h3 class="tem-dados">⚡ ENSAIO DE ISOLAMENTO (MEGGER)</h3>
     <table id="tabMeg">
         <thead><tr><th>Ponto</th><th>V</th><th>30s</th><th>60s</th><th>120s</th><th>Status</th><th class="no-print">X</th></tr></thead>
         <tbody></tbody>
@@ -113,7 +113,7 @@
         </div>
         <button class="btn-add" onclick="addTTR()">📊 ADICIONAR AO LAUDO</button>
     </div>
-    <h3>📊 RELAÇÃO DE TRANSFORMAÇÃO (TTR)</h3>
+    <h3 class="tem-dados">📊 RELAÇÃO DE TRANSFORMAÇÃO (TTR)</h3>
     <table id="tabTTR"><thead><tr><th>Nominal</th><th>A</th><th>B</th><th>C</th><th>Erro%</th><th class="no-print">X</th></tr></thead><tbody></tbody></table>
 </div>
 
@@ -126,9 +126,11 @@
         <label>VALOR LIDO (mΩ)</label><input type="text" id="micV" inputmode="decimal">
         <button class="btn-add" onclick="addMicro()">📟 ADICIONAR AO LAUDO</button>
     </div>
-    <h3>📟 RESISTÊNCIA ÔHMICA (MICRO)</h3>
+    <h3 class="tem-dados">📟 RESISTÊNCIA ÔHMICA (MICRO)</h3>
     <table id="tabMicro"><thead><tr><th>Ponto</th><th>Lido</th><th>@20°C</th><th class="no-print">X</th></tr></thead><tbody></tbody></table>
 </div>
+
+<button onclick="window.print()" id="btnPDFGlobal" class="no-print">🖨️ GERAR RELATÓRIO PDF</button>
 
 <div id="secCONFIG" class="tela config-area">
     <button onclick="voltar()" class="btn-add" style="background:#555;">← VOLTAR</button>
@@ -139,7 +141,7 @@
 </div>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('alpha_v29_db')) || { tecnicos: [], locais: [] };
+    let db = JSON.parse(localStorage.getItem('alpha_v30_db')) || { tecnicos: [], locais: [] };
     let selecionados = [];
 
     function mudar(t) {
@@ -163,7 +165,7 @@
 
     function salvar(tipo, id) {
         const v = document.getElementById(id).value;
-        if(v) { db[tipo].push(v); localStorage.setItem('alpha_v29_db', JSON.stringify(db)); document.getElementById(id).value=''; render(); }
+        if(v) { db[tipo].push(v); localStorage.setItem('alpha_v30_db', JSON.stringify(db)); document.getElementById(id).value=''; render(); }
     }
 
     function render() {
