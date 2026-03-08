@@ -3,21 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENSAIO PRO EVOLUTION v28</title>
+    <title>ENSAIO PRO EVOLUTION v29</title>
     <style>
         :root { --p: #0284c7; --bg: #ffffff; --t: #000; --re: #dc2626; --ap: #16a34a; }
         body { font-family: sans-serif; background: var(--bg); color: var(--t); margin: 0; padding: 5px; }
         
         .main-title { text-align: center; color: var(--p); font-weight: 900; font-size: 18px; margin: 10px 0; text-transform: uppercase; }
         
-        /* Cabeçalho e Botão PDF */
         header { display: flex; justify-content: space-between; align-items: center; padding: 5px 10px; background: #f1f5f9; border-radius: 8px; border: 1px solid #cbd5e1; }
         #btnPDFGlobal { width: 100%; background: #000; color: #fff; border: none; border-radius: 8px; padding: 12px; font-weight: bold; margin: 8px 0; font-size: 14px; display: none; cursor: pointer; }
         
         .tela { display: none; padding: 10px; border: 1px solid #94a3b8; border-radius: 8px; margin-top: 5px; background: #fff; }
         .ativa { display: block !important; }
         
-        /* Menu Principal com Botões Grandes */
         .grid-menu { display: grid; grid-template-columns: 1fr; gap: 12px; padding: 10px; }
         .btn-menu { background: var(--p); color: white; border: none; padding: 25px; border-radius: 12px; font-size: 16px; font-weight: bold; display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .btn-menu span { font-size: 30px; }
@@ -36,7 +34,6 @@
         .status-repro { background: var(--re) !important; color: white !important; font-weight: bold; }
         .status-aprov { background: var(--ap) !important; color: white !important; font-weight: bold; }
 
-        /* REGRAS DE IMPRESSÃO PDF */
         @media print {
             .no-print, #poolTecnicos, .btn-inf, .btn-add, .btn-menu, header, #btnPDFGlobal, .config-area { display: none !important; }
             .tela { display: none; border: none !important; padding: 0; margin: 0; }
@@ -54,7 +51,7 @@
 
 <header class="no-print">
     <button onclick="voltar()" id="btnVoltar" style="display:none; background:#64748b; color:white; border:none; padding:8px 12px; border-radius:5px;">← VOLTAR</button>
-    <b>v28.0</b>
+    <b>v29.0</b>
     <button onclick="mudar('CONFIG')" style="background:#fff; border:1px solid #94a3b8; padding:8px; border-radius:6px;">⚙️</button>
 </header>
 
@@ -76,14 +73,19 @@
         <div id="poolTecnicos" style="background:#f1f5f9; padding:8px; border-radius:8px; border:1px solid #cbd5e1; margin-bottom: 5px;"></div>
     </div>
     <label>EQUIPE TÉCNICA ESCALADA</label>
-    <div id="tecsSelecionados" style="font-weight: bold; margin-top: 5px; font-size: 13px; color: #333;"></div>
+    <div id="tecsSelecionados" style="font-weight: bold; margin-top: 5px; font-size: 13px;"></div>
 </div>
 
 <div id="secMEG" class="tela">
     <div class="no-print">
-        <label>CONEXÃO E TENSÃO</label>
+        <label>CONEXÃO</label>
         <div class="row-ensaio" style="grid-template-columns: 1fr 80px;">
-            <select id="mPonto"><option>ENTRADA x SAÍDA</option><option>ENTRADA x CARCAÇA</option><option>SAÍDA x CARCAÇA</option></select>
+            <select id="mPonto">
+                <option>ENTRADA x SAÍDA</option>
+                <option>ENTRADA x CARCAÇA</option>
+                <option>SAÍDA x CARCAÇA</option>
+                <option>CAMIS</option>
+            </select>
             <select id="mTensao"><option>500V</option><option>1kV</option><option>2.5kV</option><option>5kV</option></select>
         </div>
         <label>REFERÊNCIA MÍNIMA</label>
@@ -104,8 +106,7 @@
 <div id="secTTR" class="tela">
     <div class="no-print">
         <label>RELAÇÃO NOMINAL</label><input type="text" id="ttrNom" inputmode="decimal">
-        <label>VALORES LIDOS POR FASE</label>
-        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:5px;">
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:5px; margin-top:5px;">
             <input type="text" id="ttrA" inputmode="decimal" placeholder="Fase A">
             <input type="text" id="ttrB" inputmode="decimal" placeholder="Fase B">
             <input type="text" id="ttrC" inputmode="decimal" placeholder="Fase C">
@@ -119,8 +120,8 @@
 <div id="secMICRO" class="tela">
     <div class="no-print">
         <div style="display:grid; grid-template-columns: 1fr 80px; gap:10px;">
-            <div><label>PONTO</label><input type="text" id="micP" placeholder="ex: H1-H2"></div>
-            <div><label>TEMP °C</label><input type="text" id="micT" value="25" inputmode="numeric"></div>
+            <input type="text" id="micP" placeholder="Ponto (ex: H1-H2)">
+            <input type="text" id="micT" value="25" inputmode="numeric">
         </div>
         <label>VALOR LIDO (mΩ)</label><input type="text" id="micV" inputmode="decimal">
         <button class="btn-add" onclick="addMicro()">📟 ADICIONAR AO LAUDO</button>
@@ -130,7 +131,7 @@
 </div>
 
 <div id="secCONFIG" class="tela config-area">
-    <button onclick="voltar()" class="btn-add" style="background:#555; margin-bottom: 10px;">← VOLTAR</button>
+    <button onclick="voltar()" class="btn-add" style="background:#555;">← VOLTAR</button>
     <label>CADASTRAR TÉCNICO</label>
     <div class="row-ensaio" style="grid-template-columns: 1fr 70px;"><input type="text" id="cfgT"><button onclick="salvar('tecnicos','cfgT')" style="background:var(--ap); color:white; border:none; border-radius:4px;">SALVAR</button></div>
     <label>CADASTRAR LOCAL</label>
@@ -138,7 +139,7 @@
 </div>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('alpha_v28_db')) || { tecnicos: [], locais: [] };
+    let db = JSON.parse(localStorage.getItem('alpha_v29_db')) || { tecnicos: [], locais: [] };
     let selecionados = [];
 
     function mudar(t) {
@@ -162,7 +163,7 @@
 
     function salvar(tipo, id) {
         const v = document.getElementById(id).value;
-        if(v) { db[tipo].push(v); localStorage.setItem('alpha_v28_db', JSON.stringify(db)); document.getElementById(id).value=''; render(); }
+        if(v) { db[tipo].push(v); localStorage.setItem('alpha_v29_db', JSON.stringify(db)); document.getElementById(id).value=''; render(); }
     }
 
     function render() {
@@ -211,7 +212,7 @@
         const v = parseFloat(document.getElementById('micV').value.replace(',','.'));
         const t = parseFloat(document.getElementById('micT').value);
         const v20 = (v * (234.5 + 20)) / (234.5 + t);
-        const row = `<tr><td>${document.getElementById('micP').value}</td><td>${v}</td><td>${v20.toFixed(4)}</td><td class="no-print"><button onclick="this.closest('tr').remove()">❌</button></td></tr>`;
+        const row = `<tr><td>${document.getElementById('micP').value}</td><td>${v}</td><td>${v20.toFixed(4)}</td><td class="no-print"><button onclick="checkData(this)">❌</button></td></tr>`;
         document.getElementById('tabMicro').querySelector('tbody').innerHTML += row;
         document.getElementById('secMICRO').classList.add('tem-dados');
     }
