@@ -3,84 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENSAIO PRO v23</title>
+    <title>ENSAIO PRO v25</title>
     <style>
-        :root { --p: #0284c7; --bg: #ffffff; --t: #000000; --re: #fee2e2; --ap: #dcfce7; }
-        body { font-family: -apple-system, sans-serif; background: var(--bg); color: var(--t); margin: 0; padding: 5px; font-size: 12px; }
+        :root { --p: #0284c7; --bg: #ffffff; --t: #000; --re: #dc2626; --ap: #16a34a; }
+        body { font-family: sans-serif; background: var(--bg); color: var(--t); margin: 0; padding: 5px; font-size: 12px; }
         
-        header { background: #f1f5f9; padding: 8px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #ccc; margin-bottom: 5px; }
-        .tela { display: none; padding: 5px; border: 1px solid #ccc; border-radius: 4px; margin-top: 5px; }
+        header { background: #f8fafc; padding: 8px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #94a3b8; margin-bottom: 5px; }
+        .tela { display: none; padding: 8px; border: 1px solid #94a3b8; border-radius: 6px; margin-top: 5px; background: #fff; }
         .ativa { display: block !important; }
         
-        .grid-menu { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
-        .btn-menu { background: var(--p); color: white; border: none; padding: 8px 2px; border-radius: 4px; font-size: 9px; font-weight: bold; cursor: pointer; text-align: center; }
+        .grid-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 5px; }
+        .btn-menu { background: var(--p); color: white; border: none; padding: 10px 2px; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; text-align: center; }
         
-        label { display: block; font-size: 9px; font-weight: bold; color: #444; margin: 4px 0 1px; text-transform: uppercase; }
-        input, select { width: 100%; padding: 4px; border: 1px solid #999; border-radius: 3px; font-size: 13px; height: 28px; box-sizing: border-box; }
+        label { display: block; font-size: 9px; font-weight: bold; color: var(--p); margin: 4px 0 1px; text-transform: uppercase; }
+        input, select { width: 100%; padding: 4px; border: 1px solid #64748b; border-radius: 4px; font-size: 13px; height: 28px; box-sizing: border-box; }
         
-        .row-ensaio { display: grid; grid-template-columns: 1fr 55px 35px; gap: 3px; align-items: end; margin-bottom: 2px; }
-        .btn-inf { background: #666; color: white; border: none; border-radius: 3px; height: 28px; cursor: pointer; }
-        .btn-add { width: 100%; padding: 8px; background: #059669; color: white; border: none; border-radius: 4px; font-weight: bold; margin-top: 8px; }
+        .row-ensaio { display: grid; grid-template-columns: 1fr 55px 35px; gap: 3px; align-items: end; margin-bottom: 3px; }
+        .btn-inf { background: #475569; color: white; border: none; border-radius: 4px; height: 28px; font-weight: bold; cursor: pointer; }
+        .btn-add { width: 100%; padding: 10px; background: #0284c7; color: white; border: none; border-radius: 6px; font-weight: bold; margin-top: 8px; font-size: 13px; }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 10px; }
-        th, td { border: 1px solid #000; padding: 3px; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 10px; }
+        th, td { border: 1px solid #000; padding: 4px; text-align: center; }
+        th { background: #f1f5f9; }
         
-        .status-repro { background: #f87171 !important; color: white; font-weight: bold; }
-        .status-aprov { background: #34d399 !important; color: white; font-weight: bold; }
-
-        .tag-tec { background: #eee; padding: 2px 5px; border-radius: 2px; font-size: 10px; border: 1px solid #ccc; display: inline-block; margin: 1px; }
+        .status-repro { background: var(--re) !important; color: white !important; font-weight: bold; }
+        .status-aprov { background: var(--ap) !important; color: white !important; font-weight: bold; }
 
         @media print {
             .no-print { display: none !important; }
             .tela { display: block !important; border: none !important; }
-            .print-header { display: block !important; text-align: center; border-bottom: 2px solid #000; margin-bottom: 10px; }
-            input { border: none !important; font-weight: bold; }
+            .print-header { display: block !important; text-align: center; border-bottom: 2px solid #000; margin-bottom: 10px; padding-bottom: 5px; }
         }
         .print-header { display: none; }
     </style>
 </head>
 <body>
 
-<div class="print-header"><h1>ENSAIO PRO</h1></div>
+<div class="print-header">
+    <h1>⚡ ENSAIO PRO - RELATÓRIO TÉCNICO 📊</h1>
+</div>
 
 <header class="no-print">
-    <b>ALPHA v23.0</b>
-    <button onclick="window.print()" style="background:#000; color:#fff; border-radius:4px; padding:4px 8px; font-size:10px;">GERAR PDF</button>
-    <button onclick="mudar('CONFIG')" style="background:#ddd; border:1px solid #999; padding:4px 8px; font-size:10px;">⚙️</button>
+    <b>v25.0</b>
+    <div>
+        <button onclick="window.print()" style="background:#000; color:#fff; border:none; border-radius:4px; padding:5px 10px; font-weight:bold; font-size:10px;">🖨️ GERAR PDF</button>
+        <button onclick="mudar('CONFIG')" style="background:#f1f5f9; border:1px solid #94a3b8; padding:5px; border-radius:4px; margin-left:5px;">⚙️</button>
+    </div>
 </header>
 
 <div id="menuHome" class="grid-menu no-print ativa">
-    <div class="btn-menu" onclick="mudar('MEG')">MEGGER</div>
-    <div class="btn-menu" onclick="mudar('TTR')">TTR</div>
-    <div class="btn-menu" onclick="mudar('MICRO')">MICRO</div>
-    <div class="btn-menu" onclick="location.reload()" style="background:#666;">LIMPAR</div>
+    <div class="btn-menu" onclick="mudar('MEG')">⚡<br>MEGGER</div>
+    <div class="btn-menu" onclick="mudar('TTR')">📊<br>TTR</div>
+    <div class="btn-menu" onclick="mudar('MICRO')">📟<br>MICRO</div>
 </div>
 
 <div id="blocoDados" class="tela">
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
-        <div><label>TAG</label><input type="text" id="tag"></div>
+        <div><label>TAG EQUIP.</label><input type="text" id="tag"></div>
         <div><label>LOCAL</label><select id="listaLocais"></select></div>
     </div>
-    <label>EQUIPE</label>
+    <label>EQUIPE TÉCNICA</label>
     <div id="poolTecnicos" class="no-print"></div>
-    <div id="tecsSelecionados" style="font-weight: bold; margin-top:2px;"></div>
+    <div id="tecsSelecionados" style="font-weight: bold; margin-top: 2px;"></div>
 </div>
 
 <div id="secMEG" class="tela">
     <div class="no-print">
-        <div class="row-ensaio" style="grid-template-columns: 1fr 60px;">
-            <select id="mPonto">
-                <option>ENTRADA x SAÍDA</option>
-                <option>ENTRADA x CARCAÇA</option>
-                <option>SAÍDA x CARCAÇA</option>
-                <option>CAMIS - Entrada e carcaça</option>
-            </select>
+        <label>PONTO E TENSÃO</label>
+        <div class="row-ensaio" style="grid-template-columns: 1fr 70px;">
+            <select id="mPonto"><option>ENTRADA x SAÍDA</option><option>ENTRADA x CARCAÇA</option><option>SAÍDA x CARCAÇA</option></select>
             <select id="mTensao"><option>500V</option><option>1kV</option><option>2.5kV</option><option>5kV</option></select>
         </div>
         
-        <label>REF. MÍNIMA</label>
-        <div class="row-ensaio">
-            <input type="text" id="mRef" inputmode="decimal" placeholder="0.00">
+        <label>REFERÊNCIA MÍNIMA</label>
+        <div class="row-ensaio" style="grid-template-columns: 1fr 70px;">
+            <input type="text" id="mRef" inputmode="decimal" placeholder="Ex: 5000">
             <select id="uRef"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
         </div>
 
@@ -89,31 +86,57 @@
         <div class="row-ensaio"><input type="text" id="r60" inputmode="decimal"><select id="u60"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select><button class="btn-inf" onclick="setInf('r60')">∞</button></div>
         <div class="row-ensaio"><input type="text" id="r120" inputmode="decimal"><select id="u120"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select><button class="btn-inf" onclick="setInf('r120')">∞</button></div>
         
-        <button class="btn-add" onclick="addMegger()">REGISTRAR ENSAIO</button>
+        <button class="btn-add" onclick="addMegger()">⚡ REGISTRAR PONTO</button>
     </div>
-
     <table id="tabMeg">
         <thead><tr><th>Ponto</th><th>V</th><th>30s</th><th>60s</th><th>120s</th><th>Status</th><th class="no-print">X</th></tr></thead>
         <tbody></tbody>
     </table>
 </div>
 
-<div id="secCONFIG" class="tela">
-    <button onclick="voltar()" class="btn-add" style="background:#555;">VOLTAR</button>
-    <label>TÉCNICO</label>
-    <div class="row-ensaio" style="grid-template-columns: 1fr 60px;">
-        <input type="text" id="cfgT">
-        <button onclick="salvar('tecnicos','cfgT')" style="background:green; color:white; border:none; border-radius:3px;">ADD</button>
+<div id="secTTR" class="tela">
+    <div class="no-print">
+        <label>NOMINAL</label><input type="text" id="ttrNom" inputmode="decimal">
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:3px;">
+            <div><label>FASE A</label><input type="text" id="ttrA" inputmode="decimal"></div>
+            <div><label>FASE B</label><input type="text" id="ttrB" inputmode="decimal"></div>
+            <div><label>FASE C</label><input type="text" id="ttrC" inputmode="decimal"></div>
+        </div>
+        <button class="btn-add" onclick="addTTR()">📊 REGISTRAR TTR</button>
     </div>
-    <label>LOCAL</label>
-    <div class="row-ensaio" style="grid-template-columns: 1fr 60px;">
+    <table id="tabTTR"><thead><tr><th>Nominal</th><th>A</th><th>B</th><th>C</th><th>Erro%</th><th class="no-print">X</th></tr></thead><tbody></tbody></table>
+</div>
+
+<div id="secMICRO" class="tela">
+    <div class="no-print">
+        <label>PONTO E TEMP.</label>
+        <div class="row-ensaio" style="grid-template-columns: 1fr 70px;">
+            <input type="text" id="micP" placeholder="ex: H1-H2">
+            <input type="text" id="micT" value="25" inputmode="numeric">
+        </div>
+        <label>VALOR LIDO (mΩ)</label>
+        <input type="text" id="micV" inputmode="decimal">
+        <button class="btn-add" onclick="addMicro()">📟 REGISTRAR MICRO</button>
+    </div>
+    <table id="tabMicro"><thead><tr><th>Ponto</th><th>Lido</th><th>@20°C</th><th class="no-print">X</th></tr></thead><tbody></tbody></table>
+</div>
+
+<div id="secCONFIG" class="tela">
+    <button onclick="voltar()" class="btn-add" style="background:#555;">← VOLTAR</button>
+    <label>CADASTRAR TÉCNICO</label>
+    <div class="row-ensaio" style="grid-template-columns: 1fr 70px;">
+        <input type="text" id="cfgT">
+        <button onclick="salvar('tecnicos','cfgT')" style="background:var(--ap); color:white; border:none; border-radius:4px;">ADD</button>
+    </div>
+    <label>CADASTRAR LOCAL</label>
+    <div class="row-ensaio" style="grid-template-columns: 1fr 70px;">
         <input type="text" id="cfgL">
-        <button onclick="salvar('locais','cfgL')" style="background:green; color:white; border:none; border-radius:3px;">ADD</button>
+        <button onclick="salvar('locais','cfgL')" style="background:var(--ap); color:white; border:none; border-radius:4px;">ADD</button>
     </div>
 </div>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('alpha_v23_db')) || { tecnicos: [], locais: [] };
+    let db = JSON.parse(localStorage.getItem('alpha_v25_db')) || { tecnicos: [], locais: [] };
     let selecionados = [];
 
     function mudar(t) {
@@ -124,57 +147,76 @@
         render();
     }
 
-    function voltar() { document.querySelectorAll('.tela').forEach(x => x.classList.remove('ativa')); document.getElementById('menuHome').classList.add('ativa'); }
+    function voltar() { 
+        document.querySelectorAll('.tela').forEach(x => x.classList.remove('ativa')); 
+        document.getElementById('menuHome').classList.add('ativa'); 
+    }
     
     function setInf(id) { document.getElementById(id).value = '∞'; }
 
     function salvar(tipo, id) {
         const v = document.getElementById(id).value;
-        if(v) { db[tipo].push(v); localStorage.setItem('alpha_v23_db', JSON.stringify(db)); document.getElementById(id).value=''; render(); }
+        if(v) { db[tipo].push(v); localStorage.setItem('alpha_v25_db', JSON.stringify(db)); document.getElementById(id).value=''; render(); }
     }
 
     function render() {
         document.getElementById('listaLocais').innerHTML = db.locais.map(l => `<option>${l}</option>`).join('');
-        document.getElementById('poolTecnicos').innerHTML = db.tecnicos.map(t => `<span class="tag-tec" onclick="addTec('${t}')">${t}</span>`).join('');
+        document.getElementById('poolTecnicos').innerHTML = db.tecnicos.map(t => `<span style="background:#eee; padding:3px 6px; border-radius:4px; margin:2px; display:inline-block; border:1px solid #ccc; cursor:pointer;" onclick="addTec('${t}')">${t}</span>`).join('');
         document.getElementById('tecsSelecionados').innerHTML = selecionados.map(s => `<div>- ${s}</div>`).join('');
     }
 
     function addTec(t) { if(!selecionados.includes(t)) selecionados.push(t); render(); }
 
-    function getM(v, u) {
+    function convM(v, u) {
         if(v === '∞') return 999999999999;
-        let n = Number(v.replace(',', '.'));
-        if(isNaN(n)) return 0;
+        let n = parseFloat(v.toString().replace(',', '.'));
+        if(isNaN(n)) return null; 
         if(u === 'GΩ') return n * 1000;
         if(u === 'TΩ') return n * 1000000;
         return n;
     }
 
     function addMegger() {
-        // CAPTURA E CONVERSÃO RIGOROSA
-        const vRef = getM(document.getElementById('mRef').value, document.getElementById('uRef').value);
-        const v60 = getM(document.getElementById('r60').value, document.getElementById('u60').value);
+        const ref = convM(document.getElementById('mRef').value, document.getElementById('uRef').value);
+        const v30 = convM(document.getElementById('r30').value, document.getElementById('u30').value);
+        const v60 = convM(document.getElementById('r60').value, document.getElementById('u60').value);
+        const v120 = convM(document.getElementById('r120').value, document.getElementById('u120').value);
         
-        // COMPARAÇÃO NUMÉRICA REAL
-        const reprovado = Number(v60) < Number(vRef);
-        const classe = reprovado ? 'status-repro' : 'status-aprov';
-        const texto = reprovado ? 'REPROVADO' : 'APROVADO';
+        // NOVA LÓGICA: Se QUALQUER valor preenchido for menor que a referência, reprova.
+        let reprovou = false;
+        if (v30 !== null && v30 < ref) reprovou = true;
+        if (v60 !== null && v60 < ref) reprovou = true;
+        if (v120 !== null && v120 < ref) reprovou = true;
 
-        const row = `<tr>
+        const row = `<tr class="${reprovou ? 'status-repro' : 'status-aprov'}">
             <td>${document.getElementById('mPonto').value}</td>
             <td>${document.getElementById('mTensao').value}</td>
             <td>${document.getElementById('r30').value}${document.getElementById('r30').value==='∞'?'':document.getElementById('u30').value}</td>
             <td>${document.getElementById('r60').value}${document.getElementById('r60').value==='∞'?'':document.getElementById('u60').value}</td>
             <td>${document.getElementById('r120').value}${document.getElementById('r120').value==='∞'?'':document.getElementById('u120').value}</td>
-            <td class="${classe}">${texto}</td>
+            <td>${reprovou ? 'REPROVADO' : 'APROVADO'}</td>
             <td class="no-print"><button onclick="this.closest('tr').remove()" style="border:none; background:none;">❌</button></td>
         </tr>`;
         document.getElementById('tabMeg').querySelector('tbody').innerHTML += row;
-        
-        // Limpa campos para o próximo ponto
-        document.getElementById('r30').value = '';
-        document.getElementById('r60').value = '';
-        document.getElementById('r120').value = '';
+        ['r30','r60','r120'].forEach(id => document.getElementById(id).value = '');
+    }
+
+    function addTTR() {
+        const nom = parseFloat(document.getElementById('ttrNom').value.replace(',','.'));
+        const a = parseFloat(document.getElementById('ttrA').value.replace(',','.'));
+        const b = parseFloat(document.getElementById('ttrB').value.replace(',','.'));
+        const c = parseFloat(document.getElementById('ttrC').value.replace(',','.'));
+        const erro = Math.max(Math.abs((a-nom)/nom), Math.abs((b-nom)/nom), Math.abs((c-nom)/nom)) * 100;
+        const row = `<tr><td>${nom}</td><td>${a}</td><td>${b}</td><td>${c}</td><td>${erro.toFixed(3)}%</td><td class="no-print"><button onclick="this.closest('tr').remove()">❌</button></td></tr>`;
+        document.getElementById('tabTTR').querySelector('tbody').innerHTML += row;
+    }
+
+    function addMicro() {
+        const v = parseFloat(document.getElementById('micV').value.replace(',','.'));
+        const t = parseFloat(document.getElementById('micT').value);
+        const v20 = (v * (234.5 + 20)) / (234.5 + t);
+        const row = `<tr><td>${document.getElementById('micP').value}</td><td>${v}</td><td>${v20.toFixed(4)}</td><td class="no-print"><button onclick="this.closest('tr').remove()">❌</button></td></tr>`;
+        document.getElementById('tabMicro').querySelector('tbody').innerHTML += row;
     }
 
     window.onload = render;
