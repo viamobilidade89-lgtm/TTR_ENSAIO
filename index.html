@@ -2,265 +2,136 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ENSAIO ALPHA - SOLUÇÃO DEFINITIVA v60</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENSAIO ALPHA v30</title>
     <style>
-        :root { --primary: #0284c7; --danger: #dc2626; --success: #16a34a; --gray: #64748b; --bg: #f8fafc; }
-        body { font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: #1e293b; margin: 0; padding: 10px; }
-        
-        /* Layout Mobile e Botões */
+        :root { --p: #0284c7; --re: #dc2626; --ap: #16a34a; }
+        body { font-family: sans-serif; margin: 0; padding: 10px; background: #f1f5f9; }
         .no-print { display: block; }
-        .btn-config { position: fixed; top: 15px; right: 15px; background: white; border: 2px solid var(--gray); border-radius: 50%; width: 45px; height: 45px; z-index: 100; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        .main-menu { display: grid; gap: 15px; padding: 20px 10px; }
-        .btn-menu { height: 90px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2); transition: 0.2s; }
-        .btn-menu:active { transform: scale(0.95); }
-
-        /* Estilo das Seções */
-        .tela { display: none; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; border: 1px solid #e2e8f0; }
+        .tela { display: none; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 15px; }
         .ativa { display: block !important; }
-        
-        /* Formulários */
-        label { display: block; font-size: 11px; font-weight: 700; color: var(--primary); margin: 12px 0 4px; text-transform: uppercase; }
-        input, select { width: 100%; padding: 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 15px; outline: none; transition: border 0.3s; }
-        input:focus { border-color: var(--primary); }
-        .row-med { display: grid; grid-template-columns: 1fr 85px 50px; gap: 6px; margin-bottom: 8px; }
-        .btn-inf { background: #334155; color: white; border: none; border-radius: 8px; font-size: 20px; font-weight: bold; }
-        .btn-add-item { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: bold; margin-top: 15px; cursor: pointer; font-size: 14px; }
-
-        /* Tabelas Profissionais */
-        .table-container { width: 100%; overflow-x: auto; margin-top: 15px; border: 1px solid #000; }
-        table { width: 100%; border-collapse: collapse; font-size: 11px; background: white; min-width: 580px; }
-        th, td { border: 1px solid #000; padding: 8px 4px; text-align: center; }
-        th { background: #f1f5f9; color: #000; text-transform: uppercase; font-size: 10px; }
-        .status-repro { color: var(--danger); font-weight: 900; }
-        .status-aprov { color: var(--success); font-weight: 900; }
-
-        /* Cabeçalho de Relatório */
-        .header-relatorio { display: none; border-bottom: 3px solid #000; margin-bottom: 15px; padding-bottom: 10px; }
-        .info-box { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-
+        label { display: block; font-size: 11px; font-weight: bold; color: var(--p); margin-top: 10px; }
+        input, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .btn-menu { width: 100%; padding: 20px; background: var(--p); color: #fff; border: none; border-radius: 8px; font-weight: bold; margin-bottom: 10px; }
+        .btn-add { width: 100%; padding: 15px; background: var(--p); color: #fff; border: none; border-radius: 6px; font-weight: bold; margin-top: 10px; }
+        .btn-inf { background: #475569; color: #fff; border: none; padding: 10px; border-radius: 4px; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
+        th, td { border: 1px solid #000; padding: 8px; text-align: center; }
+        th { background: #eee; }
+        .status-repro { color: var(--re); font-weight: bold; }
+        .status-aprov { color: var(--ap); font-weight: bold; }
         @media print {
-            .no-print, .btn-config, .btn-add-item, .btn-inf { display: none !important; }
-            body { background: white; padding: 0; }
-            .tela { display: none; border: none; box-shadow: none; padding: 0; }
+            .no-print, .btn-add, .btn-inf { display: none !important; }
+            .tela { display: none; }
             .tem-dados { display: block !important; }
-            .header-relatorio { display: block; text-align: center; }
-            .header-relatorio h1 { margin: 0; font-size: 22px; color: #000; }
-            .table-container { overflow: visible; border: none; }
-            table { font-size: 12px; min-width: 100%; }
-            .status-repro { color: #cc0000 !important; }
-            .status-aprov { color: #008000 !important; }
         }
     </style>
 </head>
 <body>
 
-<button class="btn-config no-print" onclick="mudar('CONFIG')">⚙️</button>
-
-<div class="header-relatorio">
-    <h1>RELATÓRIO DE ENSAIOS ELÉTRICOS</h1>
-    <p style="font-size: 12px; margin: 5px 0;">Alpha Manutenção e Serviços de Energia</p>
-</div>
-
-<div id="menuHome" class="main-menu no-print ativa">
-    <div style="text-align: center; margin-bottom: 10px; font-weight: bold; color: var(--primary);">SELECIONE O ENSAIO:</div>
-    <button class="btn-menu" onclick="mudar('MEG')">⚡ Isolação (Megger)</button>
-    <button class="btn-menu" onclick="mudar('TTR')">📊 Relação (TTR)</button>
-    <button class="btn-menu" onclick="mudar('MICRO')">📟 Ôhmica (Micro)</button>
+<div id="menuHome" class="no-print ativa">
+    <button class="btn-menu" onclick="mudar('MEG')">ENSAIO MEGGER</button>
+    <button class="btn-menu" onclick="mudar('TTR')">ENSAIO TTR</button>
+    <button class="btn-menu" onclick="mudar('MICRO')">ENSAIO MICRO</button>
 </div>
 
 <div id="blocoDados" class="tela">
-    <div class="info-box">
-        <div><label>TAG EQUIPAMENTO</label><input type="text" id="tag" placeholder="Ex: TR-02"></div>
-        <div><label>LOCAL / SE</label><select id="listaLocais"></select></div>
-    </div>
-    <div id="poolTecsHome" class="no-print" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
-    <div style="margin-top:10px; font-size: 12px;">
-        <span style="font-weight:bold;">TÉCNICOS: </span><span id="tecsSelecionados">---</span>
-    </div>
+    <label>TAG EQUIPAMENTO</label>
+    <input type="text" id="tag">
+    <label>LOCAL</label>
+    <select id="listaLocais"></select>
+    <div id="poolTecsHome" style="margin-top:10px;"></div>
+    <p style="font-size:12px;"><strong>Técnicos:</strong> <span id="tecsSelecionados"></span></p>
 </div>
 
 <div id="secMEG" class="tela">
     <div class="no-print">
-        <label>PONTO DE MEDIÇÃO</label>
-        <select id="mPonto">
-            <option>PRIMÁRIO x SECUNDÁRIO</option><option>PRIMÁRIO x CARCAÇA</option>
-            <option>SECUNDÁRIO x CARCAÇA</option><option>CAMIS</option>
-        </select>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <div><label>TENSÃO</label><select id="mTensao"><option>500V</option><option>1kV</option><option>2,5kV</option><option>5kV</option></select></div>
-            <div><label>REF. MÍNIMA</label>
-                <div style="display:flex; gap:4px;">
-                    <input type="text" id="mRef" placeholder="Ex: 1000">
-                    <select id="uRef" style="width:85px;"><option value="1">MΩ</option><option value="1000">GΩ</option><option value="1000000">TΩ</option></select>
-                </div>
-            </div>
+        <label>PONTO</label>
+        <select id="mPonto"><option>PRI x SEC</option><option>PRI x CARC</option><option>SEC x CARC</option></select>
+        <label>REF. MÍNIMA (MΩ)</label>
+        <input type="number" id="mRef">
+        <label>LEITURA (MΩ)</label>
+        <div style="display:flex; gap:5px;">
+            <input type="text" id="mLei">
+            <button class="btn-inf" onclick="document.getElementById('mLei').value='∞'">∞</button>
         </div>
-        <label>LEITURAS</label>
-        <div class="row-med"><input type="text" id="r30" placeholder="30s"><select id="u30"><option value="1">MΩ</option><option value="1000">GΩ</option><option value="1000000">TΩ</option></select><button class="btn-inf" onclick="setInf('r30')">∞</button></div>
-        <div class="row-med"><input type="text" id="r60" placeholder="60s"><select id="u60"><option value="1">MΩ</option><option value="1000">GΩ</option><option value="1000000">TΩ</option></select><button class="btn-inf" onclick="setInf('r60')">∞</button></div>
-        <div class="row-med"><input type="text" id="r120" placeholder="120s"><select id="u120"><option value="1">MΩ</option><option value="1000">GΩ</option><option value="1000000">TΩ</option></select><button class="btn-inf" onclick="setInf('r120')">∞</button></div>
-        <button class="btn-add-item" onclick="addMegger()">⚡ ADICIONAR MEDIÇÃO</button>
+        <button class="btn-add" onclick="addMegger()">ADICIONAR</button>
     </div>
-    <h3 class="tem-dados" style="font-size:14px; border-left: 4px solid var(--primary); padding-left: 10px;">⚡ RESISTÊNCIA DE ISOLAÇÃO</h3>
-    <div class="table-container tem-dados"><table id="tabMeg"><thead><tr><th>PONTO</th><th>TENSÃO</th><th>REF.</th><th>30s</th><th>60s</th><th>120s</th><th>STATUS</th><th class="no-print">X</th></tr></thead><tbody></tbody></table></div>
+    <h3 class="tem-dados">RELATÓRIO MEGGER</h3>
+    <table id="tabMeg"><thead><tr><th>Ponto</th><th>Ref.</th><th>Lido</th><th>Status</th></tr></thead><tbody></tbody></table>
 </div>
 
 <div id="secTTR" class="tela">
     <div class="no-print">
-        <label>GRUPO FASORIAL</label>
-        <select id="ttrFas" onchange="calcTTR()"><option value="Ydn11">Ydn11</option><option value="Ydn1">Ydn1</option><option value="Dyn11">Dyn11</option><option value="Dyn1">Dyn1</option><option value="Yy0">Yy0</option><option value="Dd0">Dd0</option></select>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
-            <input type="number" id="vPri" placeholder="V. Primário" oninput="calcTTR()"><input type="number" id="vSec" placeholder="V. Secundário" oninput="calcTTR()">
+        <label>TEÓRICO</label>
+        <input type="number" id="tTeo">
+        <label>LIDO (A | B | C)</label>
+        <div style="display:flex; gap:5px;">
+            <input type="number" id="tA"><input type="number" id="tB"><input type="number" id="tC">
         </div>
-        <div style="background:#f1f5f9; padding:10px; border-radius:8px; margin:10px 0; text-align:center;">
-            RT TEÓRICO: <span id="vTeoExib" style="font-weight:bold; color:var(--primary); font-size:18px;">0.0000</span>
-        </div>
-        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;"><input type="text" id="tA" placeholder="Fase A"><input type="text" id="tB" placeholder="Fase B"><input type="text" id="tC" placeholder="Fase C"></div>
-        <button class="btn-add-item" onclick="addTTR()">📊 ADICIONAR RELAÇÃO</button>
+        <button class="btn-add" onclick="addTTR()">ADICIONAR</button>
     </div>
-    <h3 class="tem-dados" style="font-size:14px; border-left: 4px solid var(--primary); padding-left: 10px;">📊 RELAÇÃO DE TRANSFORMAÇÃO</h3>
-    <div class="table-container tem-dados"><table id="tabTTR"><thead><tr><th>FASORIAL</th><th>TEÓRICO</th><th>A</th><th>B</th><th>C</th><th>DESVIO</th><th>STATUS</th><th class="no-print">X</th></tr></thead><tbody></tbody></table></div>
+    <h3 class="tem-dados">RELATÓRIO TTR</h3>
+    <table id="tabTTR"><thead><tr><th>Teórico</th><th>A</th><th>B</th><th>C</th><th>Erro</th><th>Status</th></tr></thead><tbody></tbody></table>
 </div>
 
 <div id="secMICRO" class="tela">
     <div class="no-print">
-        <label>PONTO E MEDIDA (mΩ)</label>
-        <div style="display:grid; grid-template-columns: 1fr 100px; gap:8px;">
-            <input type="text" id="micP" placeholder="Ex: H1-H2">
-            <input type="text" id="micV" placeholder="Valor">
-        </div>
-        <button class="btn-add-item" onclick="addMicro()">📟 ADICIONAR ÔHMICA</button>
+        <label>PONTO</label><input type="text" id="micP">
+        <label>VALOR (mΩ)</label><input type="number" id="micV">
+        <button class="btn-add" onclick="addMicro()">ADICIONAR</button>
     </div>
-    <h3 class="tem-dados" style="font-size:14px; border-left: 4px solid var(--primary); padding-left: 10px;">📟 RESISTÊNCIA ÔHMICA</h3>
-    <div class="table-container tem-dados"><table id="tabMicro"><thead><tr><th>PONTO</th><th>LIDO (mΩ)</th><th>@20°C (mΩ)</th><th class="no-print">X</th></tr></thead><tbody></tbody></table></div>
+    <h3 class="tem-dados">RELATÓRIO MICRO</h3>
+    <table id="tabMicro"><thead><tr><th>Ponto</th><th>Lido</th><th>@20°C</th></tr></thead><tbody></tbody></table>
 </div>
 
-<div id="areaAcoes" class="no-print" style="padding:10px; display:none;">
-    <button onclick="window.print()" style="background:#000; color:white; width:100%; padding:18px; border-radius:12px; font-weight:bold; margin-bottom:10px;">🖨️ GERAR PDF PROFISSIONAL</button>
-    <button onclick="location.reload()" style="background:var(--danger); color:white; width:100%; padding:18px; border-radius:12px; font-weight:bold;">♻️ NOVO ENSAIO (LIMPAR TUDO)</button>
-</div>
-
-<div id="secCONFIG" class="tela">
-    <button onclick="voltar()" class="btn-add-item" style="background:#475569; margin-bottom:20px;">← VOLTAR AO MENU</button>
-    <label>CADASTRAR TÉCNICO</label>
-    <div style="display:flex; gap:8px;"><input type="text" id="cfgT"><button onclick="salvarCfg('tecnicos','cfgT')" style="width:60px; background:var(--primary); color:white; border:none; border-radius:8px; font-weight:bold;">+</button></div>
-    <label>CADASTRAR LOCAL / SE</label>
-    <div style="display:flex; gap:8px;"><input type="text" id="cfgL"><button onclick="salvarCfg('locais','cfgL')" style="width:60px; background:var(--primary); color:white; border:none; border-radius:8px; font-weight:bold;">+</button></div>
+<div id="acoes" class="no-print" style="display:none; margin-top:20px;">
+    <button onclick="window.print()" style="width:100%; padding:15px; background:#000; color:#fff; border-radius:8px;">GERAR PDF</button>
+    <button onclick="location.reload()" style="width:100%; padding:15px; background:var(--re); color:#fff; border-radius:8px; margin-top:10px;">LIMPAR</button>
 </div>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('alpha_v60_db')) || { tecnicos: [], locais: [] };
+    let db = JSON.parse(localStorage.getItem('alpha_v30')) || { tecnicos: ["Claudemir", "Jone"], locais: ["SE Carapicuíba"] };
     let selecionados = [];
 
-    function setInf(id) { document.getElementById(id).value = "∞"; }
-    function parseNum(v) { 
-        if(!v || v==="") return 0; 
-        if(v === "∞") return Infinity;
-        return parseFloat(v.toString().replace(',','.')); 
+    function mudar(t) {
+        document.querySelectorAll('.tela, #menuHome').forEach(el => el.classList.remove('ativa'));
+        document.getElementById('sec'+t).classList.add('ativa');
+        document.getElementById('blocoDados').classList.add('ativa');
+        document.getElementById('acoes').style.display = 'block';
+        render();
     }
 
-    // --- LÓGICA MEGGER ---
     function addMegger() {
-        const p = document.getElementById('mPonto').value;
-        const refNum = parseNum(document.getElementById('mRef').value);
-        const refMult = parseNum(document.getElementById('uRef').value);
-        const refFinal = refNum * refMult; // Base em MΩ
-
-        const v60Val = parseNum(document.getElementById('r60').value);
-        const u60Mult = parseNum(document.getElementById('u60').value);
-        const v60Final = (document.getElementById('r60').value === "∞") ? Infinity : (v60Val * u60Mult);
-
-        const st = (v60Final >= refFinal) ? "APROVADO" : "REPROVADO";
-        const cls = (st === "APROVADO") ? "status-aprov" : "status-repro";
-        
-        const getU = (id) => document.getElementById(id).options[document.getElementById(id).selectedIndex].text;
-        const r30 = document.getElementById('r30').value;
-        const r60 = document.getElementById('r60').value;
-        const r120 = document.getElementById('r120').value;
-
-        const row = `<tr>
-            <td>${p}</td><td>${document.getElementById('mTensao').value}</td>
-            <td>${refNum}${getU('uRef')}</td>
-            <td>${r30}${r30==="∞"?"":getU('u30')}</td>
-            <td>${r60}${r60==="∞"?"":getU('u60')}</td>
-            <td>${r120}${r120==="∞"?"":getU('u120')}</td>
-            <td class="${cls}">${st}</td>
-            <td class="no-print"><button onclick="this.closest('tr').remove()">X</button></td>
-        </tr>`;
+        let ref = parseFloat(document.getElementById('mRef').value);
+        let leiStr = document.getElementById('mLei').value;
+        let lei = leiStr === "∞" ? Infinity : parseFloat(leiStr);
+        let st = lei >= ref ? "APROVADO" : "REPROVADO";
+        let row = `<tr><td>${document.getElementById('mPonto').value}</td><td>${ref}</td><td>${leiStr}</td><td class="${st==='APROVADO'?'status-aprov':'status-repro'}">${st}</td></tr>`;
         document.getElementById('tabMeg').querySelector('tbody').innerHTML += row;
-        document.getElementById('secMEG').classList.add('tem-dados');
-    }
-
-    // --- LÓGICA TTR ---
-    function calcTTR() {
-        const v1 = parseNum(document.getElementById('vPri').value);
-        const v2 = parseNum(document.getElementById('vSec').value);
-        const f = document.getElementById('ttrFas').value;
-        if(v1 && v2) {
-            let res = (f.includes("Yd") || f.includes("Dy")) ? (v1 * 1.73205) / v2 : v1 / v2;
-            document.getElementById('vTeoExib').innerText = res.toFixed(4);
-        }
     }
 
     function addTTR() {
-        const teo = parseNum(document.getElementById('vTeoExib').innerText);
-        const vA = parseNum(document.getElementById('tA').value);
-        const vB = parseNum(document.getElementById('tB').value);
-        const vC = parseNum(document.getElementById('tC').value);
-        const err = Math.max(Math.abs((vA-teo)/teo)*100, Math.abs((vB-teo)/teo)*100, Math.abs((vC-teo)/teo)*100);
-        const st = err <= 0.5 ? "APROVADO" : "REPROVADO";
-        const cls = st === "APROVADO" ? "status-aprov" : "status-repro";
-
-        const row = `<tr>
-            <td>${document.getElementById('ttrFas').value}</td><td>${teo.toFixed(4)}</td>
-            <td>${vA}</td><td>${vB}</td><td>${vC}</td><td>${err.toFixed(3)}%</td>
-            <td class="${cls}">${st}</td><td class="no-print"><button onclick="this.closest('tr').remove()">X</button></td>
-        </tr>`;
+        let teo = parseFloat(document.getElementById('tTeo').value);
+        let a = parseFloat(document.getElementById('tA').value);
+        let b = parseFloat(document.getElementById('tB').value);
+        let c = parseFloat(document.getElementById('tC').value);
+        let erro = Math.max(Math.abs((a-teo)/teo), Math.abs((b-teo)/teo), Math.abs((c-teo)/teo)) * 100;
+        let st = erro <= 0.5 ? "APROVADO" : "REPROVADO";
+        let row = `<tr><td>${teo}</td><td>${a}</td><td>${b}</td><td>${c}</td><td>${erro.toFixed(2)}%</td><td class="${st==='APROVADO'?'status-aprov':'status-repro'}">${st}</td></tr>`;
         document.getElementById('tabTTR').querySelector('tbody').innerHTML += row;
-        document.getElementById('secTTR').classList.add('tem-dados');
     }
 
-    // --- LÓGICA MICRO ---
     function addMicro() {
-        const v = parseNum(document.getElementById('micV').value);
-        const row = `<tr><td>${document.getElementById('micP').value}</td><td>${v}</td><td>${(v*0.985).toFixed(3)}</td><td class="no-print"><button onclick="this.closest('tr').remove()">X</button></td></tr>`;
+        let v = parseFloat(document.getElementById('micV').value);
+        let row = `<tr><td>${document.getElementById('micP').value}</td><td>${v}</td><td>${(v*0.98).toFixed(2)}</td></tr>`;
         document.getElementById('tabMicro').querySelector('tbody').innerHTML += row;
-        document.getElementById('secMICRO').classList.add('tem-dados');
-    }
-
-    // --- NAVEGAÇÃO E SISTEMA ---
-    function mudar(t) {
-        document.querySelectorAll('.tela, #menuHome').forEach(el => el.classList.remove('ativa'));
-        if(t === 'CONFIG') {
-            document.getElementById('secCONFIG').classList.add('ativa');
-        } else {
-            document.getElementById('sec'+t).classList.add('ativa');
-            document.getElementById('blocoDados').classList.add('ativa');
-            document.getElementById('areaAcoes').style.display = 'block';
-        }
-    }
-
-    function voltar() {
-        document.querySelectorAll('.tela').forEach(el => el.classList.remove('ativa'));
-        document.getElementById('menuHome').classList.add('ativa');
-        document.getElementById('areaAcoes').style.display = 'none';
-    }
-
-    function salvarCfg(tipo, id) {
-        const val = document.getElementById(id).value;
-        if(val) {
-            db[tipo].push(val);
-            localStorage.setItem('alpha_v60_db', JSON.stringify(db));
-            document.getElementById(id).value = ""; // LIMPA CAMPO
-            render();
-        }
     }
 
     function render() {
         document.getElementById('listaLocais').innerHTML = db.locais.map(l => `<option>${l}</option>`).join('');
-        document.getElementById('poolTecsHome').innerHTML = db.tecnicos.map(t => `<button onclick="addTec('${t}')" style="font-size:10px; padding:6px; border-radius:20px; border:1.5px solid var(--primary); background:white; margin:2px;">+ ${t}</button>`).join('');
-        document.getElementById('tecsSelecionados').innerText = selecionados.length > 0 ? selecionados.join(', ') : "---";
+        document.getElementById('poolTecsHome').innerHTML = db.tecnicos.map(t => `<button onclick="addTec('${t}')" style="margin:2px; font-size:10px;">+ ${t}</button>`).join('');
+        document.getElementById('tecsSelecionados').innerText = selecionados.join(', ');
     }
 
     function addTec(t) { if(!selecionados.includes(t)) selecionados.push(t); render(); }
