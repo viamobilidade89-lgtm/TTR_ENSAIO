@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENSAIO PRO EVOLUTION v48</title>
+    <title>ENSAIO PRO EVOLUTION v49</title>
     <style>
-        :root { --p: #0284c7; --bg: #ffffff; --t: #000; --re: #dc2626; --ap: #16a34a; --hi: #475569; }
+        :root { --p: #0284c7; --bg: #ffffff; --t: #000; --re: #dc2626; --ap: #16a34a; }
         body { font-family: sans-serif; background: var(--bg); color: var(--t); margin: 0; padding: 5px; }
         .main-title { text-align: center; color: var(--p); font-weight: 900; font-size: 22px; margin: 10px 0; text-transform: uppercase; border-bottom: 4px solid #000; padding-bottom: 10px; }
         header { display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f1f5f9; border-radius: 8px; border: 1px solid #cbd5e1; margin-bottom: 10px; }
@@ -20,22 +20,28 @@
         label { display: block; font-size: 11px; font-weight: bold; color: var(--p); margin: 10px 0 3px; text-transform: uppercase; }
         input, select { width: 100%; padding: 12px; border: 1px solid #64748b; border-radius: 6px; font-size: 15px; box-sizing: border-box; }
         .row-ensaio { display: grid; grid-template-columns: 1fr 85px 45px; gap: 8px; align-items: end; margin-bottom: 10px; }
-        .btn-inf { background: #hi; color: white; border: none; border-radius: 6px; height: 45px; font-weight: bold; cursor: pointer; }
+        .btn-inf { background: #475569; color: white; border: none; border-radius: 6px; height: 45px; font-weight: bold; cursor: pointer; }
         .btn-add { width: 100%; padding: 18px; background: var(--p); color: white; border: none; border-radius: 10px; font-weight: bold; margin-top: 15px; cursor: pointer; }
+        
+        /* TABELAS PADRÃO PDF */
         table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 11px; }
-        th, td { border: 1px solid #000; padding: 10px; text-align: center; }
-        th { background: #f8fafc; font-weight: 900; }
-        .status-repro { background: var(--re) !important; color: white !important; }
-        .status-aprov { background: var(--ap) !important; color: white !important; }
+        th, td { border: 1px solid #000; padding: 8px; text-align: center; }
+        th { background: #f1f5f9; font-weight: 900; text-transform: uppercase; }
+        .status-repro { color: var(--re) !important; font-weight: bold; }
+        .status-aprov { color: var(--ap) !important; font-weight: bold; }
+        
+        .guia-conexao { background: #fff9c4; padding: 10px; border-radius: 6px; font-size: 12px; margin: 10px 0; border: 2px solid #fbc02d; color: #856404; font-weight: bold; display: none; }
         .pool-tecs { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; background: #f1f5f9; padding: 10px; border-radius: 8px; border: 1px dashed #94a3b8; }
         .btn-tec-opt { background: #fff; border: 1px solid #cbd5e1; padding: 8px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; }
-        .hist-card { border: 1px solid #cbd5e1; padding: 10px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; }
         .footer-msg { text-align: center; font-size: 11px; margin-top: 40px; color: #94a3b8; font-style: italic; border-top: 1px solid #e2e8f0; padding-top: 10px; }
+
         @media print {
             .no-print, header, #btnPDFGlobal, #btnNovoEnsaio, .btn-inf, .btn-add, .pool-tecs { display: none !important; }
             .tela { display: none; border: none !important; padding: 0; margin: 0; }
             .tem-dados { display: block !important; }
             #blocoDados { display: block !important; border-bottom: 2px solid #000; margin-bottom: 20px; padding-bottom: 10px; }
+            table { border: 1.5px solid #000 !important; }
+            th { background: #eee !important; color: #000 !important; }
         }
     </style>
 </head>
@@ -45,7 +51,7 @@
 
 <header class="no-print">
     <button onclick="voltar()" id="btnVoltar" style="display:none; background:#64748b; color:white; border:none; padding:10px 15px; border-radius:6px;">← MENU</button>
-    <b>v48.0</b>
+    <b>v49.0 OFFICIAL REPORT</b>
     <button onclick="mudar('CONFIG')" style="background:#fff; border:1px solid #94a3b8; padding:10px; border-radius:8px;">⚙️</button>
 </header>
 
@@ -60,51 +66,46 @@
         <div><label>TAG EQUIPAMENTO</label><input type="text" id="tag"></div>
         <div><label>LOCAL / SE</label><select id="listaLocais"></select></div>
     </div>
-    <label class="no-print">EQUIPE TÉCNICA (CLIQUE PARA ADD):</label>
+    <label class="no-print">ADICIONAR TÉCNICO À EQUIPE:</label>
     <div id="poolTecsHome" class="pool-tecs no-print"></div>
-    <div id="tecsSelecionados" style="background: #f8fafc; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0; min-height: 40px;"></div>
+    <div id="tecsSelecionados" style="background: #f8fafc; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0; min-height: 35px;"></div>
 </div>
 
 <div id="secMEG" class="tela">
     <div class="no-print">
         <label>PONTO DE MEDIÇÃO</label>
         <select id="mPonto"><option>PRIMÁRIO x SECUNDÁRIO</option><option>PRIMÁRIO x CARCAÇA</option><option>SECUNDÁRIO x CARCAÇA</option><option>CAMIS</option></select>
-        
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <div><label>TENSÃO APLICADA</label><select id="mTensao"><option>500V</option><option>1kV</option><option>2,5kV</option><option>5kV</option><option>10kV</option></select></div>
-            <div>
-                <label>REF. MÍNIMA</label>
-                <div style="display: flex; gap: 5px;"><input type="text" id="mRef"><select id="uRef" style="width: 80px;"><option value="1">MΩ</option><option value="1000">GΩ</option><option value="1000000">TΩ</option></select></div>
-            </div>
+            <div><label>REF. MÍNIMA</label><div style="display: flex; gap: 5px;"><input type="text" id="mRef"><select id="uRef" style="width: 80px;"><option value="1">MΩ</option><option value="1000">GΩ</option><option value="1000000">TΩ</option></select></div></div>
         </div>
-
         <label>LEITURAS</label>
         <div class="row-ensaio"><input type="text" id="r30" placeholder="30s"><select id="u30"><option value="1">MΩ</option><option value="1000">GΩ</option><option value="1000000">TΩ</option></select><button class="btn-inf" onclick="setInf('r30')">∞</button></div>
         <div class="row-ensaio"><input type="text" id="r60" placeholder="60s"><select id="u60"><option value="1">MΩ</option><option value="1000">GΩ</option><option value="1000000">TΩ</option></select><button class="btn-inf" onclick="setInf('r60')">∞</button></div>
         <div class="row-ensaio"><input type="text" id="r120" placeholder="120s"><select id="u120"><option value="1">MΩ</option><option value="1000">GΩ</option><option value="1000000">TΩ</option></select><button class="btn-inf" onclick="setInf('r120')">∞</button></div>
-        <button class="btn-add" onclick="addMegger()">⚡ ADICIONAR AO RELATÓRIO</button>
+        <button class="btn-add" onclick="addMegger()">⚡ ADICIONAR MEGGER</button>
     </div>
     <h3 class="tem-dados">⚡ RESISTÊNCIA DE ISOLAÇÃO (MEGGER)</h3>
-    <table id="tabMeg"><thead><tr><th>Ponto</th><th>V. Aplicada</th><th>Ref.</th><th>30s</th><th>60s</th><th>120s</th><th>Status</th><th class="no-print">X</th></tr></thead><tbody></tbody></table>
+    <table id="tabMeg"><thead><tr><th>Ponto</th><th>Tensão</th><th>Ref.</th><th>30s</th><th>60s</th><th>120s</th><th>Status</th><th class="no-print">X</th></tr></thead><tbody></tbody></table>
 </div>
 
 <div id="secTTR" class="tela">
     <div class="no-print">
         <label>GRUPO FASORIAL</label>
         <select id="ttrFas" onchange="atualizarPontas()">
-            <option value="">Selecione...</option>
+            <option value="">Selecione o Fasorial...</option>
             <optgroup label="X0 APARENTE"><option value="Ydn1">Ydn1</option><option value="Ydn11">Ydn11</option><option value="Dyn1">Dyn1</option><option value="Dyn11">Dyn11</option></optgroup>
             <optgroup label="X0 NÃO APARENTE"><option value="Yy0">Yy0</option><option value="Dd0">Dd0</option><option value="Yd1">Yd1</option><option value="Yd11">Yd11</option></optgroup>
         </select>
-        <div id="guiaConexao" style="display:none; background:#fff9c4; padding:8px; border-radius:5px; font-size:11px; margin:5px 0; border:1px solid #fbc02d;"></div>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;"><input type="number" id="vPri" placeholder="V. Pri" oninput="calcTeorico()"><input type="number" id="vSec" placeholder="V. Sec" oninput="calcTeorico()"></div>
+        <div id="guiaConexao" class="guia-conexao"></div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;"><input type="number" id="vPri" placeholder="V. Primário" oninput="calcTeorico()"><input type="number" id="vSec" placeholder="V. Secundário" oninput="calcTeorico()"></div>
         <label>RT TEÓRICO: <span id="vTeoExib" style="color:var(--p); font-size:16px;">0.0000</span></label>
         <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
             <div><label>FASE A</label><input type="text" id="tA"></div>
             <div><label>FASE B</label><input type="text" id="tB"></div>
             <div><label>FASE C</label><input type="text" id="tC"></div>
         </div>
-        <button class="btn-add" onclick="addTTR()">📊 ADICIONAR AO RELATÓRIO</button>
+        <button class="btn-add" onclick="addTTR()">📊 ADICIONAR TTR</button>
     </div>
     <h3 class="tem-dados">📊 RELAÇÃO DE TRANSFORMAÇÃO (TTR)</h3>
     <table id="tabTTR"><thead><tr><th>Grupo</th><th>Teórico</th><th>A</th><th>B</th><th>C</th><th>Desvio %</th><th>Status</th><th class="no-print">X</th></tr></thead><tbody></tbody></table>
@@ -114,10 +115,10 @@
     <div class="no-print">
         <label>PONTO E VALOR (mΩ)</label>
         <div class="row-ensaio" style="grid-template-columns: 1fr 100px;"><input type="text" id="micP" placeholder="Ponto"><input type="text" id="micV" placeholder="mΩ"></div>
-        <button class="btn-add" onclick="addMicro()">📟 ADICIONAR AO RELATÓRIO</button>
+        <button class="btn-add" onclick="addMicro()">📟 ADICIONAR MICRO</button>
     </div>
     <h3 class="tem-dados">📟 RESISTÊNCIA ÔHMICA (MICRO)</h3>
-    <table id="tabMicro"><thead><tr><th>Ponto</th><th>Lido</th><th>@20°C</th><th class="no-print">X</th></tr></thead><tbody></tbody></table>
+    <table id="tabMicro"><thead><tr><th>Ponto</th><th>Lido (mΩ)</th><th>@20°C (mΩ)</th><th class="no-print">X</th></tr></thead><tbody></tbody></table>
 </div>
 
 <div class="no-print" style="padding: 10px;">
@@ -127,7 +128,7 @@
 
 <div id="secCONFIG" class="tela">
     <button onclick="voltar()" class="btn-add" style="background:#555;">← VOLTAR</button>
-    <h3>📜 HISTÓRICO DE ENSAIOS</h3>
+    <h3>📜 HISTÓRICO</h3>
     <div id="listaHistorico"></div>
     <hr>
     <label>CADASTRAR TÉCNICO</label>
@@ -140,7 +141,7 @@
 <div class="footer-msg tem-dados" style="display:none;">Produced by unknown</div>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('alpha_v48_db')) || { tecnicos: [], locais: [], historico: [] };
+    let db = JSON.parse(localStorage.getItem('alpha_v49_db')) || { tecnicos: [], locais: [], historico: [] };
     let selecionados = [];
     let idAtual = null;
 
@@ -161,7 +162,11 @@
         const f = document.getElementById('ttrFas').value;
         const g = document.getElementById('guiaConexao');
         g.style.display = f ? 'block' : 'none';
-        g.innerText = f.includes("Ydn") ? "Ydn: Conexão H1-H2|X2-X0 (Fase A)..." : "Seguir conexão padrão de placa.";
+        if(f.includes("Ydn11")) g.innerText = "Ydn11: Conectar H1-H2|X2-X0, H2-H3|X3-X0, H3-H1|X1-X0";
+        else if(f.includes("Ydn1")) g.innerText = "Ydn1: Conectar H1-H2|X1-X0, H2-H3|X2-X0, H3-H1|X3-X0";
+        else if(f.includes("Dyn11")) g.innerText = "Dyn11: Conectar H1-H3|X1-X0, H2-H1|X2-X0, H3-H2|X3-X0";
+        else g.innerText = "Seguir conexão padrão conforme grupo fasorial selecionado.";
+        calcTeorico();
     }
 
     function addMegger() {
@@ -170,14 +175,14 @@
         const v60 = parseNum(document.getElementById('r60').value) * parseNum(document.getElementById('u60').value);
         const st = (v60 >= ref && v30 >= ref) ? "APROVADO" : "REPROVADO";
         
-        const row = `<tr class="${st==='APROVADO'?'':'status-repro'}">
+        const row = `<tr>
             <td>${document.getElementById('mPonto').value}</td>
             <td>${document.getElementById('mTensao').value}</td>
             <td>${document.getElementById('mRef').value}${document.getElementById('uRef').options[document.getElementById('uRef').selectedIndex].text}</td>
             <td>${document.getElementById('r30').value}${document.getElementById('u30').options[document.getElementById('u30').selectedIndex].text}</td>
             <td>${document.getElementById('r60').value}${document.getElementById('u60').options[document.getElementById('u60').selectedIndex].text}</td>
             <td>${document.getElementById('r120').value}${document.getElementById('u120').options[document.getElementById('u120').selectedIndex].text}</td>
-            <td class="${st==='APROVADO'?'status-aprov':'status-repro'}">${st}</td>
+            <td class="${st === 'APROVADO' ? 'status-aprov' : 'status-repro'}">${st}</td>
             <td class="no-print"><button onclick="this.closest('tr').remove()">X</button></td>
         </tr>`;
         document.getElementById('tabMeg').querySelector('tbody').innerHTML += row;
@@ -194,7 +199,7 @@
         const row = `<tr>
             <td>${document.getElementById('ttrFas').value}</td><td>${teo.toFixed(4)}</td>
             <td>${vA}</td><td>${vB}</td><td>${vC}</td><td>${maxErr.toFixed(3)}%</td>
-            <td class="${st==='APROVADO'?'status-aprov':'status-repro'}">${st}</td>
+            <td class="${st === 'APROVADO' ? 'status-aprov' : 'status-repro'}">${st}</td>
             <td class="no-print"><button onclick="this.closest('tr').remove()">X</button></td>
         </tr>`;
         document.getElementById('tabTTR').querySelector('tbody').innerHTML += row;
@@ -226,8 +231,8 @@
         } else {
             db.historico.push(ensaio);
         }
-        localStorage.setItem('alpha_v48_db', JSON.stringify(db));
-        if(limpar) { alert("Salvo com sucesso!"); location.reload(); }
+        localStorage.setItem('alpha_v49_db', JSON.stringify(db));
+        if(limpar) { alert("Relatório Salvo!"); location.reload(); }
     }
 
     function carregarHistorico(id) {
@@ -248,7 +253,7 @@
     function excluirHistorico(id) {
         if(confirm("Excluir permanentemente?")) {
             db.historico = db.historico.filter(x => x.id !== id);
-            localStorage.setItem('alpha_v48_db', JSON.stringify(db));
+            localStorage.setItem('alpha_v49_db', JSON.stringify(db));
             render();
         }
     }
@@ -267,12 +272,14 @@
     function voltar() {
         document.querySelectorAll('.tela').forEach(x => x.classList.remove('ativa'));
         document.getElementById('menuHome').classList.add('ativa');
-        document.getElementById('btnVoltar, #btnPDFGlobal, #btnNovoEnsaio').forEach(e => { if(e) e.style.display='none'; });
+        document.getElementById('btnVoltar').style.display = 'none';
+        document.getElementById('btnPDFGlobal').style.display = 'none';
+        document.getElementById('btnNovoEnsaio').style.display = 'none';
     }
 
     function salvarBasico(tipo, id) {
         const v = document.getElementById(id).value;
-        if(v) { db[tipo].push(v); localStorage.setItem('alpha_v48_db', JSON.stringify(db)); document.getElementById(id).value=''; render(); }
+        if(v) { db[tipo].push(v); localStorage.setItem('alpha_v49_db', JSON.stringify(db)); document.getElementById(id).value=''; render(); }
     }
 
     function render() {
@@ -280,8 +287,8 @@
         document.getElementById('poolTecsHome').innerHTML = db.tecnicos.map(t => `<button class="btn-tec-opt" onclick="addTec('${t}')">+ ${t}</button>`).join('');
         document.getElementById('tecsSelecionados').innerHTML = selecionados.map(s => `<div>• ${s}</div>`).join('');
         document.getElementById('listaHistorico').innerHTML = db.historico.map(h => `
-            <div class="hist-card">
-                <div><b>${h.tag}</b> - <small>${h.data}</small></div>
+            <div style="border:1px solid #ccc; padding:8px; margin-bottom:5px; display:flex; justify-content:space-between; align-items:center;">
+                <div><b>${h.tag}</b> - ${h.data}</div>
                 <div><button onclick="carregarHistorico(${h.id})">Abrir</button> <button onclick="excluirHistorico(${h.id})">X</button></div>
             </div>
         `).reverse().join('');
