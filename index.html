@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENSAIO PRO EVOLUTION v30.5</title>
+    <title>ENSAIO PRO EVOLUTION v30.5 - RESTAURADA</title>
     <style>
         :root { --p: #0284c7; --bg: #ffffff; --t: #000; --re: #dc2626; --ap: #16a34a; }
         body { font-family: sans-serif; background: var(--bg); color: var(--t); margin: 0; padding: 5px; }
@@ -16,6 +16,8 @@
         .btn-menu span { font-size: 30px; }
         label { display: block; font-size: 10px; font-weight: bold; color: var(--p); margin: 8px 0 2px; text-transform: uppercase; }
         input, select { width: 100%; padding: 8px; border: 1px solid #64748b; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
+        .row-ensaio { display: grid; grid-template-columns: 1fr 60px 40px; gap: 5px; align-items: end; margin-bottom: 5px; }
+        .btn-inf { background: #475569; color: white; border: none; border-radius: 6px; height: 35px; font-weight: bold; width: 40px; }
         .btn-add { width: 100%; padding: 12px; background: #0284c7; color: white; border: none; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer; }
         .btn-new { width: 100%; padding: 15px; background: #f59e0b; color: white; border: none; border-radius: 8px; font-weight: bold; margin-top: 20px; cursor: pointer; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 10px; }
@@ -25,7 +27,7 @@
         .status-aprov { background: var(--ap) !important; color: white !important; font-weight: bold; }
         .motivo-erro { font-size: 8px; display: block; font-style: italic; opacity: 0.9; }
         @media print {
-            .no-print, .btn-add, .btn-menu, .btn-new, header, .config-area { display: none !important; }
+            .no-print, .btn-inf, .btn-add, .btn-menu, .btn-new, header, .config-area { display: none !important; }
             .tela { display: none; border: none !important; padding: 0; margin: 0; }
             .tem-dados { display: block !important; }
             #blocoDados { display: block !important; border-bottom: 2px solid #000; margin-bottom: 15px; }
@@ -61,18 +63,25 @@
 <div id="secMEG" class="tela">
     <div class="no-print">
         <label>CONEXÃO</label>
-        <div style="display:grid; grid-template-columns: 1fr 80px; gap:5px;">
-            <select id="mPonto"><option>ENTRADA x SAÍDA</option><option>ENTRADA x CARCAÇA</option><option>SAÍDA x CARCAÇA</option><option>CAMIS</option></select>
+        <div class="row-ensaio" style="grid-template-columns: 1fr 80px;">
+            <select id="mPonto">
+                <option>ENTRADA x SAÍDA</option><option>ENTRADA x CARCAÇA</option><option>SAÍDA x CARCAÇA</option><option>CAMIS</option>
+            </select>
             <select id="mTensao"><option>500V</option><option>1kV</option><option>2.5kV</option><option>5kV</option></select>
         </div>
-        <label>REF. MÍNIMA</label>
-        <div style="display:grid; grid-template-columns: 1fr 80px; gap:5px;"><input type="text" id="mRef" inputmode="decimal"><select id="uRef"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select></div>
-        <label>LEITURAS (30s | 60s | 120s)</label>
-        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:5px;"><input type="text" id="r30" placeholder="30s"><input type="text" id="r60" placeholder="60s"><input type="text" id="r120" placeholder="120s"></div>
+        <label>REFERÊNCIA MÍNIMA</label>
+        <div class="row-ensaio" style="grid-template-columns: 1fr 80px;"><input type="text" id="mRef" inputmode="decimal"><select id="uRef"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select></div>
+        <label>LEITURAS</label>
+        <div class="row-ensaio"><input type="text" id="r30" inputmode="decimal" placeholder="30s"><select id="u30"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select><button class="btn-inf" onclick="setInf('r30')">∞</button></div>
+        <div class="row-ensaio"><input type="text" id="r60" inputmode="decimal" placeholder="60s"><select id="u60"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select><button class="btn-inf" onclick="setInf('r60')">∞</button></div>
+        <div class="row-ensaio"><input type="text" id="r120" inputmode="decimal" placeholder="120s"><select id="u120"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select><button class="btn-inf" onclick="setInf('r120')">∞</button></div>
         <button class="btn-add" onclick="addMegger()">⚡ ADICIONAR AO LAUDO</button>
     </div>
     <h3 class="tem-dados">⚡ ENSAIO DE ISOLAMENTO (MEGGER)</h3>
-    <table id="tabMeg"><thead><tr><th>Ponto</th><th>V</th><th>30s</th><th>60s</th><th>120s</th><th>Status / Motivo</th><th class="no-print">X</th></tr></thead><tbody></tbody></table>
+    <table id="tabMeg">
+        <thead><tr><th>Ponto</th><th>V</th><th>30s</th><th>60s</th><th>120s</th><th>Status / Motivo</th><th class="no-print">X</th></tr></thead>
+        <tbody></tbody>
+    </table>
 </div>
 
 <div id="secTTR" class="tela">
@@ -138,6 +147,7 @@
 
     function voltar() { document.querySelectorAll('.tela').forEach(x => x.classList.remove('ativa')); document.getElementById('menuHome').classList.add('ativa'); document.getElementById('btnVoltar').style.display = 'none'; document.getElementById('btnPDFGlobal').style.display = 'none'; }
     function novoEnsaio() { if(confirm("Limpar sessão atual?")) { localStorage.removeItem('alpha_v30_session'); location.reload(); } }
+    function setInf(id) { document.getElementById(id).value = '∞'; }
     function autoSave() { session.tag = document.getElementById('tag').value; session.local = document.getElementById('listaLocais').value; localStorage.setItem('alpha_v30_session', JSON.stringify(session)); }
     function salvarCfg(tipo, id) { const v = document.getElementById(id).value; if(v) { db[tipo].push(v); localStorage.setItem('alpha_v30_db', JSON.stringify(db)); document.getElementById(id).value=''; render(); } }
 
@@ -156,11 +166,30 @@
 
     function addTec(t) { if(!session.tecs.includes(t)) session.tecs.push(t); autoSave(); render(); }
 
+    // MEGGER: CONVERSÃO v30 ORIGINAL
+    function convM(v, u) {
+        if(v === '∞') return 999999999999;
+        let n = parseFloat(v.toString().replace(',', '.'));
+        if(isNaN(n)) return null; 
+        return (u === 'GΩ') ? n * 1000 : (u === 'TΩ') ? n * 1000000 : n;
+    }
+
     function addMegger() {
-        const ref = parseFloat(document.getElementById('mRef').value) || 0;
-        const v30 = parseFloat(document.getElementById('r30').value) || 0;
-        let repro = v30 < ref;
-        const row = `<tr class="${repro?'status-repro':'status-aprov'}"><td>${document.getElementById('mPonto').value}</td><td>${document.getElementById('mTensao').value}</td><td>${v30}</td><td>${document.getElementById('r60').value}</td><td>${document.getElementById('r120').value}</td><td>${repro?'REPROVADO':'APROVADO'} ${repro?'<span class="motivo-erro">Isolação Baixa</span>':''}</td><td class="no-print"><button onclick="remover(this,'meg')">❌</button></td></tr>`;
+        const ref = convM(document.getElementById('mRef').value, document.getElementById('uRef').value);
+        const v30 = convM(document.getElementById('r30').value, document.getElementById('u30').value);
+        const v60 = convM(document.getElementById('r60').value, document.getElementById('u60').value);
+        const v120 = convM(document.getElementById('r120').value, document.getElementById('u120').value);
+        
+        let repro = (v30 !== null && v30 < ref) || (v60 !== null && v60 < ref) || (v120 !== null && v120 < ref);
+        let motivo = repro ? "Isolação Baixa" : "";
+
+        const row = `<tr class="${repro ? 'status-repro' : 'status-aprov'}">
+            <td>${document.getElementById('mPonto').value}</td><td>${document.getElementById('mTensao').value}</td>
+            <td>${document.getElementById('r30').value}${document.getElementById('r30').value==='∞'?'':document.getElementById('u30').value}</td>
+            <td>${document.getElementById('r60').value}${document.getElementById('r60').value==='∞'?'':document.getElementById('u60').value}</td>
+            <td>${document.getElementById('r120').value}${document.getElementById('r120').value==='∞'?'':document.getElementById('u120').value}</td>
+            <td>${repro ? 'REPROVADO' : 'APROVADO'} <span class="motivo-erro">${motivo}</span></td>
+            <td class="no-print"><button onclick="remover(this,'meg')">❌</button></td></tr>`;
         session.meg.push(row); autoSave(); render();
     }
 
