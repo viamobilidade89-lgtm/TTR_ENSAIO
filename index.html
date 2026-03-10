@@ -18,12 +18,36 @@
         .empresa-nome { color: white; font-weight: 900; font-size: 28px; letter-spacing: 3px; text-align: center; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
 
-        /* Header - Título Azul Centralizado */
-        header { display: flex; justify-content: center; align-items: center; padding: 30px 20px; background: white; position: relative; border-bottom: 1px solid #f1f5f9; }
-        .header-title { font-size: 24px; font-weight: 900; color: var(--accent); margin: 0; text-align: center; letter-spacing: 1px; }
-        .config-icon { position: absolute; right: 25px; font-size: 22px; cursor: pointer; background: none; border: none; color: #cbd5e1; }
+        /* Header Harmonioso - Título centralizado e Menu isolado */
+        header { 
+            display: grid; 
+            grid-template-columns: 50px 1fr 50px; 
+            align-items: center; 
+            padding: 25px 15px; 
+            background: white; 
+            border-bottom: 1px solid #f1f5f9; 
+        }
+        .header-title { 
+            grid-column: 2; 
+            font-size: 22px; 
+            font-weight: 900; 
+            color: var(--accent); 
+            margin: 0; 
+            text-align: center; 
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+        .config-icon { 
+            grid-column: 3; 
+            font-size: 24px; 
+            cursor: pointer; 
+            background: none; 
+            border: none; 
+            color: #cbd5e1; 
+            justify-self: end;
+        }
 
-        /* Menu Monolito Centralizado e Grande */
+        /* Menu Monolito Centralizado e Impactante */
         #main-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .monolito-menu { 
             display: flex; 
@@ -45,12 +69,11 @@
             align-items: center; 
             gap: 25px; 
             position: relative; 
-            transition: 0.3s;
         }
         .btn-monolito:active { background: rgba(255, 255, 255, 0.1); }
         .btn-monolito:not(:last-child)::after { content: ""; position: absolute; bottom: 0; left: 10%; width: 80%; height: 1px; background: rgba(255,255,255,0.1); }
 
-        .icon-box { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 35px; }
+        .icon-box { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 40px; }
         .btn-text { display: flex; flex-direction: column; text-align: left; }
         .btn-label { font-size: 22px; font-weight: 900; letter-spacing: 1px; }
         .btn-desc { font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.8); margin-top: 4px; }
@@ -59,18 +82,19 @@
         .pager-ui { width: 38px; height: 28px; background: #f84c4c; border-radius: 6px; position: relative; border: 2px solid white; }
         .pager-screen { position: absolute; top: 4px; left: 4px; right: 4px; height: 10px; background: #86efac; border-radius: 2px; }
 
+        /* Cards e Botões */
+        .card { background: #f8fafc; padding: 25px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 500px; margin: auto; }
+        .btn-acao { width: 100%; padding: 18px; border-radius: 15px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; color: white; }
+        
+        /* Histórico */
+        .hist-item { background: white; border: 1px solid #e2e8f0; padding: 18px; border-radius: 20px; margin-bottom: 15px; border-left: 6px solid var(--accent); }
+        .hist-btns { display: flex; gap: 8px; margin-top: 12px; }
+        .btn-mini { flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; font-size: 11px; cursor: pointer; }
+
         /* Telas */
         .tela { display: none; padding: 20px; flex: 1; animation: fadeIn 0.4s ease-out; }
         .ativa { display: block !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Cards, Botões e Listas */
-        .card { background: #f8fafc; padding: 25px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 500px; margin: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .btn-acao { width: 100%; padding: 18px; border-radius: 15px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; color: white; }
-        
-        .hist-item { background: white; border: 1px solid #e2e8f0; padding: 18px; border-radius: 20px; margin-bottom: 15px; border-left: 6px solid var(--accent); }
-        .hist-btns { display: flex; gap: 8px; margin-top: 12px; }
-        .btn-mini { flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; font-size: 11px; cursor: pointer; }
 
         footer { text-align: center; padding: 30px; font-size: 11px; color: #cbd5e1; letter-spacing: 2px; }
     </style>
@@ -86,7 +110,7 @@
 </div>
 
 <header>
-    <h1 class="header-title">ENSAIOS PRO EVOLUTION</h1>
+    <div></div> <h1 class="header-title">ENSAIOS PRO EVOLUTION</h1>
     <button class="config-icon" onclick="mudar('CONFIG')">⚙️</button>
 </header>
 
@@ -100,7 +124,7 @@
             </div>
         </button>
 
-        <button class="btn-monolito" onclick="abrirNovoTTR()">
+        <button class="btn-monolito" onclick="mudar('TTR')">
             <div class="icon-box">📟</div>
             <div class="btn-text">
                 <span class="btn-label">TTR</span>
@@ -121,34 +145,20 @@
 <div id="secMEG" class="tela">
     <div class="card">
         <button class="btn-acao" style="background:var(--dark); margin-bottom:15px" onclick="novoEnsaio()">+ NOVO ENSAIO</button>
-        <h3 style="text-align:center; color:var(--accent); margin-top:0">ENSAIO MEGGER</h3>
+        <h3 style="text-align:center; color:var(--accent); margin-top:0">MEGGER</h3>
         <input type="hidden" id="editId">
-        
-        <label style="font-size:11px; font-weight:bold">PONTO DE TESTE</label>
-        <select id="mPonto">
-            <option>PRI X SEC</option>
-            <option>PRI X CARC</option>
-            <option>SEC X CARC</option>
-        </select>
-        
-        <label style="font-size:11px; font-weight:bold">VALOR MEDIDO</label>
-        <div style="display:flex; gap:8px">
-            <input type="number" id="mVal" placeholder="0.00">
-            <select id="mUnit" style="width:100px"><option>GΩ</option><option>MΩ</option></select>
-        </div>
-        
-        <button class="btn-acao" style="background:var(--accent)" onclick="addMedicao()">ADICIONAR LEITURA</button>
+        <select id="mPonto"><option>PRI X SEC</option><option>PRI X CARC</option><option>SEC X CARC</option></select>
+        <div style="display:flex; gap:8px"><input type="number" id="mVal" placeholder="VALOR"><select id="mUnit" style="width:80px"><option>GΩ</option><option>MΩ</option></select></div>
+        <button class="btn-acao" style="background:var(--accent); margin-top:10px" onclick="addMedicao()">ADICIONAR</button>
     </div>
-
     <div class="card" style="margin-top:20px; padding:10px">
         <table id="tabMeg" style="width:100%; border-collapse: collapse; text-align:center">
             <thead><tr style="border-bottom:2px solid #eee"><th style="padding:10px">PONTO</th><th>VALOR</th></tr></thead>
             <tbody></tbody>
         </table>
     </div>
-
-    <button class="btn-acao" style="background:var(--success); margin-top:20px" onclick="arquivar()">💾 ARQUIVAR NO HISTÓRICO</button>
-    <button class="btn-acao" style="background:#64748b" onclick="voltar()">VOLTAR AO MENU</button>
+    <button class="btn-acao" style="background:var(--success); margin-top:20px" onclick="arquivar()">💾 SALVAR NO HISTÓRICO</button>
+    <button class="btn-acao" style="background:#64748b; margin-top:10px" onclick="voltar()">VOLTAR</button>
 </div>
 
 <div id="secCONFIG" class="tela">
@@ -158,27 +168,26 @@
 
         <h3 style="color:var(--accent); margin-top:30px;">👥 TÉCNICOS</h3>
         <div style="display:flex; gap:8px;">
-            <input type="text" id="cfgT" placeholder="NOME DO TÉCNICO" style="margin:0">
+            <input type="text" id="cfgT" placeholder="NOME" style="margin:0">
             <button onclick="salvarCfg('tecnicos','cfgT')" style="background:var(--accent); border:none; color:white; width:55px; border-radius:12px; font-size:20px">+</button>
         </div>
         <div id="listT" style="margin:15px 0"></div>
 
         <h3 style="color:var(--accent); margin-top:20px;">📍 LOCAIS</h3>
         <div style="display:flex; gap:8px;">
-            <input type="text" id="cfgL" placeholder="NOME DO LOCAL" style="margin:0">
+            <input type="text" id="cfgL" placeholder="LOCAL" style="margin:0">
             <button onclick="salvarCfg('locais','cfgL')" style="background:var(--accent); border:none; color:white; width:55px; border-radius:12px; font-size:20px">+</button>
         </div>
         <div id="listL" style="margin:15px 0"></div>
 
-        <button class="btn-acao" style="background:#64748b; margin-top:25px" onclick="voltar()">FECHAR PAINEL</button>
+        <button class="btn-acao" style="background:#64748b; margin-top:25px" onclick="voltar()">FECHAR</button>
     </div>
 </div>
 
 <footer>PRODUCED BY UNKNOWN</footer>
 
 <script>
-    // Inicialização do Banco de Dados Local
-    let db = JSON.parse(localStorage.getItem('pro_evo_v10')) || { tecnicos: [], locais: [], historico: [] };
+    let db = JSON.parse(localStorage.getItem('pro_evo_v11')) || { tecnicos: [], locais: [], historico: [] };
     let tempMedicoes = [];
 
     window.onload = () => { 
@@ -196,19 +205,16 @@
     function voltar() { mudar('HOME'); }
 
     function novoEnsaio() {
-        if(confirm("LIMPAR DADOS ATUAIS E INICIAR NOVO?")) {
-            tempMedicoes = [];
-            document.getElementById('editId').value = '';
-            renderTabela();
+        if(confirm("LIMPAR TELA PARA NOVO ENSAIO?")) {
+            tempMedicoes = []; document.getElementById('editId').value = ''; renderTabela();
         }
     }
 
     function addMedicao() {
         const p = document.getElementById('mPonto').value, v = document.getElementById('mVal').value, u = document.getElementById('mUnit').value;
-        if(!v) return alert("INSIRA UM VALOR");
+        if(!v) return;
         tempMedicoes.push({p, v: v+u});
-        renderTabela();
-        document.getElementById('mVal').value = '';
+        renderTabela(); document.getElementById('mVal').value = '';
     }
 
     function renderTabela() {
@@ -217,84 +223,54 @@
     }
 
     function arquivar() {
-        if(tempMedicoes.length === 0) return alert("NENHUMA MEDIÇÃO PARA SALVAR");
+        if(tempMedicoes.length === 0) return alert("VAZIO");
         const id = document.getElementById('editId').value || Date.now();
         const registro = { id, data: new Date().toLocaleDateString('pt-BR'), tipo: 'MEGGER', dados: [...tempMedicoes] };
         const idx = db.historico.findIndex(h => h.id == id);
-        
-        if(idx > -1) db.historico[idx] = registro; 
-        else db.historico.unshift(registro);
-
-        localStorage.setItem('pro_evo_v10', JSON.stringify(db));
-        alert("ENSAIO ARQUIVADO COM SUCESSO!");
-        tempMedicoes = []; renderTabela(); render(); voltar();
+        if(idx > -1) db.historico[idx] = registro; else db.historico.unshift(registro);
+        localStorage.setItem('pro_evo_v11', JSON.stringify(db));
+        alert("SALVO!"); tempMedicoes = []; renderTabela(); render(); voltar();
     }
 
     async function compartilharPDF(id) {
         const h = db.historico.find(x => x.id == id);
-        let txt = `LAUDO TÉCNICO - PRO EVOLUTION\n==========================\nDATA: ${h.data}\nENSAIO: ${h.tipo}\n--------------------------\n`;
+        let txt = `LAUDO PRO EVOLUTION\nDATA: ${h.data}\nENSAIO: ${h.tipo}\n\n`;
         h.dados.forEach(d => txt += `${d.p}: ${d.v}\n`);
-        txt += `--------------------------\nGERADO VIA APP PRO EVOLUTION`;
-
-        if(navigator.share) await navigator.share({ title: 'Laudo PDF', text: txt });
-        else alert("PDF GERADO: " + txt);
+        if(navigator.share) await navigator.share({ title: 'Laudo', text: txt });
     }
 
     function carregarEnsaio(id) {
         const h = db.historico.find(x => x.id == id);
-        tempMedicoes = [...h.dados];
-        document.getElementById('editId').value = h.id;
-        renderTabela(); 
-        mudar('MEG');
+        tempMedicoes = [...h.dados]; document.getElementById('editId').value = h.id;
+        renderTabela(); mudar('MEG');
     }
 
     function deletar(id) {
-        if(confirm("TEM CERTEZA QUE DESEJA EXCLUIR ESTE REGISTRO PERMANENTEMENTE?")) {
+        if(confirm("TEM CERTEZA QUE DESEJA EXCLUIR?")) {
             db.historico = db.historico.filter(x => x.id != id);
-            localStorage.setItem('pro_evo_v10', JSON.stringify(db)); 
-            render();
+            localStorage.setItem('pro_evo_v11', JSON.stringify(db)); render();
         }
     }
 
     function salvarCfg(tipo, id) {
         const v = document.getElementById(id).value.toUpperCase();
-        if(v) { 
-            db[tipo].push(v); 
-            localStorage.setItem('pro_evo_v10', JSON.stringify(db)); 
-            render(); 
-            document.getElementById(id).value=''; 
-        }
+        if(v) { db[tipo].push(v); localStorage.setItem('pro_evo_v11', JSON.stringify(db)); render(); document.getElementById(id).value=''; }
     }
 
     function render() {
-        // Render Técnicos
         document.getElementById('listT').innerHTML = db.tecnicos.map((t,i) => 
-            `<span style="background:#e2e8f0; padding:8px 15px; border-radius:15px; margin:4px; display:inline-block; font-weight:bold; font-size:13px">${t} 
-            <b onclick="db.tecnicos.splice(${i},1);localStorage.setItem('pro_evo_v10',JSON.stringify(db));render();" style="color:red; margin-left:8px; cursor:pointer">×</b></span>`).join('');
-        
-        // Render Locais
+            `<span style="background:#e2e8f0; padding:8px; border-radius:10px; margin:4px; display:inline-block">${t} <b onclick="db.tecnicos.splice(${i},1);localStorage.setItem('pro_evo_v11',JSON.stringify(db));render();" style="color:red">×</b></span>`).join('');
         document.getElementById('listL').innerHTML = db.locais.map((l,i) => 
-            `<span style="background:#e2e8f0; padding:8px 15px; border-radius:15px; margin:4px; display:inline-block; font-weight:bold; font-size:13px">${l} 
-            <b onclick="db.locais.splice(${i},1);localStorage.setItem('pro_evo_v10',JSON.stringify(db));render();" style="color:red; margin-left:8px; cursor:pointer">×</b></span>`).join('');
-        
-        // Render Histórico
+            `<span style="background:#e2e8f0; padding:8px; border-radius:10px; margin:4px; display:inline-block">${l} <b onclick="db.locais.splice(${i},1);localStorage.setItem('pro_evo_v11',JSON.stringify(db));render();" style="color:red">×</b></span>`).join('');
         document.getElementById('listaHist').innerHTML = db.historico.map(h => `
             <div class="hist-item">
-                <div style="display:flex; justify-content:space-between; align-items:center">
-                    <b>${h.data}</b>
-                    <span style="background:var(--accent); color:white; padding:2px 8px; border-radius:5px; font-size:10px">${h.tipo}</span>
-                </div>
+                <b>${h.data} - ${h.tipo}</b>
                 <div class="hist-btns">
                     <button class="btn-mini" style="background:var(--accent)" onclick="carregarEnsaio(${h.id})">CONTINUAR</button>
                     <button class="btn-mini" style="background:var(--success)" onclick="compartilharPDF(${h.id})">PDF</button>
                     <button class="btn-mini" style="background:var(--danger)" onclick="deletar(${h.id})">EXCLUIR</button>
                 </div>
-            </div>`).join('') || "<p style='text-align:center; color:#94a3b8'>HISTÓRICO VAZIO</p>";
-    }
-
-    function abrirNovoTTR() {
-        alert("SISTEMA TTR PRONTO PARA RECEBER AS COLUNAS DE CÁLCULO!");
-        // Aqui entraremos com a lógica de TTR no próximo passo
+            </div>`).join('') || "VAZIO";
     }
 </script>
 </body>
