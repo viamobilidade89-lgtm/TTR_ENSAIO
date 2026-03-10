@@ -19,12 +19,10 @@
         .empresa-nome { color: white; font-weight: 900; font-size: 28px; letter-spacing: 3px; text-align: center; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
 
-        /* Header Harmonioso */
         header { display: grid; grid-template-columns: 50px 1fr 50px; align-items: center; padding: 25px 15px; background: white; border-bottom: 1px solid #f1f5f9; }
         .header-title { grid-column: 2; font-size: 20px; font-weight: 900; color: var(--accent); margin: 0; text-align: center; letter-spacing: 1px; }
         .config-icon { grid-column: 3; font-size: 24px; cursor: pointer; background: none; border: none; color: #cbd5e1; justify-self: end; }
 
-        /* Menu Monolito */
         #main-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .monolito-menu { display: flex; flex-direction: column; width: 95%; max-width: 400px; background: linear-gradient(145deg, #0284c7, #0271ab); border-radius: 40px; overflow: hidden; box-shadow: 0 25px 50px rgba(2, 132, 199, 0.35); }
         .btn-monolito { background: transparent; color: white; border: none; padding: 45px 25px; cursor: pointer; display: flex; align-items: center; gap: 25px; position: relative; text-align: left; }
@@ -33,7 +31,6 @@
         .btn-label { font-size: 22px; font-weight: 900; letter-spacing: 1px; display: block; }
         .btn-desc { font-size: 12px; color: rgba(255,255,255,0.8); text-transform: uppercase; }
 
-        /* Cards e Telas */
         .tela { display: none; padding: 20px; animation: fadeIn 0.4s ease-out; }
         .ativa { display: block !important; }
         .card { background: #f8fafc; padding: 25px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 600px; margin: auto; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
@@ -41,13 +38,16 @@
         
         .btn-inf { background: #e2e8f0; border: none; border-radius: 8px; padding: 0 15px; cursor: pointer; font-size: 20px; font-weight: bold; margin-bottom: 10px; height: 45px;}
 
-        /* Tabela */
+        /* Área de seleção múltipla de técnicos */
+        .multi-select { background: white; border: 2px solid #cbd5e1; border-radius: 12px; padding: 10px; max-height: 120px; overflow-y: auto; margin-bottom: 10px; }
+        .multi-item { display: flex; align-items: center; gap: 10px; padding: 5px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; font-weight: 600; }
+        .multi-item input { width: 20px; height: 20px; margin: 0; }
+
         .table-wrap { overflow-x: auto; background: white; border-radius: 15px; border: 1px solid #e2e8f0; }
-        table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 450px; }
-        th { background: #f1f5f9; padding: 10px; border-bottom: 2px solid #e2e8f0; text-transform: uppercase; }
+        table { width: 100%; border-collapse: collapse; font-size: 10px; min-width: 480px; }
+        th { background: #f1f5f9; padding: 10px; border-bottom: 2px solid #e2e8f0; }
         td { padding: 10px; border-bottom: 1px solid #f1f5f9; text-align: center; }
 
-        /* Histórico */
         .hist-item { background: white; border: 1px solid #e2e8f0; padding: 18px; border-radius: 20px; margin-bottom: 15px; border-left: 6px solid var(--accent); }
         .hist-btns { display: flex; gap: 8px; margin-top: 12px; }
         .btn-mini { flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; font-size: 11px; cursor: pointer; }
@@ -92,10 +92,10 @@
         <input type="hidden" id="editId">
         
         <label>1. TAG do Equipamento</label>
-        <input type="text" id="mTag" placeholder="EX: TR-01">
+        <input type="text" id="mTag" placeholder="EX: TR-01" oninput="this.value = this.value.toUpperCase()">
 
-        <label>2. Técnico</label>
-        <select id="mTec"></select>
+        <label>2. Técnicos (Selecione um ou mais)</label>
+        <div id="mTecContainer" class="multi-select"></div>
 
         <label>3. Local</label>
         <select id="mLoc"></select>
@@ -115,23 +115,23 @@
 
         <label>6. Resistência de Referência (Mínima)</label>
         <div style="display:flex; gap:5px">
-            <input type="number" id="mRef" placeholder="VALOR NOMINAL">
+            <input type="number" id="mRef" placeholder="VALOR" inputmode="decimal">
             <select id="mRefUni" style="width:100px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
         </div>
 
-        <label>7/8. Leituras e Tempos</label>
-        <div style="display:flex; gap:5px; align-items: flex-start">
-            <input type="text" id="m30" placeholder="VALOR 30s">
+        <label>7/8. Leituras e Tempos (Teclado Numérico)</label>
+        <div style="display:flex; gap:5px; align-items: center">
+            <input type="text" id="m30" placeholder="30s" inputmode="decimal">
             <button class="btn-inf" onclick="setInf('m30')">∞</button>
             <select id="u30" style="width:100px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
         </div>
-        <div style="display:flex; gap:5px; align-items: flex-start">
-            <input type="text" id="m60" placeholder="VALOR 60s">
+        <div style="display:flex; gap:5px; align-items: center">
+            <input type="text" id="m60" placeholder="60s" inputmode="decimal">
             <button class="btn-inf" onclick="setInf('m60')">∞</button>
             <select id="u60" style="width:100px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
         </div>
-        <div style="display:flex; gap:5px; align-items: flex-start">
-            <input type="text" id="m120" placeholder="VALOR 120s">
+        <div style="display:flex; gap:5px; align-items: center">
+            <input type="text" id="m120" placeholder="120s" inputmode="decimal">
             <button class="btn-inf" onclick="setInf('m120')">∞</button>
             <select id="u120" style="width:100px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
         </div>
@@ -146,39 +146,37 @@
                 <thead>
                     <tr>
                         <th>PONTO</th>
+                        <th>TEN.</th>
                         <th>30s</th>
                         <th>60s</th>
                         <th>120s</th>
-                        <th>STATUS</th>
+                        <th>ST.</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
             </table>
         </div>
-        <button class="btn-acao" style="background:var(--success); margin-top:20px" onclick="salvarHistorico()">💾 SALVAR ENSAIO NO HISTÓRICO</button>
+        <button class="btn-acao" style="background:var(--success); margin-top:20px" onclick="salvarHistorico()">💾 SALVAR NO HISTÓRICO</button>
     </div>
-    <button class="btn-acao" style="background:#64748b" onclick="voltar()">VOLTAR AO MENU</button>
+    <button class="btn-acao" style="background:#64748b" onclick="voltar()">VOLTAR</button>
 </div>
 
 <div id="secCONFIG" class="tela">
     <div class="card">
         <h3 style="color:var(--accent); border-bottom: 2px solid #eee; padding-bottom:10px">📁 HISTÓRICO</h3>
         <div id="listaHist"></div>
-
         <h3 style="color:var(--accent); margin-top:30px">👥 TÉCNICOS</h3>
         <div style="display:flex; gap:8px">
             <input type="text" id="cTec" placeholder="NOME" style="margin:0">
             <button onclick="addCfg('tecnicos','cTec')" style="background:var(--accent); color:white; border:none; border-radius:12px; width:50px; font-size:20px">+</button>
         </div>
         <div id="lTec" style="margin-top:10px"></div>
-
         <h3 style="color:var(--accent); margin-top:30px">📍 LOCAIS</h3>
         <div style="display:flex; gap:8px">
             <input type="text" id="cLoc" placeholder="LOCAL" style="margin:0">
             <button onclick="addCfg('locais','cLoc')" style="background:var(--accent); color:white; border:none; border-radius:12px; width:50px; font-size:20px">+</button>
         </div>
         <div id="lLoc" style="margin-top:10px"></div>
-
         <button class="btn-acao" style="background:#64748b; margin-top:30px" onclick="voltar()">FECHAR</button>
     </div>
 </div>
@@ -186,7 +184,7 @@
 <footer>PRODUCED BY UNKNOWN</footer>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('pro_evo_v13')) || { tecnicos: [], locais: [], historico: [] };
+    let db = JSON.parse(localStorage.getItem('pro_evo_v14')) || { tecnicos: [], locais: [], historico: [] };
     let ensaiosAtuais = [];
 
     window.onload = () => { 
@@ -209,11 +207,11 @@
         if(v) { db[tipo].push(v); salvar(); renderTudo(); document.getElementById(id).value=''; }
     }
 
-    function salvar() { localStorage.setItem('pro_evo_v13', JSON.stringify(db)); }
+    function salvar() { localStorage.setItem('pro_evo_v14', JSON.stringify(db)); }
 
     function converterParaValor(val, uni) {
         if (val === "∞") return Infinity;
-        const n = parseFloat(val);
+        const n = parseFloat(val.replace(',', '.'));
         if (isNaN(n)) return 0;
         const pesos = { "MΩ": 1, "GΩ": 1000, "TΩ": 1000000 };
         return n * pesos[uni];
@@ -222,30 +220,26 @@
     function registrarMegger() {
         const refVal = document.getElementById('mRef').value;
         const refUni = document.getElementById('mRefUni').value;
-        
         const v30 = document.getElementById('m30').value;
-        const u30 = document.getElementById('u30').value;
         const v60 = document.getElementById('m60').value;
-        const u60 = document.getElementById('u60').value;
         const v120 = document.getElementById('m120').value;
-        const u120 = document.getElementById('u120').value;
 
-        if(!refVal || !v30 || !v60 || !v120) return alert("PREENCHA A REFERÊNCIA E TODAS AS LEITURAS (30s, 60s, 120s)");
+        if(!refVal || !v30 || !v60 || !v120) return alert("PREENCHA TUDO");
 
         const numRef = converterParaValor(refVal, refUni);
-        const num30 = converterParaValor(v30, u30);
-        const num60 = converterParaValor(v60, u60);
-        const num120 = converterParaValor(v120, u120);
+        const num30 = converterParaValor(v30, document.getElementById('u30').value);
+        const num60 = converterParaValor(v60, document.getElementById('u60').value);
+        const num120 = converterParaValor(v120, document.getElementById('u120').value);
 
-        // Lógica: Reprovado se QUALQUER valor for menor que a referência
         const aprovado = (num30 >= numRef && num60 >= numRef && num120 >= numRef);
-        const status = aprovado ? "APROVADO" : "REPROVADO";
+        const status = aprovado ? "OK" : "REPR";
         
         ensaiosAtuais.push({
             ponto: document.getElementById('mPonto').value,
-            v30: v30 + (v30 === "∞" ? "" : u30),
-            v60: v60 + (v60 === "∞" ? "" : u60),
-            v120: v120 + (v120 === "∞" ? "" : u120),
+            tensao: document.getElementById('mTen').value,
+            v30: v30 + (v30 === "∞" ? "" : document.getElementById('u30').value),
+            v60: v60 + (v60 === "∞" ? "" : document.getElementById('u60').value),
+            v120: v120 + (v120 === "∞" ? "" : document.getElementById('u120').value),
             status: status,
             cor: aprovado ? "var(--success)" : "var(--danger)"
         });
@@ -256,20 +250,29 @@
         document.querySelector('#tabMegResult tbody').innerHTML = ensaiosAtuais.map(e => `
             <tr>
                 <td style="font-weight:bold">${e.ponto}</td>
+                <td>${e.tensao}</td>
                 <td>${e.v30}</td>
                 <td>${e.v60}</td>
                 <td>${e.v120}</td>
-                <td style="color:white; background:${e.cor}; font-weight:bold; border-radius:5px">${e.status}</td>
+                <td style="color:white; background:${e.cor}; font-weight:bold; border-radius:4px">${e.status}</td>
             </tr>`).join('');
     }
 
+    function getTecnicosSelecionados() {
+        const checks = document.querySelectorAll('.tec-check:checked');
+        return Array.from(checks).map(c => c.value).join(', ');
+    }
+
     function salvarHistorico() {
-        if(ensaiosAtuais.length === 0) return alert("ADICIONE AO MENOS UM REGISTRO");
+        if(ensaiosAtuais.length === 0) return alert("ADICIONE DADOS");
+        const tecs = getTecnicosSelecionados();
+        if(!tecs) return alert("SELECIONE AO MENOS UM TÉCNICO");
+
         const id = document.getElementById('editId').value || Date.now();
         const novo = {
             id,
             tag: document.getElementById('mTag').value || "SEM TAG",
-            tecnico: document.getElementById('mTec').value,
+            tecnico: tecs,
             local: document.getElementById('mLoc').value,
             data: new Date().toLocaleDateString('pt-BR'),
             tipo: 'MEGGER',
@@ -283,41 +286,50 @@
     function novoEnsaio() {
         ensaiosAtuais = []; document.getElementById('editId').value = ''; renderTabela();
         document.querySelectorAll('#secMEG input').forEach(i => i.value = '');
+        document.querySelectorAll('.tec-check').forEach(c => c.checked = false);
     }
 
     function carregarEnsaio(id) {
         const h = db.historico.find(x => x.id == id);
         document.getElementById('mTag').value = h.tag;
-        document.getElementById('mTec').value = h.tecnico;
         document.getElementById('mLoc').value = h.local;
         document.getElementById('editId').value = h.id;
         ensaiosAtuais = [...h.dados];
+        
+        // Marcar técnicos salvos
+        const tecs = h.tecnico.split(', ');
+        document.querySelectorAll('.tec-check').forEach(c => c.checked = tecs.includes(c.value));
+        
         renderTabela(); mudar('MEG');
     }
 
     function excluirHist(id) {
-        if(confirm("EXCLUIR PERMANENTEMENTE?")) {
-            db.historico = db.historico.filter(x => x.id != id);
-            salvar(); renderTudo();
-        }
+        if(confirm("EXCLUIR?")) { db.historico = db.historico.filter(x => x.id != id); salvar(); renderTudo(); }
     }
 
     async function compartilhar(id) {
         const h = db.historico.find(x => x.id == id);
-        let t = `PRO EVOLUTION - LAUDO MEGGER\nTAG: ${h.tag}\nDATA: ${h.data}\n\n`;
-        h.dados.forEach(d => t += `${d.ponto}: ${d.v60} -> ${d.status}\n`);
+        let t = `PRO EVOLUTION - LAUDO MEGGER\nTAG: ${h.tag}\nDATA: ${h.data}\nTÉCNICOS: ${h.tecnico}\n\n`;
+        h.dados.forEach(d => t += `${d.ponto} (${d.tensao}): ${d.v60} -> ${d.status}\n`);
         if(navigator.share) await navigator.share({ title: 'Laudo', text: t });
     }
 
     function renderTudo() {
-        document.getElementById('mTec').innerHTML = db.tecnicos.map(t => `<option>${t}</option>`).join('') || '<option>CADASTRE UM TÉCNICO</option>';
+        // Renderizar seleção múltipla de técnicos
+        const container = document.getElementById('mTecContainer');
+        container.innerHTML = db.tecnicos.map(t => `
+            <div class="multi-item">
+                <input type="checkbox" class="tec-check" value="${t}"> ${t}
+            </div>
+        `).join('') || '<p style="font-size:11px;color:gray">CADASTRE TÉCNICOS NAS CONFIG.</p>';
+
         document.getElementById('mLoc').innerHTML = db.locais.map(l => `<option>${l}</option>`).join('') || '<option>CADASTRE UM LOCAL</option>';
         document.getElementById('lTec').innerHTML = db.tecnicos.map((t,i) => `<span style="display:inline-block; background:#f1f5f9; padding:8px 12px; border-radius:12px; margin:4px; font-weight:bold">${t} <b onclick="db.tecnicos.splice(${i},1);salvar();renderTudo()" style="color:var(--danger);cursor:pointer">×</b></span>`).join('');
         document.getElementById('lLoc').innerHTML = db.locais.map((l,i) => `<span style="display:inline-block; background:#f1f5f9; padding:8px 12px; border-radius:12px; margin:4px; font-weight:bold">${l} <b onclick="db.locais.splice(${i},1);salvar();renderTudo()" style="color:var(--danger);cursor:pointer">×</b></span>`).join('');
         document.getElementById('listaHist').innerHTML = db.historico.map(h => `
             <div class="hist-item">
-                <div style="display:flex; justify-content:space-between"><b>TAG: ${h.tag}</b> <span>${h.data}</span></div>
-                <div style="font-size:11px; color:var(--accent); margin-top:5px">${h.tipo} | ${h.tecnico}</div>
+                <div style="display:flex; justify-content:space-between"><b>${h.tag}</b> <span>${h.data}</span></div>
+                <div style="font-size:10px; color:var(--accent); margin-top:5px">${h.tecnico}</div>
                 <div class="hist-btns">
                     <button class="btn-mini" style="background:var(--accent)" onclick="carregarEnsaio(${h.id})">CONTINUAR</button>
                     <button class="btn-mini" style="background:var(--success)" onclick="compartilhar(${h.id})">PDF</button>
@@ -328,4 +340,3 @@
 </script>
 </body>
 </html>
-
