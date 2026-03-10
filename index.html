@@ -11,7 +11,7 @@
         input, select, textarea { text-transform: uppercase; width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 12px; font-size: 15px; box-sizing: border-box; margin-bottom: 10px; }
         label { font-size: 11px; font-weight: 800; color: #64748b; margin-left: 5px; text-transform: uppercase; display: block; margin-bottom: 4px; }
 
-        /* Splash Screen com Animação de Pulso */
+        /* Splash Screen */
         #splash { position: fixed; top:0; left:0; width:100%; height:100%; background: var(--dark); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; transition: 0.6s; }
         .logo-box { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
         .logo-circle { width: 140px; height: 140px; border: 5px solid var(--p); border-radius: 50%; position: absolute; animation: pulse 2s infinite; }
@@ -24,7 +24,7 @@
         .header-title { grid-column: 2; font-size: 20px; font-weight: 900; color: var(--accent); margin: 0; text-align: center; letter-spacing: 1px; }
         .config-icon { grid-column: 3; font-size: 24px; cursor: pointer; background: none; border: none; color: #cbd5e1; justify-self: end; }
 
-        /* Menu Monolito Premium */
+        /* Menu Monolito */
         #main-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .monolito-menu { display: flex; flex-direction: column; width: 95%; max-width: 400px; background: linear-gradient(145deg, #0284c7, #0271ab); border-radius: 40px; overflow: hidden; box-shadow: 0 25px 50px rgba(2, 132, 199, 0.35); }
         .btn-monolito { background: transparent; color: white; border: none; padding: 45px 25px; cursor: pointer; display: flex; align-items: center; gap: 25px; position: relative; text-align: left; }
@@ -33,15 +33,13 @@
         .btn-label { font-size: 22px; font-weight: 900; letter-spacing: 1px; display: block; }
         .btn-desc { font-size: 12px; color: rgba(255,255,255,0.8); text-transform: uppercase; }
 
-        /* Telas e Cards */
+        /* Cards e Telas */
         .tela { display: none; padding: 20px; animation: fadeIn 0.4s ease-out; }
         .ativa { display: block !important; }
         .card { background: #f8fafc; padding: 25px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 600px; margin: auto; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
         .btn-acao { width: 100%; padding: 18px; border-radius: 15px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; color: white; margin-top: 10px; }
         
-        /* Botão Infinito */
-        .btn-inf { background: #e2e8f0; border: none; border-radius: 8px; padding: 0 15px; cursor: pointer; font-size: 20px; font-weight: bold; margin-bottom: 10px; }
-        .btn-inf:active { background: #cbd5e1; }
+        .btn-inf { background: #e2e8f0; border: none; border-radius: 8px; padding: 0 15px; cursor: pointer; font-size: 20px; font-weight: bold; margin-bottom: 10px; height: 45px;}
 
         /* Tabela */
         .table-wrap { overflow-x: auto; background: white; border-radius: 15px; border: 1px solid #e2e8f0; }
@@ -117,8 +115,7 @@
 
         <label>6. Resistência de Referência (Mínima)</label>
         <div style="display:flex; gap:5px">
-            <input type="text" id="mRef" placeholder="VALOR">
-            <button class="btn-inf" onclick="setInf('mRef')">∞</button>
+            <input type="number" id="mRef" placeholder="VALOR NOMINAL">
             <select id="mRefUni" style="width:100px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
         </div>
 
@@ -165,7 +162,7 @@
 
 <div id="secCONFIG" class="tela">
     <div class="card">
-        <h3 style="color:var(--accent); border-bottom: 2px solid #eee; padding-bottom:10px">📁 HISTÓRICO DE ENSAIOS</h3>
+        <h3 style="color:var(--accent); border-bottom: 2px solid #eee; padding-bottom:10px">📁 HISTÓRICO</h3>
         <div id="listaHist"></div>
 
         <h3 style="color:var(--accent); margin-top:30px">👥 TÉCNICOS</h3>
@@ -182,14 +179,14 @@
         </div>
         <div id="lLoc" style="margin-top:10px"></div>
 
-        <button class="btn-acao" style="background:#64748b; margin-top:30px" onclick="voltar()">FECHAR PAINEL</button>
+        <button class="btn-acao" style="background:#64748b; margin-top:30px" onclick="voltar()">FECHAR</button>
     </div>
 </div>
 
 <footer>PRODUCED BY UNKNOWN</footer>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('pro_evo_v12')) || { tecnicos: [], locais: [], historico: [] };
+    let db = JSON.parse(localStorage.getItem('pro_evo_v13')) || { tecnicos: [], locais: [], historico: [] };
     let ensaiosAtuais = [];
 
     window.onload = () => { 
@@ -205,7 +202,6 @@
     }
 
     function voltar() { mudar('HOME'); }
-
     function setInf(id) { document.getElementById(id).value = "∞"; }
 
     function addCfg(tipo, id) {
@@ -213,31 +209,43 @@
         if(v) { db[tipo].push(v); salvar(); renderTudo(); document.getElementById(id).value=''; }
     }
 
-    function salvar() { localStorage.setItem('pro_evo_v12', JSON.stringify(db)); }
+    function salvar() { localStorage.setItem('pro_evo_v13', JSON.stringify(db)); }
+
+    function converterParaValor(val, uni) {
+        if (val === "∞") return Infinity;
+        const n = parseFloat(val);
+        if (isNaN(n)) return 0;
+        const pesos = { "MΩ": 1, "GΩ": 1000, "TΩ": 1000000 };
+        return n * pesos[uni];
+    }
 
     function registrarMegger() {
-        const refRaw = document.getElementById('mRef').value;
-        const l60Raw = document.getElementById('m60').value;
-        const u60 = document.getElementById('u60').value;
-        const uRef = document.getElementById('mRefUni').value;
-
-        if(!l60Raw || !refRaw) return alert("INSIRA A REFERÊNCIA E O VALOR DE 60s");
-
-        const pesos = { "MΩ": 1, "GΩ": 1000, "TΩ": 1000000 };
+        const refVal = document.getElementById('mRef').value;
+        const refUni = document.getElementById('mRefUni').value;
         
-        // Conversão para comparação numérica
-        const valRef = refRaw === "∞" ? Infinity : parseFloat(refRaw) * pesos[uRef];
-        const val60 = l60Raw === "∞" ? Infinity : parseFloat(l60Raw) * pesos[u60];
+        const v30 = document.getElementById('m30').value;
+        const u30 = document.getElementById('u30').value;
+        const v60 = document.getElementById('m60').value;
+        const u60 = document.getElementById('u60').value;
+        const v120 = document.getElementById('m120').value;
+        const u120 = document.getElementById('u120').value;
 
-        // Lógica de Aprovação: Infinito é sempre maior ou igual a qualquer referência
-        const aprovado = val60 >= valRef;
+        if(!refVal || !v30 || !v60 || !v120) return alert("PREENCHA A REFERÊNCIA E TODAS AS LEITURAS (30s, 60s, 120s)");
+
+        const numRef = converterParaValor(refVal, refUni);
+        const num30 = converterParaValor(v30, u30);
+        const num60 = converterParaValor(v60, u60);
+        const num120 = converterParaValor(v120, u120);
+
+        // Lógica: Reprovado se QUALQUER valor for menor que a referência
+        const aprovado = (num30 >= numRef && num60 >= numRef && num120 >= numRef);
         const status = aprovado ? "APROVADO" : "REPROVADO";
         
         ensaiosAtuais.push({
             ponto: document.getElementById('mPonto').value,
-            v30: document.getElementById('m30').value + (document.getElementById('m30').value === "∞" ? "" : document.getElementById('u30').value),
-            v60: l60Raw + (l60Raw === "∞" ? "" : u60),
-            v120: document.getElementById('m120').value + (document.getElementById('m120').value === "∞" ? "" : document.getElementById('u120').value),
+            v30: v30 + (v30 === "∞" ? "" : u30),
+            v60: v60 + (v60 === "∞" ? "" : u60),
+            v120: v120 + (v120 === "∞" ? "" : u120),
             status: status,
             cor: aprovado ? "var(--success)" : "var(--danger)"
         });
@@ -256,7 +264,7 @@
     }
 
     function salvarHistorico() {
-        if(ensaiosAtuais.length === 0) return alert("ADICIONE AO MENOS UM REGISTRO NA TABELA");
+        if(ensaiosAtuais.length === 0) return alert("ADICIONE AO MENOS UM REGISTRO");
         const id = document.getElementById('editId').value || Date.now();
         const novo = {
             id,
@@ -269,18 +277,12 @@
         };
         const idx = db.historico.findIndex(h => h.id == id);
         if(idx > -1) db.historico[idx] = novo; else db.historico.unshift(novo);
-        salvar(); alert("SALVO COM SUCESSO!"); novoEnsaio(); renderTudo(); voltar();
+        salvar(); alert("SALVO!"); novoEnsaio(); renderTudo(); voltar();
     }
 
     function novoEnsaio() {
-        ensaiosAtuais = []; 
-        document.getElementById('editId').value = ''; 
-        renderTabela();
-        document.getElementById('mTag').value = '';
-        document.getElementById('mRef').value = '';
-        document.getElementById('m30').value = '';
-        document.getElementById('m60').value = '';
-        document.getElementById('m120').value = '';
+        ensaiosAtuais = []; document.getElementById('editId').value = ''; renderTabela();
+        document.querySelectorAll('#secMEG input').forEach(i => i.value = '');
     }
 
     function carregarEnsaio(id) {
@@ -294,7 +296,7 @@
     }
 
     function excluirHist(id) {
-        if(confirm("EXCLUIR ESTE ENSAIO PERMANENTEMENTE?")) {
+        if(confirm("EXCLUIR PERMANENTEMENTE?")) {
             db.historico = db.historico.filter(x => x.id != id);
             salvar(); renderTudo();
         }
@@ -302,29 +304,26 @@
 
     async function compartilhar(id) {
         const h = db.historico.find(x => x.id == id);
-        let t = `PRO EVOLUTION - LAUDO MEGGER\nTAG: ${h.tag}\nDATA: ${h.data}\nLOCAL: ${h.local}\n\n`;
+        let t = `PRO EVOLUTION - LAUDO MEGGER\nTAG: ${h.tag}\nDATA: ${h.data}\n\n`;
         h.dados.forEach(d => t += `${d.ponto}: ${d.v60} -> ${d.status}\n`);
-        if(navigator.share) await navigator.share({ title: 'Laudo Megger', text: t });
+        if(navigator.share) await navigator.share({ title: 'Laudo', text: t });
     }
 
     function renderTudo() {
-        const sTec = document.getElementById('mTec'), sLoc = document.getElementById('mLoc');
-        sTec.innerHTML = db.tecnicos.map(t => `<option>${t}</option>`).join('') || '<option>CADASTRE UM TÉCNICO</option>';
-        sLoc.innerHTML = db.locais.map(l => `<option>${l}</option>`).join('') || '<option>CADASTRE UM LOCAL</option>';
-        
-        document.getElementById('lTec').innerHTML = db.tecnicos.map((t,i) => `<span style="display:inline-block; background:#f1f5f9; padding:8px 12px; border-radius:12px; margin:4px; font-weight:bold">${t} <b onclick="db.tecnicos.splice(${i},1);salvar();renderTudo()" style="color:var(--danger);cursor:pointer;margin-left:5px">×</b></span>`).join('');
-        document.getElementById('lLoc').innerHTML = db.locais.map((l,i) => `<span style="display:inline-block; background:#f1f5f9; padding:8px 12px; border-radius:12px; margin:4px; font-weight:bold">${l} <b onclick="db.locais.splice(${i},1);salvar();renderTudo()" style="color:var(--danger);cursor:pointer;margin-left:5px">×</b></span>`).join('');
-
+        document.getElementById('mTec').innerHTML = db.tecnicos.map(t => `<option>${t}</option>`).join('') || '<option>CADASTRE UM TÉCNICO</option>';
+        document.getElementById('mLoc').innerHTML = db.locais.map(l => `<option>${l}</option>`).join('') || '<option>CADASTRE UM LOCAL</option>';
+        document.getElementById('lTec').innerHTML = db.tecnicos.map((t,i) => `<span style="display:inline-block; background:#f1f5f9; padding:8px 12px; border-radius:12px; margin:4px; font-weight:bold">${t} <b onclick="db.tecnicos.splice(${i},1);salvar();renderTudo()" style="color:var(--danger);cursor:pointer">×</b></span>`).join('');
+        document.getElementById('lLoc').innerHTML = db.locais.map((l,i) => `<span style="display:inline-block; background:#f1f5f9; padding:8px 12px; border-radius:12px; margin:4px; font-weight:bold">${l} <b onclick="db.locais.splice(${i},1);salvar();renderTudo()" style="color:var(--danger);cursor:pointer">×</b></span>`).join('');
         document.getElementById('listaHist').innerHTML = db.historico.map(h => `
             <div class="hist-item">
                 <div style="display:flex; justify-content:space-between"><b>TAG: ${h.tag}</b> <span>${h.data}</span></div>
-                <div style="font-size:11px; color:var(--accent); font-weight:bold; margin-top:5px">${h.tipo} | ${h.tecnico}</div>
+                <div style="font-size:11px; color:var(--accent); margin-top:5px">${h.tipo} | ${h.tecnico}</div>
                 <div class="hist-btns">
                     <button class="btn-mini" style="background:var(--accent)" onclick="carregarEnsaio(${h.id})">CONTINUAR</button>
                     <button class="btn-mini" style="background:var(--success)" onclick="compartilhar(${h.id})">PDF</button>
                     <button class="btn-mini" style="background:var(--danger)" onclick="excluirHist(${h.id})">EXCLUIR</button>
                 </div>
-            </div>`).join('') || "<p style='text-align:center;color:#cbd5e1'>NENHUM ENSAIO ARQUIVADO</p>";
+            </div>`).join('') || "<p style='text-align:center;color:#cbd5e1'>VAZIO</p>";
     }
 </script>
 </body>
