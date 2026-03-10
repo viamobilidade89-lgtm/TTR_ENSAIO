@@ -11,7 +11,7 @@
         input, select, textarea { text-transform: uppercase; width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 12px; font-size: 15px; box-sizing: border-box; margin-bottom: 10px; }
         label { font-size: 11px; font-weight: 800; color: #64748b; margin-left: 5px; text-transform: uppercase; display: block; margin-bottom: 4px; }
 
-        /* Splash Screen com Animação Original */
+        /* Splash Screen com Animação de Pulso */
         #splash { position: fixed; top:0; left:0; width:100%; height:100%; background: var(--dark); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; transition: 0.6s; }
         .logo-box { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
         .logo-circle { width: 140px; height: 140px; border: 5px solid var(--p); border-radius: 50%; position: absolute; animation: pulse 2s infinite; }
@@ -21,7 +21,7 @@
 
         /* Header Harmonioso */
         header { display: grid; grid-template-columns: 50px 1fr 50px; align-items: center; padding: 25px 15px; background: white; border-bottom: 1px solid #f1f5f9; }
-        .header-title { grid-column: 2; font-size: 22px; font-weight: 900; color: var(--accent); margin: 0; text-align: center; letter-spacing: 1px; }
+        .header-title { grid-column: 2; font-size: 20px; font-weight: 900; color: var(--accent); margin: 0; text-align: center; letter-spacing: 1px; }
         .config-icon { grid-column: 3; font-size: 24px; cursor: pointer; background: none; border: none; color: #cbd5e1; justify-self: end; }
 
         /* Menu Monolito Premium */
@@ -31,7 +31,7 @@
         .btn-monolito:not(:last-child)::after { content: ""; position: absolute; bottom: 0; left: 10%; width: 80%; height: 1px; background: rgba(255,255,255,0.1); }
         .icon-box { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 40px; }
         .btn-label { font-size: 22px; font-weight: 900; letter-spacing: 1px; display: block; }
-        .btn-desc { font-size: 12px; color: rgba(255,255,255,0.8); }
+        .btn-desc { font-size: 12px; color: rgba(255,255,255,0.8); text-transform: uppercase; }
 
         /* Telas e Cards */
         .tela { display: none; padding: 20px; animation: fadeIn 0.4s ease-out; }
@@ -39,16 +39,20 @@
         .card { background: #f8fafc; padding: 25px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 600px; margin: auto; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
         .btn-acao { width: 100%; padding: 18px; border-radius: 15px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; color: white; margin-top: 10px; }
         
-        /* Histórico Premium */
+        /* Botão Infinito */
+        .btn-inf { background: #e2e8f0; border: none; border-radius: 8px; padding: 0 15px; cursor: pointer; font-size: 20px; font-weight: bold; margin-bottom: 10px; }
+        .btn-inf:active { background: #cbd5e1; }
+
+        /* Tabela */
+        .table-wrap { overflow-x: auto; background: white; border-radius: 15px; border: 1px solid #e2e8f0; }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 450px; }
+        th { background: #f1f5f9; padding: 10px; border-bottom: 2px solid #e2e8f0; text-transform: uppercase; }
+        td { padding: 10px; border-bottom: 1px solid #f1f5f9; text-align: center; }
+
+        /* Histórico */
         .hist-item { background: white; border: 1px solid #e2e8f0; padding: 18px; border-radius: 20px; margin-bottom: 15px; border-left: 6px solid var(--accent); }
         .hist-btns { display: flex; gap: 8px; margin-top: 12px; }
         .btn-mini { flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; font-size: 11px; cursor: pointer; }
-
-        /* Tabela Completa */
-        .table-wrap { overflow-x: auto; background: white; border-radius: 15px; border: 1px solid #e2e8f0; }
-        table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 400px; }
-        th { background: #f1f5f9; padding: 10px; border-bottom: 2px solid #e2e8f0; }
-        td { padding: 10px; border-bottom: 1px solid #f1f5f9; text-align: center; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         footer { text-align: center; padding: 30px; font-size: 11px; color: #cbd5e1; letter-spacing: 2px; }
@@ -113,18 +117,26 @@
 
         <label>6. Resistência de Referência (Mínima)</label>
         <div style="display:flex; gap:5px">
-            <input type="number" id="mRef" placeholder="VALOR">
+            <input type="text" id="mRef" placeholder="VALOR">
+            <button class="btn-inf" onclick="setInf('mRef')">∞</button>
             <select id="mRefUni" style="width:100px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
         </div>
 
-        <label>7/8. Leituras (30s, 60s, 120s)</label>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px">
-            <input type="number" id="m30" placeholder="VALOR 30s">
-            <select id="u30"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
-            <input type="number" id="m60" placeholder="VALOR 60s">
-            <select id="u60"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
-            <input type="number" id="m120" placeholder="VALOR 120s">
-            <select id="u120"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
+        <label>7/8. Leituras e Tempos</label>
+        <div style="display:flex; gap:5px; align-items: flex-start">
+            <input type="text" id="m30" placeholder="VALOR 30s">
+            <button class="btn-inf" onclick="setInf('m30')">∞</button>
+            <select id="u30" style="width:100px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
+        </div>
+        <div style="display:flex; gap:5px; align-items: flex-start">
+            <input type="text" id="m60" placeholder="VALOR 60s">
+            <button class="btn-inf" onclick="setInf('m60')">∞</button>
+            <select id="u60" style="width:100px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
+        </div>
+        <div style="display:flex; gap:5px; align-items: flex-start">
+            <input type="text" id="m120" placeholder="VALOR 120s">
+            <button class="btn-inf" onclick="setInf('m120')">∞</button>
+            <select id="u120" style="width:100px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
         </div>
 
         <button class="btn-acao" style="background:var(--accent)" onclick="registrarMegger()">9. REGISTRAR NO QUADRO</button>
@@ -156,14 +168,14 @@
         <h3 style="color:var(--accent); border-bottom: 2px solid #eee; padding-bottom:10px">📁 HISTÓRICO DE ENSAIOS</h3>
         <div id="listaHist"></div>
 
-        <h3 style="color:var(--accent); margin-top:30px">👥 CADASTRO DE TÉCNICOS</h3>
+        <h3 style="color:var(--accent); margin-top:30px">👥 TÉCNICOS</h3>
         <div style="display:flex; gap:8px">
             <input type="text" id="cTec" placeholder="NOME" style="margin:0">
             <button onclick="addCfg('tecnicos','cTec')" style="background:var(--accent); color:white; border:none; border-radius:12px; width:50px; font-size:20px">+</button>
         </div>
         <div id="lTec" style="margin-top:10px"></div>
 
-        <h3 style="color:var(--accent); margin-top:30px">📍 CADASTRO DE LOCAIS</h3>
+        <h3 style="color:var(--accent); margin-top:30px">📍 LOCAIS</h3>
         <div style="display:flex; gap:8px">
             <input type="text" id="cLoc" placeholder="LOCAL" style="margin:0">
             <button onclick="addCfg('locais','cLoc')" style="background:var(--accent); color:white; border:none; border-radius:12px; width:50px; font-size:20px">+</button>
@@ -177,7 +189,7 @@
 <footer>PRODUCED BY UNKNOWN</footer>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('pro_evo_vfinal')) || { tecnicos: [], locais: [], historico: [] };
+    let db = JSON.parse(localStorage.getItem('pro_evo_v12')) || { tecnicos: [], locais: [], historico: [] };
     let ensaiosAtuais = [];
 
     window.onload = () => { 
@@ -194,31 +206,40 @@
 
     function voltar() { mudar('HOME'); }
 
+    function setInf(id) { document.getElementById(id).value = "∞"; }
+
     function addCfg(tipo, id) {
         const v = document.getElementById(id).value.toUpperCase();
         if(v) { db[tipo].push(v); salvar(); renderTudo(); document.getElementById(id).value=''; }
     }
 
-    function salvar() { localStorage.setItem('pro_evo_vfinal', JSON.stringify(db)); }
+    function salvar() { localStorage.setItem('pro_evo_v12', JSON.stringify(db)); }
 
     function registrarMegger() {
-        const ref = parseFloat(document.getElementById('mRef').value);
-        const l60 = parseFloat(document.getElementById('m60').value);
+        const refRaw = document.getElementById('mRef').value;
+        const l60Raw = document.getElementById('m60').value;
         const u60 = document.getElementById('u60').value;
         const uRef = document.getElementById('mRefUni').value;
 
-        if(!l60 || !ref) return alert("INSIRA A REFERÊNCIA E O VALOR DE 60s");
+        if(!l60Raw || !refRaw) return alert("INSIRA A REFERÊNCIA E O VALOR DE 60s");
 
         const pesos = { "MΩ": 1, "GΩ": 1000, "TΩ": 1000000 };
-        const status = (l60 * pesos[u60]) >= (ref * pesos[uRef]) ? "APROVADO" : "REPROVADO";
+        
+        // Conversão para comparação numérica
+        const valRef = refRaw === "∞" ? Infinity : parseFloat(refRaw) * pesos[uRef];
+        const val60 = l60Raw === "∞" ? Infinity : parseFloat(l60Raw) * pesos[u60];
+
+        // Lógica de Aprovação: Infinito é sempre maior ou igual a qualquer referência
+        const aprovado = val60 >= valRef;
+        const status = aprovado ? "APROVADO" : "REPROVADO";
         
         ensaiosAtuais.push({
             ponto: document.getElementById('mPonto').value,
-            v30: document.getElementById('m30').value + document.getElementById('u30').value,
-            v60: l60 + u60,
-            v120: document.getElementById('m120').value + document.getElementById('u120').value,
+            v30: document.getElementById('m30').value + (document.getElementById('m30').value === "∞" ? "" : document.getElementById('u30').value),
+            v60: l60Raw + (l60Raw === "∞" ? "" : u60),
+            v120: document.getElementById('m120').value + (document.getElementById('m120').value === "∞" ? "" : document.getElementById('u120').value),
             status: status,
-            cor: status === "APROVADO" ? "var(--success)" : "var(--danger)"
+            cor: aprovado ? "var(--success)" : "var(--danger)"
         });
         renderTabela();
     }
@@ -226,16 +247,16 @@
     function renderTabela() {
         document.querySelector('#tabMegResult tbody').innerHTML = ensaiosAtuais.map(e => `
             <tr>
-                <td>${e.ponto}</td>
+                <td style="font-weight:bold">${e.ponto}</td>
                 <td>${e.v30}</td>
                 <td>${e.v60}</td>
                 <td>${e.v120}</td>
-                <td style="color:white; background:${e.cor}; font-weight:bold">${e.status}</td>
+                <td style="color:white; background:${e.cor}; font-weight:bold; border-radius:5px">${e.status}</td>
             </tr>`).join('');
     }
 
     function salvarHistorico() {
-        if(ensaiosAtuais.length === 0) return alert("NENHUM DADO PARA SALVAR");
+        if(ensaiosAtuais.length === 0) return alert("ADICIONE AO MENOS UM REGISTRO NA TABELA");
         const id = document.getElementById('editId').value || Date.now();
         const novo = {
             id,
@@ -248,12 +269,18 @@
         };
         const idx = db.historico.findIndex(h => h.id == id);
         if(idx > -1) db.historico[idx] = novo; else db.historico.unshift(novo);
-        salvar(); alert("ENSAIO ARQUIVADO!"); novoEnsaio(); renderTudo(); voltar();
+        salvar(); alert("SALVO COM SUCESSO!"); novoEnsaio(); renderTudo(); voltar();
     }
 
     function novoEnsaio() {
-        ensaiosAtuais = []; document.getElementById('editId').value = ''; renderTabela();
-        document.querySelectorAll('#secMEG input').forEach(i => i.value = '');
+        ensaiosAtuais = []; 
+        document.getElementById('editId').value = ''; 
+        renderTabela();
+        document.getElementById('mTag').value = '';
+        document.getElementById('mRef').value = '';
+        document.getElementById('m30').value = '';
+        document.getElementById('m60').value = '';
+        document.getElementById('m120').value = '';
     }
 
     function carregarEnsaio(id) {
@@ -267,7 +294,7 @@
     }
 
     function excluirHist(id) {
-        if(confirm("TEM CERTEZA QUE DESEJA EXCLUIR?")) {
+        if(confirm("EXCLUIR ESTE ENSAIO PERMANENTEMENTE?")) {
             db.historico = db.historico.filter(x => x.id != id);
             salvar(); renderTudo();
         }
@@ -275,30 +302,29 @@
 
     async function compartilhar(id) {
         const h = db.historico.find(x => x.id == id);
-        let t = `LAUDO PRO EVOLUTION\nTAG: ${h.tag}\nDATA: ${h.data}\n\n`;
-        h.dados.forEach(d => t += `${d.ponto}: ${d.v60} - ${d.status}\n`);
-        if(navigator.share) await navigator.share({ title: 'Laudo', text: t });
+        let t = `PRO EVOLUTION - LAUDO MEGGER\nTAG: ${h.tag}\nDATA: ${h.data}\nLOCAL: ${h.local}\n\n`;
+        h.dados.forEach(d => t += `${d.ponto}: ${d.v60} -> ${d.status}\n`);
+        if(navigator.share) await navigator.share({ title: 'Laudo Megger', text: t });
     }
 
     function renderTudo() {
-        // Listas Config
-        document.getElementById('mTec').innerHTML = db.tecnicos.map(t => `<option>${t}</option>`).join('');
-        document.getElementById('mLoc').innerHTML = db.locais.map(l => `<option>${l}</option>`).join('');
+        const sTec = document.getElementById('mTec'), sLoc = document.getElementById('mLoc');
+        sTec.innerHTML = db.tecnicos.map(t => `<option>${t}</option>`).join('') || '<option>CADASTRE UM TÉCNICO</option>';
+        sLoc.innerHTML = db.locais.map(l => `<option>${l}</option>`).join('') || '<option>CADASTRE UM LOCAL</option>';
         
-        document.getElementById('lTec').innerHTML = db.tecnicos.map((t,i) => `<span style="display:inline-block; background:#eee; padding:5px 10px; border-radius:8px; margin:2px">${t} <b onclick="db.tecnicos.splice(${i},1);salvar();renderTudo()" style="color:red;cursor:pointer">×</b></span>`).join('');
-        document.getElementById('lLoc').innerHTML = db.locais.map((l,i) => `<span style="display:inline-block; background:#eee; padding:5px 10px; border-radius:8px; margin:2px">${l} <b onclick="db.locais.splice(${i},1);salvar();renderTudo()" style="color:red;cursor:pointer">×</b></span>`).join('');
+        document.getElementById('lTec').innerHTML = db.tecnicos.map((t,i) => `<span style="display:inline-block; background:#f1f5f9; padding:8px 12px; border-radius:12px; margin:4px; font-weight:bold">${t} <b onclick="db.tecnicos.splice(${i},1);salvar();renderTudo()" style="color:var(--danger);cursor:pointer;margin-left:5px">×</b></span>`).join('');
+        document.getElementById('lLoc').innerHTML = db.locais.map((l,i) => `<span style="display:inline-block; background:#f1f5f9; padding:8px 12px; border-radius:12px; margin:4px; font-weight:bold">${l} <b onclick="db.locais.splice(${i},1);salvar();renderTudo()" style="color:var(--danger);cursor:pointer;margin-left:5px">×</b></span>`).join('');
 
-        // Histórico
         document.getElementById('listaHist').innerHTML = db.historico.map(h => `
             <div class="hist-item">
-                <div style="display:flex; justify-content:space-between"><b>${h.tag}</b> <span>${h.data}</span></div>
-                <div style="font-size:10px; color:gray">${h.tipo} | ${h.tecnico}</div>
+                <div style="display:flex; justify-content:space-between"><b>TAG: ${h.tag}</b> <span>${h.data}</span></div>
+                <div style="font-size:11px; color:var(--accent); font-weight:bold; margin-top:5px">${h.tipo} | ${h.tecnico}</div>
                 <div class="hist-btns">
                     <button class="btn-mini" style="background:var(--accent)" onclick="carregarEnsaio(${h.id})">CONTINUAR</button>
                     <button class="btn-mini" style="background:var(--success)" onclick="compartilhar(${h.id})">PDF</button>
                     <button class="btn-mini" style="background:var(--danger)" onclick="excluirHist(${h.id})">EXCLUIR</button>
                 </div>
-            </div>`).join('') || "VAZIO";
+            </div>`).join('') || "<p style='text-align:center;color:#cbd5e1'>NENHUM ENSAIO ARQUIVADO</p>";
     }
 </script>
 </body>
