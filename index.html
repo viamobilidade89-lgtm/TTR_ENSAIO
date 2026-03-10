@@ -19,44 +19,38 @@
         .empresa-nome { color: white; font-weight: 900; font-size: 28px; letter-spacing: 3px; text-align: center; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
 
-        /* Header */
+        /* Menu Principal com Sombra */
         header { display: grid; grid-template-columns: 50px 1fr 50px; align-items: center; padding: 25px 15px; background: white; border-bottom: 1px solid #f1f5f9; }
         .header-title { grid-column: 2; font-size: 20px; font-weight: 900; color: var(--accent); margin: 0; text-align: center; letter-spacing: 1px; }
         .config-icon { grid-column: 3; font-size: 24px; cursor: pointer; background: none; border: none; color: #cbd5e1; justify-self: end; }
 
-        /* Menu Monolito Premium com Sombras */
         #main-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .monolito-menu { display: flex; flex-direction: column; width: 95%; max-width: 400px; background: linear-gradient(145deg, #0284c7, #0271ab); border-radius: 40px; overflow: hidden; box-shadow: 0 30px 60px rgba(2, 132, 199, 0.45); }
         .btn-monolito { background: transparent; color: white; border: none; padding: 45px 25px; cursor: pointer; display: flex; align-items: center; gap: 25px; position: relative; text-align: left; }
-        .btn-monolito:active { background: rgba(0,0,0,0.1); }
-        .btn-monolito:not(:last-child)::after { content: ""; position: absolute; bottom: 0; left: 10%; width: 80%; height: 1px; background: rgba(255,255,255,0.15); }
         .icon-box { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 40px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
-        .btn-label { font-size: 22px; font-weight: 900; letter-spacing: 1px; display: block; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .btn-desc { font-size: 12px; color: rgba(255,255,255,0.85); text-transform: uppercase; }
+        .btn-label { font-size: 22px; font-weight: 900; display: block; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .btn-desc { font-size: 12px; color: rgba(255,255,255,0.8); }
 
-        /* Cards e Listas */
+        /* Telas */
         .tela { display: none; padding: 20px; animation: fadeIn 0.4s ease-out; }
         .ativa { display: block !important; }
         .card { background: #f8fafc; padding: 25px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 600px; margin: auto; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .btn-acao { width: 100%; padding: 18px; border-radius: 15px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; color: white; margin-top: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .btn-acao { width: 100%; padding: 18px; border-radius: 15px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; color: white; margin-top: 10px; }
         
         .btn-inf { background: #e2e8f0; border: none; border-radius: 8px; padding: 0 15px; cursor: pointer; font-size: 20px; font-weight: bold; margin-bottom: 10px; height: 45px; }
-
         .multi-select { background: white; border: 2px solid #cbd5e1; border-radius: 12px; padding: 10px; max-height: 120px; overflow-y: auto; margin-bottom: 10px; }
         .multi-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; font-weight: 600; }
-        .multi-item input { width: 18px; height: 18px; margin: 0; }
-
+        
         /* Tabela */
         .table-wrap { overflow-x: auto; background: white; border-radius: 15px; border: 1px solid #e2e8f0; }
         table { width: 100%; border-collapse: collapse; font-size: 10px; min-width: 520px; }
-        th { background: #f1f5f9; padding: 10px; border-bottom: 2px solid #e2e8f0; text-transform: uppercase; color: #475569; }
+        th { background: #f1f5f9; padding: 10px; border-bottom: 2px solid #e2e8f0; }
         td { padding: 10px; border-bottom: 1px solid #f1f5f9; text-align: center; }
-        .btn-del-row { background: var(--danger); color: white; border: none; border-radius: 6px; padding: 4px 8px; cursor: pointer; }
+        .btn-del-row { background: var(--danger); color: white; border: none; border-radius: 6px; padding: 4px 8px; }
 
-        /* Histórico */
-        .hist-item { background: white; border: 1px solid #e2e8f0; padding: 18px; border-radius: 20px; margin-bottom: 15px; border-left: 6px solid var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+        .hist-item { background: white; border: 1px solid #e2e8f0; padding: 18px; border-radius: 20px; margin-bottom: 15px; border-left: 6px solid var(--accent); }
         .hist-btns { display: flex; gap: 8px; margin-top: 12px; }
-        .btn-mini { flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; font-size: 11px; cursor: pointer; }
+        .btn-mini { flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; font-size: 11px; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         footer { text-align: center; padding: 30px; font-size: 11px; color: #cbd5e1; letter-spacing: 2px; }
@@ -96,70 +90,48 @@
         <button class="btn-acao" style="background:var(--dark); margin-bottom:20px" onclick="novoEnsaio()">+ NOVO ENSAIO</button>
         <h2 style="text-align:center; color:var(--accent); margin:0 0 20px 0">ENSAIO MEGGER</h2>
         <input type="hidden" id="editId">
-        
         <label>1. TAG do Equipamento</label>
         <input type="text" id="mTag" placeholder="EX: TR-01" oninput="this.value = this.value.toUpperCase()">
-
         <label>2. Técnicos (Múltipla Seleção)</label>
         <div id="mTecContainer" class="multi-select"></div>
-
         <label>3. Local</label>
         <select id="mLoc"></select>
-
         <label>4. Ponto de Medição</label>
         <select id="mPonto">
-            <option>PRIMÁRIO X SECUNDÁRIO</option>
-            <option>PRIMÁRIO X CARCAÇA</option>
-            <option>SECUNDÁRIO X CARCAÇA</option>
-            <option>CAMIS</option>
+            <option>PRIMÁRIO X SECUNDÁRIO</option><option>PRIMÁRIO X CARCAÇA</option>
+            <option>SECUNDÁRIO X CARCAÇA</option><option>CAMIS</option>
         </select>
-
         <label>5. Tensão Aplicada</label>
         <select id="mTen">
             <option>250V</option><option>500V</option><option>1KV</option><option>2,5KV</option><option>5KV</option>
         </select>
-
-        <label>6. Resistência de Referência (Mínima)</label>
+        <label>6. Resistência Mínima</label>
         <div style="display:flex; gap:5px">
             <input type="number" id="mRef" placeholder="VALOR" inputmode="decimal">
             <select id="mRefUni" style="width:100px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
         </div>
-
-        <label>7/8. Leituras e Tempos</label>
+        <label>7/8. Leituras</label>
         <div style="display:flex; gap:5px; align-items: center">
             <input type="text" id="m30" placeholder="30s" inputmode="decimal">
             <button class="btn-inf" onclick="setInf('m30')">∞</button>
-            <select id="u30" style="width:100px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
+            <select id="u30" style="width:80px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
         </div>
         <div style="display:flex; gap:5px; align-items: center">
             <input type="text" id="m60" placeholder="60s" inputmode="decimal">
             <button class="btn-inf" onclick="setInf('m60')">∞</button>
-            <select id="u60" style="width:100px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
+            <select id="u60" style="width:80px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
         </div>
         <div style="display:flex; gap:5px; align-items: center">
             <input type="text" id="m120" placeholder="120s" inputmode="decimal">
             <button class="btn-inf" onclick="setInf('m120')">∞</button>
-            <select id="u120" style="width:100px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
+            <select id="u120" style="width:80px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
         </div>
-
-        <button class="btn-acao" style="background:var(--accent)" onclick="registrarMegger()">9. REGISTRAR NO QUADRO</button>
+        <button class="btn-acao" style="background:var(--accent)" onclick="registrarMegger()">REGISTRAR NO QUADRO</button>
     </div>
-
     <div class="card" style="padding:15px">
-        <label>10. Tabela de Resultados</label>
         <div class="table-wrap">
             <table id="tabMegResult">
-                <thead>
-                    <tr>
-                        <th>PONTO</th>
-                        <th>TEN.</th>
-                        <th>30s</th>
-                        <th>60s</th>
-                        <th>120s</th>
-                        <th>ST.</th>
-                        <th>×</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>PONTO</th><th>TEN.</th><th>30s</th><th>60s</th><th>120s</th><th>ST.</th><th>×</th></tr></thead>
                 <tbody></tbody>
             </table>
         </div>
@@ -170,212 +142,146 @@
 
 <div id="secCONFIG" class="tela">
     <div class="card">
-        <h3 style="color:var(--accent); border-bottom: 2px solid #eee; padding-bottom:10px">📁 HISTÓRICO</h3>
+        <h3>📁 HISTÓRICO</h3>
         <div id="listaHist"></div>
-        <h3 style="color:var(--accent); margin-top:30px">👥 TÉCNICOS</h3>
+        <hr>
+        <h3>👥 TÉCNICOS</h3>
         <div style="display:flex; gap:8px">
             <input type="text" id="cTec" placeholder="NOME" style="margin:0">
-            <button onclick="addCfg('tecnicos','cTec')" style="background:var(--accent); color:white; border:none; border-radius:12px; width:50px; font-size:20px">+</button>
+            <button onclick="addCfg('tecnicos','cTec')" style="background:var(--accent); color:white; border:none; border-radius:12px; width:50px">+</button>
         </div>
-        <div id="lTec" style="margin-top:10px"></div>
-        <h3 style="color:var(--accent); margin-top:30px">📍 LOCAIS</h3>
+        <div id="lTec"></div>
+        <h3>📍 LOCAIS</h3>
         <div style="display:flex; gap:8px">
             <input type="text" id="cLoc" placeholder="LOCAL" style="margin:0">
-            <button onclick="addCfg('locais','cLoc')" style="background:var(--accent); color:white; border:none; border-radius:12px; width:50px; font-size:20px">+</button>
+            <button onclick="addCfg('locais','cLoc')" style="background:var(--accent); color:white; border:none; border-radius:12px; width:50px">+</button>
         </div>
-        <div id="lLoc" style="margin-top:10px"></div>
-        <button class="btn-acao" style="background:#64748b; margin-top:30px" onclick="voltar()">FECHAR</button>
+        <div id="lLoc"></div>
+        <button class="btn-acao" style="background:#64748b; margin-top:20px" onclick="voltar()">FECHAR</button>
     </div>
 </div>
 
 <footer>PRODUCED BY UNKNOWN</footer>
 
 <script>
-    // Versão do banco para evitar conflitos de cache
-    const DB_NAME = 'pro_evo_v17';
+    const DB_KEY = 'PRO_EVO_MASTER_V20';
     let db = { tecnicos: [], locais: [], historico: [] };
     let ensaiosAtuais = [];
 
-    // Tenta carregar dados, se falhar, usa o padrão vazio
-    try {
-        const data = localStorage.getItem(DB_NAME);
-        if(data) db = JSON.parse(data);
-    } catch(e) { console.error("Erro ao carregar DB"); }
-
-    window.onload = () => { 
+    // Função de carregamento super segura
+    function inicializar() {
+        try {
+            const saved = localStorage.getItem(DB_KEY);
+            if(saved) db = JSON.parse(saved);
+        } catch(e) { 
+            console.log("Reiniciando banco de dados...");
+        }
         renderTudo();
-        // Forçar a saída do splash independente de qualquer erro
+        // Mata o splash após 2 segundos
         setTimeout(() => {
-            const sp = document.getElementById('splash');
-            if(sp) sp.style.display = 'none';
-        }, 2500);
-    };
+            const s = document.getElementById('splash');
+            if(s) s.style.display = 'none';
+        }, 2000);
+    }
+
+    function salvar() { localStorage.setItem(DB_KEY, JSON.stringify(db)); }
 
     function mudar(t) {
         document.getElementById('main-wrapper').style.display = 'none';
         document.querySelectorAll('.tela').forEach(x => x.classList.remove('ativa'));
         if(t === 'HOME') document.getElementById('main-wrapper').style.display = 'flex';
-        else {
-            const target = document.getElementById('sec'+t);
-            if(target) target.classList.add('ativa');
-        }
+        else document.getElementById('sec'+t).classList.add('ativa');
     }
 
     function voltar() { mudar('HOME'); }
     function setInf(id) { document.getElementById(id).value = "∞"; }
 
     function addCfg(tipo, id) {
-        const input = document.getElementById(id);
-        const v = input.value.trim().toUpperCase();
-        if(v) { 
-            db[tipo].push(v); 
-            db[tipo].sort(); // Ordem Alfabética
-            salvar(); renderTudo(); 
-            input.value=''; 
-        }
+        const v = document.getElementById(id).value.trim().toUpperCase();
+        if(v) { db[tipo].push(v); db[tipo].sort(); salvar(); renderTudo(); document.getElementById(id).value=''; }
     }
 
-    function salvar() { localStorage.setItem(DB_NAME, JSON.stringify(db)); }
-
-    function converterParaValor(val, uni) {
-        if (val === "∞") return Infinity;
-        const n = parseFloat(String(val).replace(',', '.'));
-        if (isNaN(n)) return 0;
-        const pesos = { "MΩ": 1, "GΩ": 1000, "TΩ": 1000000 };
-        return n * (pesos[uni] || 1);
+    function converter(v, u) {
+        if(v === "∞") return 999999999;
+        let n = parseFloat(String(v).replace(',','.'));
+        let p = {"MΩ":1, "GΩ":1000, "TΩ":1000000}[u] || 1;
+        return n * p;
     }
 
     function registrarMegger() {
-        const refVal = document.getElementById('mRef').value;
-        const refUni = document.getElementById('mRefUni').value;
         const v30 = document.getElementById('m30').value;
         const v60 = document.getElementById('m60').value;
         const v120 = document.getElementById('m120').value;
+        const ref = parseFloat(document.getElementById('mRef').value);
+        if(!v30 || !v60 || !v120 || isNaN(ref)) return alert("DADOS INCOMPLETOS");
 
-        if(!refVal || !v30 || !v60 || !v120) return alert("PREENCHA TODOS OS TEMPOS");
+        const n30 = converter(v30, document.getElementById('u30').value);
+        const st = n30 >= converter(ref, document.getElementById('mRefUni').value) ? "OK" : "REPR";
 
-        const numRef = converterParaValor(refVal, refUni);
-        const num30 = converterParaValor(v30, document.getElementById('u30').value);
-        const num60 = converterParaValor(v60, document.getElementById('u60').value);
-        const num120 = converterParaValor(v120, document.getElementById('u120').value);
-
-        const aprovado = (num30 >= numRef && num60 >= numRef && num120 >= numRef);
-        const status = aprovado ? "OK" : "REPR";
-        
         ensaiosAtuais.push({
             id: Date.now(),
             ponto: document.getElementById('mPonto').value,
             tensao: document.getElementById('mTen').value,
-            v30: v30 + (v30 === "∞" ? "" : document.getElementById('u30').value),
-            v60: v60 + (v60 === "∞" ? "" : document.getElementById('u60').value),
-            v120: v120 + (v120 === "∞" ? "" : document.getElementById('u120').value),
-            status: status,
-            cor: aprovado ? "var(--success)" : "var(--danger)"
+            v30: v30 + (v30==="∞"?"":document.getElementById('u30').value),
+            v60: v60 + (v60==="∞"?"":document.getElementById('u60').value),
+            v120: v120 + (v120==="∞"?"":document.getElementById('u120').value),
+            status: st,
+            cor: st === "OK" ? "var(--success)" : "var(--danger)"
         });
-        renderTabela();
-    }
-
-    function removerLinha(id) {
-        ensaiosAtuais = ensaiosAtuais.filter(e => e.id !== id);
         renderTabela();
     }
 
     function renderTabela() {
         document.querySelector('#tabMegResult tbody').innerHTML = ensaiosAtuais.map(e => `
             <tr>
-                <td style="font-weight:bold">${e.ponto}</td>
-                <td>${e.tensao}</td>
-                <td>${e.v30}</td>
-                <td>${e.v60}</td>
-                <td>${e.v120}</td>
-                <td style="color:white; background:${e.cor}; font-weight:bold; border-radius:4px">${e.status}</td>
-                <td><button class="btn-del-row" onclick="removerLinha(${e.id})">×</button></td>
+                <td>${e.ponto}</td><td>${e.tensao}</td><td>${e.v30}</td><td>${e.v60}</td><td>${e.v120}</td>
+                <td style="color:white; background:${e.cor}">${e.status}</td>
+                <td><button class="btn-del-row" onclick="ensaiosAtuais=ensaiosAtuais.filter(x=>x.id!=${e.id});renderTabela()">×</button></td>
             </tr>`).join('');
     }
 
-    function getTecnicosSelecionados() {
-        const checks = document.querySelectorAll('.tec-check:checked');
-        return Array.from(checks).map(c => c.value).join(', ');
-    }
-
     function salvarHistorico() {
-        if(ensaiosAtuais.length === 0) return alert("ADICIONE DADOS NA TABELA");
-        const tecs = getTecnicosSelecionados();
-        if(!tecs) return alert("SELECIONE O TÉCNICO");
-
-        const id = document.getElementById('editId').value || Date.now();
-        const novo = {
-            id,
-            tag: document.getElementById('mTag').value || "SEM TAG",
-            tecnico: tecs,
+        const tcs = Array.from(document.querySelectorAll('.tec-check:checked')).map(c=>c.value).join(', ');
+        if(!tcs || ensaiosAtuais.length === 0) return alert("FALTA TÉCNICO OU MEDIÇÃO");
+        db.historico.unshift({
+            id: Date.now(),
+            tag: document.getElementById('mTag').value || "S/T",
+            tecnico: tcs,
             local: document.getElementById('mLoc').value,
             data: new Date().toLocaleDateString('pt-BR'),
-            tipo: 'MEGGER',
             dados: [...ensaiosAtuais]
-        };
-        const idx = db.historico.findIndex(h => h.id == id);
-        if(idx > -1) db.historico[idx] = novo; else db.historico.unshift(novo);
-        salvar(); alert("SALVO COM SUCESSO!"); novoEnsaio(); renderTudo(); voltar();
+        });
+        salvar(); alert("SALVO!"); novoEnsaio(); renderTudo(); voltar();
     }
 
     function novoEnsaio() {
-        ensaiosAtuais = []; document.getElementById('editId').value = ''; renderTabela();
-        document.querySelectorAll('#secMEG input').forEach(i => i.value = '');
-        document.querySelectorAll('.tec-check').forEach(c => c.checked = false);
-    }
-
-    function carregarEnsaio(id) {
-        const h = db.historico.find(x => x.id == id);
-        if(!h) return;
-        document.getElementById('mTag').value = h.tag;
-        document.getElementById('mLoc').value = h.local;
-        document.getElementById('editId').value = h.id;
-        ensaiosAtuais = [...h.dados];
-        const tecs = h.tecnico.split(', ');
-        setTimeout(() => {
-            document.querySelectorAll('.tec-check').forEach(c => c.checked = tecs.includes(c.value));
-        }, 100);
-        renderTabela(); mudar('MEG');
-    }
-
-    function excluirHist(id) {
-        if(confirm("EXCLUIR?")) { db.historico = db.historico.filter(x => x.id != id); salvar(); renderTudo(); }
+        ensaiosAtuais = []; renderTabela();
+        document.querySelectorAll('#secMEG input').forEach(i => i.value='');
     }
 
     async function compartilhar(id) {
         const h = db.historico.find(x => x.id == id);
-        let t = `--- LAUDO PRO EVOLUTION ---\nTAG: ${h.tag}\nDATA: ${h.data}\nLOCAL: ${h.local}\nTECS: ${h.tecnico}\n\n`;
-        h.dados.forEach(d => {
-            t += `${d.ponto} (${d.tensao}) [${d.status}]\n`;
-            t += `30s: ${d.v30} | 60s: ${d.v60} | 120s: ${d.v120}\n`;
-            t += `---------------------------\n`;
-        });
-        if(navigator.share) await navigator.share({ title: 'Laudo', text: t });
+        let t = `PRO EVOLUTION - LAUDO\nTAG: ${h.tag}\nDATA: ${h.data}\nTÉCNICOS: ${h.tecnico}\n\n`;
+        h.dados.forEach(d => t += `${d.ponto} (${d.tensao}):\n30s:${d.v30} | 60s:${d.v60} | 120s:${d.v120}\nST:${d.status}\n---\n`);
+        if(navigator.share) await navigator.share({text: t});
     }
 
     function renderTudo() {
-        const container = document.getElementById('mTecContainer');
-        container.innerHTML = db.tecnicos.map(t => `
-            <div class="multi-item">
-                <input type="checkbox" class="tec-check" value="${t}"> ${t}
-            </div>
-        `).join('') || '<p style="font-size:11px;color:gray">CADASTRE TÉCNICOS NAS CONFIGS.</p>';
-
-        document.getElementById('mLoc').innerHTML = db.locais.map(l => `<option>${l}</option>`).join('') || '<option>CADASTRE UM LOCAL</option>';
-
-        document.getElementById('lTec').innerHTML = db.tecnicos.map((t,i) => `
-            <span style="display:inline-block; background:#f1f5f9; padding:8px 12px; border-radius:12px; margin:4px; font-weight:bold">
-                ${t} <b onclick="db.tecnicos.splice(${i},1);salvar();renderTudo()" style="color:var(--danger);cursor:pointer">×</b>
-            </span>`).join('');
-            
-        document.getElementById('lLoc').innerHTML = db.locais.map((l,i) => `
-            <span style="display:inline-block; background:#f1f5f9; padding:8px 12px; border-radius:12px; margin:4px; font-weight:bold">
-                ${l} <b onclick="db.locais.splice(${i},1);salvar();renderTudo()" style="color:var(--danger);cursor:pointer">×</b>
-            </span>`).join('');
-
+        document.getElementById('mTecContainer').innerHTML = db.tecnicos.map(t => `<div class="multi-item"><input type="checkbox" class="tec-check" value="${t}"> ${t}</div>`).join('');
+        document.getElementById('mLoc').innerHTML = db.locais.map(l => `<option>${l}</option>`).join('');
+        document.getElementById('lTec').innerHTML = db.tecnicos.map((t,i) => `<button onclick="db.tecnicos.splice(${i},1);salvar();renderTudo()">${t} ×</button>`).join('');
+        document.getElementById('lLoc').innerHTML = db.locais.map((l,i) => `<button onclick="db.locais.splice(${i},1);salvar();renderTudo()">${l} ×</button>`).join('');
         document.getElementById('listaHist').innerHTML = db.historico.map(h => `
             <div class="hist-item">
-                <div style="display:flex; justify-content:space-between"><b>${h.tag}</b> <span>${h.data}</span></div>
-                <div style="font-size:10px; color:var(--accent); font-weight:bold; margin-top:5px">${h.tecnico}</div>
+                <b>${h.tag}</b> - ${h.data}<br><small>${h.tecnico}</small>
                 <div class="hist-btns">
-                    <button class="btn-mini" style="background:var(--accent)" onclick="carregarEnsaio(${h
+                    <button class="btn-mini" style="background:var(--success)" onclick="compartilhar(${h.id})">PDF</button>
+                    <button class="btn-mini" style="background:var(--danger)" onclick="db.historico=db.historico.filter(x=>x.id!=${h.id});salvar();renderTudo()">×</button>
+                </div>
+            </div>`).join('');
+    }
+
+    window.onload = inicializar;
+</script>
+</body>
+</html>
