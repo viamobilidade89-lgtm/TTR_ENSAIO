@@ -18,47 +18,46 @@
         .empresa-nome { color: white; font-weight: 900; font-size: 24px; letter-spacing: 2px; text-align: center; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
 
-        /* Header - Menu Menor e Título Azul */
+        /* Header */
         header { display: flex; justify-content: center; align-items: center; padding: 25px 20px; background: white; position: relative; }
         .header-title { font-size: 20px; font-weight: 900; color: var(--accent); margin: 0; text-align: center; letter-spacing: 1px; }
-        .config-icon { position: absolute; right: 25px; font-size: 18px; cursor: pointer; background: none; border: none; color: #cbd5e1; transition: 0.3s; }
-        .config-icon:hover { color: var(--accent); }
+        .config-icon { position: absolute; right: 25px; font-size: 18px; cursor: pointer; background: none; border: none; color: #cbd5e1; }
 
-        /* Menu Monolito com Acabamento Premium */
+        /* Menu Monolito com Descrições */
         #main-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; }
         .monolito-menu { 
             display: flex; 
             flex-direction: column; 
-            width: 88%; 
+            width: 90%; 
             max-width: 340px; 
             background: linear-gradient(145deg, #0284c7, #0271ab); 
             border-radius: 35px; 
             overflow: hidden; 
-            box-shadow: 0 20px 40px rgba(2, 132, 199, 0.25), inset 0 1px 1px rgba(255,255,255,0.2); 
+            box-shadow: 0 20px 40px rgba(2, 132, 199, 0.25); 
         }
         .btn-monolito { 
             background: transparent; 
             color: white; 
             border: none; 
-            padding: 40px 20px; 
-            font-size: 17px; 
-            font-weight: 800; 
+            padding: 30px 20px; 
             cursor: pointer; 
             display: flex; 
             align-items: center; 
-            justify-content: center; 
             gap: 20px; 
             position: relative; 
-            transition: 0.2s;
+            text-align: left;
         }
         .btn-monolito:active { background: rgba(255, 255, 255, 0.1); }
         .btn-monolito:not(:last-child)::after { content: ""; position: absolute; bottom: 0; left: 15%; width: 70%; height: 1px; background: rgba(255,255,255,0.1); }
 
-        /* Padronização de Ícones */
-        .icon-box { width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .btn-text { display: flex; flex-direction: column; }
+        .btn-label { font-size: 18px; font-weight: 800; letter-spacing: 1px; }
+        .btn-desc { font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.7); text-transform: uppercase; margin-top: 2px; }
+
+        .icon-box { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
         
-        /* Ícone Pager Reduzido para Caber no Box */
-        .pager-mini { width: 28px; height: 20px; background: #f84c4c; border-radius: 4px; position: relative; border: 1px solid white; }
+        /* Ícone Pager */
+        .pager-mini { width: 28px; height: 20px; background: #f84c4c; border-radius: 4px; position: relative; border: 1.5px solid white; }
         .pager-screen-mini { position: absolute; top: 3px; left: 3px; right: 3px; height: 7px; background: #86efac; border-radius: 1px; }
 
         /* Telas */
@@ -66,10 +65,7 @@
         .ativa { display: block !important; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Cards e Histórico */
-        .card { background: #f8fafc; padding: 25px; border-radius: 25px; border: 1px solid #e2e8f0; max-width: 500px; margin: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-        .btn-s { flex: 1; padding: 12px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 11px; color: white; text-transform: uppercase; }
-
+        .card { background: #f8fafc; padding: 25px; border-radius: 25px; border: 1px solid #e2e8f0; max-width: 500px; margin: auto; }
         footer { text-align: center; padding: 20px; font-size: 10px; color: #cbd5e1; letter-spacing: 2px; }
     </style>
 </head>
@@ -91,49 +87,43 @@
 <div id="main-wrapper" class="no-print">
     <div id="menuHome" class="monolito-menu">
         <button class="btn-monolito" onclick="mudar('MEG')">
-            <div class="icon-box">⚡</div> MEGGER
+            <div class="icon-box">⚡</div>
+            <div class="btn-text">
+                <span class="btn-label">MEGGER</span>
+                <span class="btn-desc">Resistência de isolação</span>
+            </div>
         </button>
+
         <button class="btn-monolito" onclick="mudar('TTR')">
-            <div class="icon-box">📟</div> TTR
+            <div class="icon-box">📟</div>
+            <div class="btn-text">
+                <span class="btn-label">TTR</span>
+                <span class="btn-desc">Relação de transformação</span>
+            </div>
         </button>
+
         <button class="btn-monolito" onclick="mudar('MICRO')">
             <div class="icon-box">
                 <div class="pager-mini"><div class="pager-screen-mini"></div></div>
-            </div> 
-            MICRO
+            </div>
+            <div class="btn-text">
+                <span class="btn-label">MICRO</span>
+                <span class="btn-desc">Resistência de contato</span>
+            </div>
         </button>
     </div>
 </div>
 
 <div id="secMEG" class="tela">
-    <div class="card no-print">
-        <h3 style="text-align:center; color:var(--accent); margin-top:0">ENSAIO MEGGER</h3>
-        <input type="hidden" id="editId">
-        <select id="mPonto"><option>PRI X SEC</option><option>PRI X CARC</option><option>SEC X CARC</option></select>
-        <div style="display:flex; gap:8px"><input type="number" id="mVal" placeholder="VALOR"><select id="mUnit" style="width:100px"><option>GΩ</option><option>MΩ</option></select></div>
-        <button onclick="addMedicao()" style="width:100%; background:var(--accent); color:white; padding:16px; border-radius:15px; border:none; font-weight:bold; cursor:pointer">ADICIONAR LEITURA</button>
+    <div class="card">
+        <h3 style="text-align:center; color:var(--accent); margin-top:0">CONTROLE MEGGER</h3>
+        <button onclick="voltar()" style="width:100%; background:#64748b; color:white; padding:14px; border-radius:15px; border:none; font-weight:bold; cursor:pointer">VOLTAR</button>
     </div>
-    <table id="tabMeg" style="width:100%; margin-top:20px; border-collapse: collapse; background:white; text-align:center; border-radius:15px; overflow:hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-        <thead style="background:#f1f5f9"><tr><th style="padding:15px; border:1px solid #eee">PONTO</th><th style="border:1px solid #eee">VALOR</th></tr></thead>
-        <tbody></tbody>
-    </table>
-    <button onclick="arquivar()" style="width:100%; background:#16a34a; color:white; padding:16px; border-radius:15px; border:none; font-weight:bold; margin-top:25px; cursor:pointer">💾 ARQUIVAR ENSAIO</button>
-    <button onclick="voltar()" style="width:100%; background:#64748b; color:white; padding:14px; border-radius:15px; border:none; font-weight:bold; margin-top:10px; cursor:pointer">VOLTAR</button>
 </div>
 
 <div id="secCONFIG" class="tela">
     <div class="card">
-        <h3 style="color:var(--accent); border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top:0">📁 HISTÓRICO DE ENSAIOS</h3>
-        <div id="listaHist"></div>
-
-        <h3 style="color:var(--accent); margin-top:25px;">👥 TÉCNICOS</h3>
-        <div style="display:flex; gap:5px;"><input type="text" id="cfgT" placeholder="NOME"><button onclick="salvarCfg('tecnicos','cfgT')" style="background:var(--accent); border:none; color:white; width:50px; border-radius:12px; font-weight:bold">+</button></div>
-        <div id="listT" style="margin:12px 0"></div>
-
-        <h3 style="color:var(--accent); margin-top:20px;">📍 LOCAIS</h3>
-        <div style="display:flex; gap:5px;"><input type="text" id="cfgL" placeholder="LOCAL"><button onclick="salvarCfg('locais','cfgL')" style="background:var(--accent); border:none; color:white; width:50px; border-radius:12px; font-weight:bold">+</button></div>
-        <div id="listL" style="margin:12px 0"></div>
-
+        <h3 style="color:var(--accent); margin-top:0">CONFIGURAÇÕES</h3>
         <button onclick="voltar()" style="width:100%; background:#64748b; color:white; padding:16px; border-radius:15px; border:none; font-weight:bold; margin-top:25px">FECHAR</button>
     </div>
 </div>
@@ -141,98 +131,14 @@
 <footer>PRODUCED BY UNKNOWN</footer>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('pro_evo_final_v3')) || { tecnicos: [], locais: [], historico: [] };
-    let tempMedicoes = [];
-
-    window.onload = () => { setTimeout(() => { document.getElementById('splash').style.display='none'; }, 3000); render(); };
-
+    window.onload = () => { setTimeout(() => { document.getElementById('splash').style.display='none'; }, 3000); };
     function mudar(t) {
         document.getElementById('main-wrapper').style.display = 'none';
         document.querySelectorAll('.tela').forEach(x => x.classList.remove('ativa'));
         if(t === 'HOME') document.getElementById('main-wrapper').style.display = 'flex';
         else document.getElementById('sec'+t).classList.add('ativa');
     }
-
     function voltar() { mudar('HOME'); }
-
-    function addMedicao() {
-        const p = document.getElementById('mPonto').value, v = document.getElementById('mVal').value, u = document.getElementById('mUnit').value;
-        if(!v) return;
-        tempMedicoes.push({p, v: v+u});
-        renderTabela();
-        document.getElementById('mVal').value = '';
-    }
-
-    function renderTabela() {
-        document.querySelector('#tabMeg tbody').innerHTML = tempMedicoes.map(m => `<tr><td style="padding:12px; border:1px solid #eee">${m.p}</td><td style="padding:12px; border:1px solid #eee">${m.v}</td></tr>`).join('');
-    }
-
-    function arquivar() {
-        if(tempMedicoes.length === 0) return alert("INSIRA DADOS");
-        const id = document.getElementById('editId').value || Date.now();
-        const registro = { id, data: new Date().toLocaleDateString('pt-BR'), tipo: 'MEGGER', dados: [...tempMedicoes] };
-        const idx = db.historico.findIndex(h => h.id == id);
-        if(idx > -1) db.historico[idx] = registro; else db.historico.unshift(registro);
-        localStorage.setItem('pro_evo_final_v3', JSON.stringify(db));
-        tempMedicoes = []; document.getElementById('editId').value = ''; renderTabela(); render(); voltar();
-    }
-
-    async function compartilharPDF(id) {
-        const h = db.historico.find(x => x.id == id);
-        // Formatação do conteúdo para o PDF
-        let txt = `============================\n`;
-        txt += `   LAUDO PRO EVOLUTION\n`;
-        txt += `============================\n`;
-        txt += `TIPO: ${h.tipo}\n`;
-        txt += `DATA: ${h.data}\n`;
-        txt += `----------------------------\n`;
-        h.dados.forEach(d => txt += `${d.p}: ${d.v}\n`);
-        txt += `----------------------------\n`;
-        txt += `GERADO PELO SISTEMA PRO EVOLUTION`;
-
-        if(navigator.share) {
-            try {
-                await navigator.share({ title: `LAUDO_${h.tipo}_${h.data}`, text: txt });
-            } catch (err) { console.log("Erro ao compartilhar"); }
-        } else {
-            alert("FUNÇÃO DE COMPARTILHAMENTO NÃO DISPONÍVEL NESTE DISPOSITIVO.");
-        }
-    }
-
-    function carregarEnsaio(id) {
-        const h = db.historico.find(x => x.id == id);
-        tempMedicoes = [...h.dados];
-        document.getElementById('editId').value = h.id;
-        renderTabela(); mudar('MEG');
-    }
-
-    function deletar(id) {
-        if(confirm("DESEJA REALMENTE EXCLUIR ESTE REGISTRO?")) {
-            db.historico = db.historico.filter(x => x.id != id);
-            localStorage.setItem('pro_evo_final_v3', JSON.stringify(db)); render();
-        }
-    }
-
-    function salvarCfg(tipo, id) {
-        const v = document.getElementById(id).value.toUpperCase();
-        if(v) { db[tipo].push(v); localStorage.setItem('pro_evo_final_v3', JSON.stringify(db)); render(); document.getElementById(id).value=''; }
-    }
-
-    function render() {
-        document.getElementById('listT').innerHTML = db.tecnicos.map((t,i) => `<span style="background:#e2e8f0; padding:6px 12px; border-radius:20px; margin:3px; display:inline-block; font-size:12px; font-weight:bold">${t} <b onclick="db.tecnicos.splice(${i},1);localStorage.setItem('pro_evo_final_v3',JSON.stringify(db));render();" style="color:red; cursor:pointer; margin-left:5px">×</b></span>`).join('');
-        document.getElementById('listL').innerHTML = db.locais.map((l,i) => `<span style="background:#e2e8f0; padding:6px 12px; border-radius:20px; margin:3px; display:inline-block; font-size:12px; font-weight:bold">${l} <b onclick="db.locais.splice(${i},1);localStorage.setItem('pro_evo_final_v3',JSON.stringify(db));render();" style="color:red; cursor:pointer; margin-left:5px">×</b></span>`).join('');
-        
-        document.getElementById('listaHist').innerHTML = db.historico.map(h => `
-            <div class="hist-item" style="border-left: 5px solid var(--accent)">
-                <b style="font-size:14px">${h.data} - ${h.tipo}</b>
-                <div class="hist-btns">
-                    <button class="btn-s" style="background:var(--accent)" onclick="carregarEnsaio(${h.id})">EDITAR</button>
-                    <button class="btn-s" style="background:#16a34a" onclick="compartilharPDF(${h.id})">PDF</button>
-                    <button class="btn-s" style="background:var(--danger)" onclick="deletar(${h.id})">EXCLUIR</button>
-                </div>
-            </div>`).join('') || "<p style='text-align:center; color:#94a3b8'>NENHUM REGISTRO ENCONTRADO</p>";
-    }
 </script>
 </body>
 </html>
-
