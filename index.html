@@ -19,36 +19,43 @@
         .empresa-nome { color: white; font-weight: 900; font-size: 28px; letter-spacing: 3px; text-align: center; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
 
+        /* Header */
         header { display: grid; grid-template-columns: 50px 1fr 50px; align-items: center; padding: 25px 15px; background: white; border-bottom: 1px solid #f1f5f9; }
         .header-title { grid-column: 2; font-size: 20px; font-weight: 900; color: var(--accent); margin: 0; text-align: center; letter-spacing: 1px; }
         .config-icon { grid-column: 3; font-size: 24px; cursor: pointer; background: none; border: none; color: #cbd5e1; justify-self: end; }
 
+        /* Menu Monolito com Sombras e Profundidade */
         #main-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .monolito-menu { display: flex; flex-direction: column; width: 95%; max-width: 400px; background: linear-gradient(145deg, #0284c7, #0271ab); border-radius: 40px; overflow: hidden; box-shadow: 0 25px 50px rgba(2, 132, 199, 0.35); }
-        .btn-monolito { background: transparent; color: white; border: none; padding: 45px 25px; cursor: pointer; display: flex; align-items: center; gap: 25px; position: relative; text-align: left; }
-        .btn-monolito:not(:last-child)::after { content: ""; position: absolute; bottom: 0; left: 10%; width: 80%; height: 1px; background: rgba(255,255,255,0.1); }
-        .icon-box { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 40px; }
-        .btn-label { font-size: 22px; font-weight: 900; letter-spacing: 1px; display: block; }
-        .btn-desc { font-size: 12px; color: rgba(255,255,255,0.8); text-transform: uppercase; }
+        .monolito-menu { display: flex; flex-direction: column; width: 95%; max-width: 400px; background: linear-gradient(145deg, #0284c7, #0271ab); border-radius: 40px; overflow: hidden; box-shadow: 0 30px 60px rgba(2, 132, 199, 0.45), inset 0 2px 5px rgba(255,255,255,0.2); }
+        .btn-monolito { background: transparent; color: white; border: none; padding: 45px 25px; cursor: pointer; display: flex; align-items: center; gap: 25px; position: relative; text-align: left; transition: 0.3s; }
+        .btn-monolito:active { background: rgba(0,0,0,0.1); transform: scale(0.98); }
+        .btn-monolito:not(:last-child)::after { content: ""; position: absolute; bottom: 0; left: 10%; width: 80%; height: 1px; background: rgba(255,255,255,0.15); }
+        .icon-box { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 40px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
+        .btn-label { font-size: 22px; font-weight: 900; letter-spacing: 1px; display: block; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .btn-desc { font-size: 12px; color: rgba(255,255,255,0.85); text-transform: uppercase; }
 
+        /* Telas e Cards */
         .tela { display: none; padding: 20px; animation: fadeIn 0.4s ease-out; }
         .ativa { display: block !important; }
         .card { background: #f8fafc; padding: 25px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 600px; margin: auto; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .btn-acao { width: 100%; padding: 18px; border-radius: 15px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; color: white; margin-top: 10px; }
+        .btn-acao { width: 100%; padding: 18px; border-radius: 15px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; color: white; margin-top: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         
-        .btn-inf { background: #e2e8f0; border: none; border-radius: 8px; padding: 0 15px; cursor: pointer; font-size: 20px; font-weight: bold; margin-bottom: 10px; height: 45px;}
+        .btn-inf { background: #e2e8f0; border: none; border-radius: 8px; padding: 0 15px; cursor: pointer; font-size: 20px; font-weight: bold; margin-bottom: 10px; height: 45px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 
-        /* Área de seleção múltipla de técnicos */
+        /* Seleção de Técnicos */
         .multi-select { background: white; border: 2px solid #cbd5e1; border-radius: 12px; padding: 10px; max-height: 120px; overflow-y: auto; margin-bottom: 10px; }
-        .multi-item { display: flex; align-items: center; gap: 10px; padding: 5px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; font-weight: 600; }
-        .multi-item input { width: 20px; height: 20px; margin: 0; }
+        .multi-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; font-weight: 600; }
+        .multi-item input { width: 18px; height: 18px; margin: 0; }
 
+        /* Tabela */
         .table-wrap { overflow-x: auto; background: white; border-radius: 15px; border: 1px solid #e2e8f0; }
-        table { width: 100%; border-collapse: collapse; font-size: 10px; min-width: 480px; }
-        th { background: #f1f5f9; padding: 10px; border-bottom: 2px solid #e2e8f0; }
+        table { width: 100%; border-collapse: collapse; font-size: 10px; min-width: 520px; }
+        th { background: #f1f5f9; padding: 10px; border-bottom: 2px solid #e2e8f0; text-transform: uppercase; color: #475569; }
         td { padding: 10px; border-bottom: 1px solid #f1f5f9; text-align: center; }
+        .btn-del-row { background: var(--danger); color: white; border: none; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-weight: bold; }
 
-        .hist-item { background: white; border: 1px solid #e2e8f0; padding: 18px; border-radius: 20px; margin-bottom: 15px; border-left: 6px solid var(--accent); }
+        /* Histórico */
+        .hist-item { background: white; border: 1px solid #e2e8f0; padding: 18px; border-radius: 20px; margin-bottom: 15px; border-left: 6px solid var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
         .hist-btns { display: flex; gap: 8px; margin-top: 12px; }
         .btn-mini { flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; font-size: 11px; cursor: pointer; }
 
@@ -119,7 +126,7 @@
             <select id="mRefUni" style="width:100px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select>
         </div>
 
-        <label>7/8. Leituras e Tempos (Teclado Numérico)</label>
+        <label>7/8. Leituras e Tempos</label>
         <div style="display:flex; gap:5px; align-items: center">
             <input type="text" id="m30" placeholder="30s" inputmode="decimal">
             <button class="btn-inf" onclick="setInf('m30')">∞</button>
@@ -151,6 +158,7 @@
                         <th>60s</th>
                         <th>120s</th>
                         <th>ST.</th>
+                        <th>×</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -158,7 +166,7 @@
         </div>
         <button class="btn-acao" style="background:var(--success); margin-top:20px" onclick="salvarHistorico()">💾 SALVAR NO HISTÓRICO</button>
     </div>
-    <button class="btn-acao" style="background:#64748b" onclick="voltar()">VOLTAR</button>
+    <button class="btn-acao" style="background:#64748b" onclick="voltar()">VOLTAR AO MENU</button>
 </div>
 
 <div id="secCONFIG" class="tela">
@@ -184,7 +192,7 @@
 <footer>PRODUCED BY UNKNOWN</footer>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('pro_evo_v14')) || { tecnicos: [], locais: [], historico: [] };
+    let db = JSON.parse(localStorage.getItem('pro_evo_v15')) || { tecnicos: [], locais: [], historico: [] };
     let ensaiosAtuais = [];
 
     window.onload = () => { 
@@ -207,11 +215,11 @@
         if(v) { db[tipo].push(v); salvar(); renderTudo(); document.getElementById(id).value=''; }
     }
 
-    function salvar() { localStorage.setItem('pro_evo_v14', JSON.stringify(db)); }
+    function salvar() { localStorage.setItem('pro_evo_v15', JSON.stringify(db)); }
 
     function converterParaValor(val, uni) {
         if (val === "∞") return Infinity;
-        const n = parseFloat(val.replace(',', '.'));
+        const n = parseFloat(String(val).replace(',', '.'));
         if (isNaN(n)) return 0;
         const pesos = { "MΩ": 1, "GΩ": 1000, "TΩ": 1000000 };
         return n * pesos[uni];
@@ -224,7 +232,7 @@
         const v60 = document.getElementById('m60').value;
         const v120 = document.getElementById('m120').value;
 
-        if(!refVal || !v30 || !v60 || !v120) return alert("PREENCHA TUDO");
+        if(!refVal || !v30 || !v60 || !v120) return alert("PREENCHA TODOS OS CAMPOS DE MEDIÇÃO");
 
         const numRef = converterParaValor(refVal, refUni);
         const num30 = converterParaValor(v30, document.getElementById('u30').value);
@@ -235,6 +243,7 @@
         const status = aprovado ? "OK" : "REPR";
         
         ensaiosAtuais.push({
+            id: Date.now(),
             ponto: document.getElementById('mPonto').value,
             tensao: document.getElementById('mTen').value,
             v30: v30 + (v30 === "∞" ? "" : document.getElementById('u30').value),
@@ -243,6 +252,11 @@
             status: status,
             cor: aprovado ? "var(--success)" : "var(--danger)"
         });
+        renderTabela();
+    }
+
+    function removerLinha(id) {
+        ensaiosAtuais = ensaiosAtuais.filter(e => e.id !== id);
         renderTabela();
     }
 
@@ -255,6 +269,7 @@
                 <td>${e.v60}</td>
                 <td>${e.v120}</td>
                 <td style="color:white; background:${e.cor}; font-weight:bold; border-radius:4px">${e.status}</td>
+                <td><button class="btn-del-row" onclick="removerLinha(${e.id})">×</button></td>
             </tr>`).join('');
     }
 
@@ -264,7 +279,7 @@
     }
 
     function salvarHistorico() {
-        if(ensaiosAtuais.length === 0) return alert("ADICIONE DADOS");
+        if(ensaiosAtuais.length === 0) return alert("NENHUM DADO NA TABELA");
         const tecs = getTecnicosSelecionados();
         if(!tecs) return alert("SELECIONE AO MENOS UM TÉCNICO");
 
@@ -280,7 +295,7 @@
         };
         const idx = db.historico.findIndex(h => h.id == id);
         if(idx > -1) db.historico[idx] = novo; else db.historico.unshift(novo);
-        salvar(); alert("SALVO!"); novoEnsaio(); renderTudo(); voltar();
+        salvar(); alert("ENSAIO ARQUIVADO COM SUCESSO!"); novoEnsaio(); renderTudo(); voltar();
     }
 
     function novoEnsaio() {
@@ -295,33 +310,29 @@
         document.getElementById('mLoc').value = h.local;
         document.getElementById('editId').value = h.id;
         ensaiosAtuais = [...h.dados];
-        
-        // Marcar técnicos salvos
         const tecs = h.tecnico.split(', ');
         document.querySelectorAll('.tec-check').forEach(c => c.checked = tecs.includes(c.value));
-        
         renderTabela(); mudar('MEG');
     }
 
     function excluirHist(id) {
-        if(confirm("EXCLUIR?")) { db.historico = db.historico.filter(x => x.id != id); salvar(); renderTudo(); }
+        if(confirm("DESEJA EXCLUIR ESTE REGISTRO?")) { db.historico = db.historico.filter(x => x.id != id); salvar(); renderTudo(); }
     }
 
     async function compartilhar(id) {
         const h = db.historico.find(x => x.id == id);
         let t = `PRO EVOLUTION - LAUDO MEGGER\nTAG: ${h.tag}\nDATA: ${h.data}\nTÉCNICOS: ${h.tecnico}\n\n`;
         h.dados.forEach(d => t += `${d.ponto} (${d.tensao}): ${d.v60} -> ${d.status}\n`);
-        if(navigator.share) await navigator.share({ title: 'Laudo', text: t });
+        if(navigator.share) await navigator.share({ title: 'Laudo Megger', text: t });
     }
 
     function renderTudo() {
-        // Renderizar seleção múltipla de técnicos
         const container = document.getElementById('mTecContainer');
         container.innerHTML = db.tecnicos.map(t => `
             <div class="multi-item">
                 <input type="checkbox" class="tec-check" value="${t}"> ${t}
             </div>
-        `).join('') || '<p style="font-size:11px;color:gray">CADASTRE TÉCNICOS NAS CONFIG.</p>';
+        `).join('') || '<p style="font-size:11px;color:gray">CADASTRE TÉCNICOS NAS CONFIGURAÇÕES.</p>';
 
         document.getElementById('mLoc').innerHTML = db.locais.map(l => `<option>${l}</option>`).join('') || '<option>CADASTRE UM LOCAL</option>';
         document.getElementById('lTec').innerHTML = db.tecnicos.map((t,i) => `<span style="display:inline-block; background:#f1f5f9; padding:8px 12px; border-radius:12px; margin:4px; font-weight:bold">${t} <b onclick="db.tecnicos.splice(${i},1);salvar();renderTudo()" style="color:var(--danger);cursor:pointer">×</b></span>`).join('');
@@ -329,14 +340,15 @@
         document.getElementById('listaHist').innerHTML = db.historico.map(h => `
             <div class="hist-item">
                 <div style="display:flex; justify-content:space-between"><b>${h.tag}</b> <span>${h.data}</span></div>
-                <div style="font-size:10px; color:var(--accent); margin-top:5px">${h.tecnico}</div>
+                <div style="font-size:10px; color:var(--accent); font-weight:bold; margin-top:5px">${h.tecnico}</div>
                 <div class="hist-btns">
                     <button class="btn-mini" style="background:var(--accent)" onclick="carregarEnsaio(${h.id})">CONTINUAR</button>
                     <button class="btn-mini" style="background:var(--success)" onclick="compartilhar(${h.id})">PDF</button>
                     <button class="btn-mini" style="background:var(--danger)" onclick="excluirHist(${h.id})">EXCLUIR</button>
                 </div>
-            </div>`).join('') || "<p style='text-align:center;color:#cbd5e1'>VAZIO</p>";
+            </div>`).join('') || "<p style='text-align:center;color:#cbd5e1'>HISTÓRICO VAZIO</p>";
     }
 </script>
 </body>
 </html>
+
