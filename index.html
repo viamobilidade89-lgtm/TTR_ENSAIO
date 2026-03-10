@@ -5,68 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ENSAIOS PRO EVOLUTION</title>
     <style>
-        :root { --p: #facc15; --bg: #ffffff; --dark: #0f172a; --accent: #0284c7; --danger: #ef4444; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; color: var(--dark); display: flex; flex-direction: column; min-height: 100vh; }
+        :root { --p: #facc15; --bg: #ffffff; --dark: #0f172a; --accent: #0284c7; --danger: #ef4444; --success: #16a34a; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; color: var(--dark); display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
         
         input, select, textarea { text-transform: uppercase; }
 
         /* Splash Screen */
         #splash { position: fixed; top:0; left:0; width:100%; height:100%; background: var(--dark); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; transition: 0.6s; }
         .logo-box { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
-        .logo-circle { width: 120px; height: 120px; border: 4px solid var(--p); border-radius: 50%; position: absolute; animation: pulse 2s infinite; }
-        .bolt-logo { width: 60px; height: 80px; background: var(--p); clip-path: polygon(45% 0%, 100% 0%, 55% 45%, 100% 45%, 15% 100%, 45% 55%, 0% 55%); z-index: 2; }
-        .empresa-nome { color: white; font-weight: 900; font-size: 24px; letter-spacing: 2px; text-align: center; }
+        .logo-circle { width: 140px; height: 140px; border: 5px solid var(--p); border-radius: 50%; position: absolute; animation: pulse 2s infinite; }
+        .bolt-logo { width: 70px; height: 90px; background: var(--p); clip-path: polygon(45% 0%, 100% 0%, 55% 45%, 100% 45%, 15% 100%, 45% 55%, 0% 55%); z-index: 2; }
+        .empresa-nome { color: white; font-weight: 900; font-size: 28px; letter-spacing: 3px; text-align: center; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
 
-        /* Header */
-        header { display: flex; justify-content: center; align-items: center; padding: 25px 20px; background: white; position: relative; }
-        .header-title { font-size: 20px; font-weight: 900; color: var(--accent); margin: 0; text-align: center; letter-spacing: 1px; }
-        .config-icon { position: absolute; right: 25px; font-size: 18px; cursor: pointer; background: none; border: none; color: #cbd5e1; }
+        /* Header - Título Azul Centralizado */
+        header { display: flex; justify-content: center; align-items: center; padding: 30px 20px; background: white; position: relative; border-bottom: 1px solid #f1f5f9; }
+        .header-title { font-size: 24px; font-weight: 900; color: var(--accent); margin: 0; text-align: center; letter-spacing: 1px; }
+        .config-icon { position: absolute; right: 25px; font-size: 22px; cursor: pointer; background: none; border: none; color: #cbd5e1; }
 
-        /* Menu Monolito com Descrições */
-        #main-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; }
+        /* Menu Monolito Centralizado e Grande */
+        #main-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .monolito-menu { 
             display: flex; 
             flex-direction: column; 
-            width: 90%; 
-            max-width: 340px; 
+            width: 95%; 
+            max-width: 400px; 
             background: linear-gradient(145deg, #0284c7, #0271ab); 
-            border-radius: 35px; 
+            border-radius: 40px; 
             overflow: hidden; 
-            box-shadow: 0 20px 40px rgba(2, 132, 199, 0.25); 
+            box-shadow: 0 25px 50px rgba(2, 132, 199, 0.35); 
         }
         .btn-monolito { 
             background: transparent; 
             color: white; 
             border: none; 
-            padding: 30px 20px; 
+            padding: 45px 25px; 
             cursor: pointer; 
             display: flex; 
             align-items: center; 
-            gap: 20px; 
+            gap: 25px; 
             position: relative; 
-            text-align: left;
+            transition: 0.3s;
         }
         .btn-monolito:active { background: rgba(255, 255, 255, 0.1); }
-        .btn-monolito:not(:last-child)::after { content: ""; position: absolute; bottom: 0; left: 15%; width: 70%; height: 1px; background: rgba(255,255,255,0.1); }
+        .btn-monolito:not(:last-child)::after { content: ""; position: absolute; bottom: 0; left: 10%; width: 80%; height: 1px; background: rgba(255,255,255,0.1); }
 
-        .btn-text { display: flex; flex-direction: column; }
-        .btn-label { font-size: 18px; font-weight: 800; letter-spacing: 1px; }
-        .btn-desc { font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.7); text-transform: uppercase; margin-top: 2px; }
+        .icon-box { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 35px; }
+        .btn-text { display: flex; flex-direction: column; text-align: left; }
+        .btn-label { font-size: 22px; font-weight: 900; letter-spacing: 1px; }
+        .btn-desc { font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.8); margin-top: 4px; }
 
-        .icon-box { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
-        
-        /* Ícone Pager */
-        .pager-mini { width: 28px; height: 20px; background: #f84c4c; border-radius: 4px; position: relative; border: 1.5px solid white; }
-        .pager-screen-mini { position: absolute; top: 3px; left: 3px; right: 3px; height: 7px; background: #86efac; border-radius: 1px; }
+        /* Ícone Pager Customizado */
+        .pager-ui { width: 38px; height: 28px; background: #f84c4c; border-radius: 6px; position: relative; border: 2px solid white; }
+        .pager-screen { position: absolute; top: 4px; left: 4px; right: 4px; height: 10px; background: #86efac; border-radius: 2px; }
 
         /* Telas */
-        .tela { display: none; padding: 20px; flex: 1; animation: fadeIn 0.3s forwards; }
+        .tela { display: none; padding: 20px; flex: 1; animation: fadeIn 0.4s ease-out; }
         .ativa { display: block !important; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card { background: #f8fafc; padding: 25px; border-radius: 25px; border: 1px solid #e2e8f0; max-width: 500px; margin: auto; }
-        footer { text-align: center; padding: 20px; font-size: 10px; color: #cbd5e1; letter-spacing: 2px; }
+        /* Cards, Botões e Listas */
+        .card { background: #f8fafc; padding: 25px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 500px; margin: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .btn-acao { width: 100%; padding: 18px; border-radius: 15px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; color: white; }
+        
+        .hist-item { background: white; border: 1px solid #e2e8f0; padding: 18px; border-radius: 20px; margin-bottom: 15px; border-left: 6px solid var(--accent); }
+        .hist-btns { display: flex; gap: 8px; margin-top: 12px; }
+        .btn-mini { flex: 1; padding: 12px; border: none; border-radius: 10px; color: white; font-weight: bold; font-size: 11px; cursor: pointer; }
+
+        footer { text-align: center; padding: 30px; font-size: 11px; color: #cbd5e1; letter-spacing: 2px; }
     </style>
 </head>
 <body>
@@ -79,12 +85,12 @@
     <div class="empresa-nome">PRO EVOLUTION</div>
 </div>
 
-<header class="no-print">
+<header>
     <h1 class="header-title">ENSAIOS PRO EVOLUTION</h1>
     <button class="config-icon" onclick="mudar('CONFIG')">⚙️</button>
 </header>
 
-<div id="main-wrapper" class="no-print">
+<div id="main-wrapper">
     <div id="menuHome" class="monolito-menu">
         <button class="btn-monolito" onclick="mudar('MEG')">
             <div class="icon-box">⚡</div>
@@ -94,7 +100,7 @@
             </div>
         </button>
 
-        <button class="btn-monolito" onclick="mudar('TTR')">
+        <button class="btn-monolito" onclick="abrirNovoTTR()">
             <div class="icon-box">📟</div>
             <div class="btn-text">
                 <span class="btn-label">TTR</span>
@@ -103,9 +109,7 @@
         </button>
 
         <button class="btn-monolito" onclick="mudar('MICRO')">
-            <div class="icon-box">
-                <div class="pager-mini"><div class="pager-screen-mini"></div></div>
-            </div>
+            <div class="icon-box"><div class="pager-ui"><div class="pager-screen"></div></div></div>
             <div class="btn-text">
                 <span class="btn-label">MICRO</span>
                 <span class="btn-desc">Resistência de contato</span>
@@ -116,29 +120,183 @@
 
 <div id="secMEG" class="tela">
     <div class="card">
-        <h3 style="text-align:center; color:var(--accent); margin-top:0">CONTROLE MEGGER</h3>
-        <button onclick="voltar()" style="width:100%; background:#64748b; color:white; padding:14px; border-radius:15px; border:none; font-weight:bold; cursor:pointer">VOLTAR</button>
+        <button class="btn-acao" style="background:var(--dark); margin-bottom:15px" onclick="novoEnsaio()">+ NOVO ENSAIO</button>
+        <h3 style="text-align:center; color:var(--accent); margin-top:0">ENSAIO MEGGER</h3>
+        <input type="hidden" id="editId">
+        
+        <label style="font-size:11px; font-weight:bold">PONTO DE TESTE</label>
+        <select id="mPonto">
+            <option>PRI X SEC</option>
+            <option>PRI X CARC</option>
+            <option>SEC X CARC</option>
+        </select>
+        
+        <label style="font-size:11px; font-weight:bold">VALOR MEDIDO</label>
+        <div style="display:flex; gap:8px">
+            <input type="number" id="mVal" placeholder="0.00">
+            <select id="mUnit" style="width:100px"><option>GΩ</option><option>MΩ</option></select>
+        </div>
+        
+        <button class="btn-acao" style="background:var(--accent)" onclick="addMedicao()">ADICIONAR LEITURA</button>
     </div>
+
+    <div class="card" style="margin-top:20px; padding:10px">
+        <table id="tabMeg" style="width:100%; border-collapse: collapse; text-align:center">
+            <thead><tr style="border-bottom:2px solid #eee"><th style="padding:10px">PONTO</th><th>VALOR</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <button class="btn-acao" style="background:var(--success); margin-top:20px" onclick="arquivar()">💾 ARQUIVAR NO HISTÓRICO</button>
+    <button class="btn-acao" style="background:#64748b" onclick="voltar()">VOLTAR AO MENU</button>
 </div>
 
 <div id="secCONFIG" class="tela">
     <div class="card">
-        <h3 style="color:var(--accent); margin-top:0">CONFIGURAÇÕES</h3>
-        <button onclick="voltar()" style="width:100%; background:#64748b; color:white; padding:16px; border-radius:15px; border:none; font-weight:bold; margin-top:25px">FECHAR</button>
+        <h3 style="color:var(--accent); border-bottom: 2px solid #eee; padding-bottom: 10px; margin:0">📁 HISTÓRICO</h3>
+        <div id="listaHist" style="margin-top:15px"></div>
+
+        <h3 style="color:var(--accent); margin-top:30px;">👥 TÉCNICOS</h3>
+        <div style="display:flex; gap:8px;">
+            <input type="text" id="cfgT" placeholder="NOME DO TÉCNICO" style="margin:0">
+            <button onclick="salvarCfg('tecnicos','cfgT')" style="background:var(--accent); border:none; color:white; width:55px; border-radius:12px; font-size:20px">+</button>
+        </div>
+        <div id="listT" style="margin:15px 0"></div>
+
+        <h3 style="color:var(--accent); margin-top:20px;">📍 LOCAIS</h3>
+        <div style="display:flex; gap:8px;">
+            <input type="text" id="cfgL" placeholder="NOME DO LOCAL" style="margin:0">
+            <button onclick="salvarCfg('locais','cfgL')" style="background:var(--accent); border:none; color:white; width:55px; border-radius:12px; font-size:20px">+</button>
+        </div>
+        <div id="listL" style="margin:15px 0"></div>
+
+        <button class="btn-acao" style="background:#64748b; margin-top:25px" onclick="voltar()">FECHAR PAINEL</button>
     </div>
 </div>
 
 <footer>PRODUCED BY UNKNOWN</footer>
 
 <script>
-    window.onload = () => { setTimeout(() => { document.getElementById('splash').style.display='none'; }, 3000); };
+    // Inicialização do Banco de Dados Local
+    let db = JSON.parse(localStorage.getItem('pro_evo_v10')) || { tecnicos: [], locais: [], historico: [] };
+    let tempMedicoes = [];
+
+    window.onload = () => { 
+        setTimeout(() => { document.getElementById('splash').style.display='none'; }, 3000); 
+        render(); 
+    };
+
     function mudar(t) {
         document.getElementById('main-wrapper').style.display = 'none';
         document.querySelectorAll('.tela').forEach(x => x.classList.remove('ativa'));
         if(t === 'HOME') document.getElementById('main-wrapper').style.display = 'flex';
         else document.getElementById('sec'+t).classList.add('ativa');
     }
+
     function voltar() { mudar('HOME'); }
+
+    function novoEnsaio() {
+        if(confirm("LIMPAR DADOS ATUAIS E INICIAR NOVO?")) {
+            tempMedicoes = [];
+            document.getElementById('editId').value = '';
+            renderTabela();
+        }
+    }
+
+    function addMedicao() {
+        const p = document.getElementById('mPonto').value, v = document.getElementById('mVal').value, u = document.getElementById('mUnit').value;
+        if(!v) return alert("INSIRA UM VALOR");
+        tempMedicoes.push({p, v: v+u});
+        renderTabela();
+        document.getElementById('mVal').value = '';
+    }
+
+    function renderTabela() {
+        document.querySelector('#tabMeg tbody').innerHTML = tempMedicoes.map(m => 
+            `<tr style="border-bottom:1px solid #eee"><td style="padding:12px">${m.p}</td><td><b>${m.v}</b></td></tr>`).join('');
+    }
+
+    function arquivar() {
+        if(tempMedicoes.length === 0) return alert("NENHUMA MEDIÇÃO PARA SALVAR");
+        const id = document.getElementById('editId').value || Date.now();
+        const registro = { id, data: new Date().toLocaleDateString('pt-BR'), tipo: 'MEGGER', dados: [...tempMedicoes] };
+        const idx = db.historico.findIndex(h => h.id == id);
+        
+        if(idx > -1) db.historico[idx] = registro; 
+        else db.historico.unshift(registro);
+
+        localStorage.setItem('pro_evo_v10', JSON.stringify(db));
+        alert("ENSAIO ARQUIVADO COM SUCESSO!");
+        tempMedicoes = []; renderTabela(); render(); voltar();
+    }
+
+    async function compartilharPDF(id) {
+        const h = db.historico.find(x => x.id == id);
+        let txt = `LAUDO TÉCNICO - PRO EVOLUTION\n==========================\nDATA: ${h.data}\nENSAIO: ${h.tipo}\n--------------------------\n`;
+        h.dados.forEach(d => txt += `${d.p}: ${d.v}\n`);
+        txt += `--------------------------\nGERADO VIA APP PRO EVOLUTION`;
+
+        if(navigator.share) await navigator.share({ title: 'Laudo PDF', text: txt });
+        else alert("PDF GERADO: " + txt);
+    }
+
+    function carregarEnsaio(id) {
+        const h = db.historico.find(x => x.id == id);
+        tempMedicoes = [...h.dados];
+        document.getElementById('editId').value = h.id;
+        renderTabela(); 
+        mudar('MEG');
+    }
+
+    function deletar(id) {
+        if(confirm("TEM CERTEZA QUE DESEJA EXCLUIR ESTE REGISTRO PERMANENTEMENTE?")) {
+            db.historico = db.historico.filter(x => x.id != id);
+            localStorage.setItem('pro_evo_v10', JSON.stringify(db)); 
+            render();
+        }
+    }
+
+    function salvarCfg(tipo, id) {
+        const v = document.getElementById(id).value.toUpperCase();
+        if(v) { 
+            db[tipo].push(v); 
+            localStorage.setItem('pro_evo_v10', JSON.stringify(db)); 
+            render(); 
+            document.getElementById(id).value=''; 
+        }
+    }
+
+    function render() {
+        // Render Técnicos
+        document.getElementById('listT').innerHTML = db.tecnicos.map((t,i) => 
+            `<span style="background:#e2e8f0; padding:8px 15px; border-radius:15px; margin:4px; display:inline-block; font-weight:bold; font-size:13px">${t} 
+            <b onclick="db.tecnicos.splice(${i},1);localStorage.setItem('pro_evo_v10',JSON.stringify(db));render();" style="color:red; margin-left:8px; cursor:pointer">×</b></span>`).join('');
+        
+        // Render Locais
+        document.getElementById('listL').innerHTML = db.locais.map((l,i) => 
+            `<span style="background:#e2e8f0; padding:8px 15px; border-radius:15px; margin:4px; display:inline-block; font-weight:bold; font-size:13px">${l} 
+            <b onclick="db.locais.splice(${i},1);localStorage.setItem('pro_evo_v10',JSON.stringify(db));render();" style="color:red; margin-left:8px; cursor:pointer">×</b></span>`).join('');
+        
+        // Render Histórico
+        document.getElementById('listaHist').innerHTML = db.historico.map(h => `
+            <div class="hist-item">
+                <div style="display:flex; justify-content:space-between; align-items:center">
+                    <b>${h.data}</b>
+                    <span style="background:var(--accent); color:white; padding:2px 8px; border-radius:5px; font-size:10px">${h.tipo}</span>
+                </div>
+                <div class="hist-btns">
+                    <button class="btn-mini" style="background:var(--accent)" onclick="carregarEnsaio(${h.id})">CONTINUAR</button>
+                    <button class="btn-mini" style="background:var(--success)" onclick="compartilharPDF(${h.id})">PDF</button>
+                    <button class="btn-mini" style="background:var(--danger)" onclick="deletar(${h.id})">EXCLUIR</button>
+                </div>
+            </div>`).join('') || "<p style='text-align:center; color:#94a3b8'>HISTÓRICO VAZIO</p>";
+    }
+
+    function abrirNovoTTR() {
+        alert("SISTEMA TTR PRONTO PARA RECEBER AS COLUNAS DE CÁLCULO!");
+        // Aqui entraremos com a lógica de TTR no próximo passo
+    }
 </script>
 </body>
 </html>
+
