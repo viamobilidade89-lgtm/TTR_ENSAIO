@@ -8,44 +8,49 @@
         :root { --p: #facc15; --bg: #ffffff; --dark: #0f172a; --accent: #0284c7; --danger: #ef4444; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; color: var(--dark); display: flex; flex-direction: column; min-height: 100vh; }
         
+        /* Forçar Maiúsculas em todos os Inputs e Selects */
+        input, select, textarea { text-transform: uppercase; }
+        input::placeholder { text-transform: none; }
+
         /* Splash */
-        #splash { position: fixed; top:0; left:0; width:100%; height:100%; background: var(--dark); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; transition: 0.5s; }
+        #splash { position: fixed; top:0; left:0; width:100%; height:100%; background: var(--dark); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; }
         .bolt { width: 100px; height: 100px; background: var(--p); clip-path: polygon(45% 0%, 100% 0%, 55% 45%, 100% 45%, 15% 100%, 45% 55%, 0% 55%); animation: surge 1s infinite alternate; }
         @keyframes surge { from { transform: scale(1); filter: drop-shadow(0 0 5px var(--p)); } to { transform: scale(1.1); filter: drop-shadow(0 0 20px var(--p)); } }
 
         /* Header Reestilizado */
-        header { padding: 10px 20px; display: flex; flex-direction: column; align-items: center; }
+        header { padding: 5px 15px; display: flex; flex-direction: column; align-items: center; }
         .nav-top { width: 100%; display: flex; justify-content: flex-end; }
-        .main-title { font-size: 28px; font-weight: 900; color: var(--accent); margin-top: 5px; }
-        .icon-btn { font-size: 28px; cursor: pointer; background: none; border: none; padding: 5px; }
+        .main-title { font-size: 24px; font-weight: 900; color: var(--accent); margin-top: 2px; }
+        .icon-btn-min { font-size: 20px; cursor: pointer; background: none; border: none; padding: 5px; opacity: 0.7; }
 
-        /* Centralização do Menu Principal */
+        /* Menu Centralizado */
         #main-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
-        .menu-grid { display: flex; flex-direction: column; width: 85%; max-width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border-radius: 20px; overflow: hidden; }
+        .menu-grid { display: flex; flex-direction: column; width: 85%; max-width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: 20px; overflow: hidden; }
         .btn-menu { 
             background: var(--accent); color: white; border: none; border-bottom: 1px solid #0369a1;
-            padding: 45px 20px; font-size: 22px; font-weight: bold; cursor: pointer; width: 100%;
+            padding: 40px 20px; font-size: 20px; font-weight: bold; cursor: pointer; width: 100%;
+            display: flex; align-items: center; justify-content: center; gap: 15px;
         }
         .btn-menu:last-child { border-bottom: none; }
 
         /* Telas */
-        .tela { display: none; padding: 20px; flex: 1; animation: fadeIn 0.3s forwards; }
+        .tela { display: none; padding: 20px; flex: 1; animation: fadeIn 0.2s forwards; }
         .ativa { display: block !important; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         /* Cards */
-        .card { background: #f8fafc; padding: 20px; border-radius: 15px; border: 1px solid #e2e8f0; max-width: 500px; margin: auto; }
-        input, select { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 10px; font-size: 16px; margin-bottom: 10px; box-sizing: border-box; }
+        .card { background: #f8fafc; padding: 15px; border-radius: 15px; border: 1px solid #e2e8f0; max-width: 500px; margin: auto; }
+        input, select { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 10px; font-size: 16px; margin-bottom: 10px; box-sizing: border-box; outline-color: var(--accent); }
         
         /* Histórico */
-        .hist-item { background: white; border: 1px solid #cbd5e1; padding: 15px; border-radius: 12px; margin-bottom: 12px; }
+        .hist-item { background: white; border: 1px solid #cbd5e1; padding: 12px; border-radius: 12px; margin-bottom: 10px; }
         .hist-btns { display: flex; gap: 5px; margin-top: 10px; }
-        .btn-s { flex: 1; padding: 8px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; color: white; }
+        .btn-s { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; color: white; }
         .btn-cont { background: var(--accent); }
         .btn-del { background: var(--danger); }
         .btn-sh { background: #16a34a; }
 
-        footer { text-align: center; padding: 20px; font-size: 13px; color: #94a3b8; }
+        footer { text-align: center; padding: 15px; font-size: 11px; color: #94a3b8; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -57,61 +62,63 @@
 
 <header class="no-print">
     <div class="nav-top">
-        <button class="icon-btn" onclick="mudar('CONFIG')">⚙️</button>
+        <button class="icon-btn-min" onclick="mudar('CONFIG')">⚙️</button>
     </div>
     <h1 class="main-title">ENSAIO PRO EVOLUTION</h1>
 </header>
 
 <div id="main-wrapper" class="no-print">
     <div id="menuHome" class="menu-grid">
-        <button class="btn-menu" onclick="mudar('MEG')">⚡ MEGGER</button>
-        <button class="btn-menu" onclick="mudar('TTR')">📟 TTR</button>
-        <button class="btn-menu" onclick="mudar('MICRO')">📏 MICRO</button>
+        <button class="btn-menu" onclick="mudar('MEG')"><span>⚡</span> MEGGER</button>
+        <button class="btn-menu" onclick="mudar('TTR')"><span>📟</span> TTR</button>
+        <button class="btn-menu" onclick="mudar('MICRO')"><span>💼</span> MICRO</button>
     </div>
 </div>
 
 <div id="secMEG" class="tela">
     <div class="card no-print">
-        <h2 style="color:var(--accent); text-align: center;">⚡ MEGGER</h2>
+        <h3 style="color:var(--accent); text-align: center; margin-top:0">ENSAIO MEGGER</h3>
         <input type="hidden" id="editId">
-        <select id="mPonto"><option>PRI x SEC</option><option>PRI x CARC</option><option>SEC x CARC</option></select>
+        <label style="font-size:10px; font-weight:bold">PONTO DE TESTE</label>
+        <select id="mPonto"><option>PRI X SEC</option><option>PRI X CARC</option><option>SEC X CARC</option></select>
+        <label style="font-size:10px; font-weight:bold">VALOR MEDIDO</label>
         <div style="display: flex; gap: 5px;">
-            <input type="number" id="mVal" placeholder="Leitura">
+            <input type="number" id="mVal" placeholder="0.00">
             <select id="mUnit" style="width: 100px;"><option>GΩ</option><option>MΩ</option></select>
         </div>
-        <button class="btn-menu" style="padding:15px; border-radius:10px; margin-top:10px" onclick="addMedicao()">ADICIONAR</button>
+        <button class="btn-cont" style="width:100%; padding:15px; border-radius:10px; border:none; color:white; font-weight:bold" onclick="addMedicao()">ADICIONAR LEITURA</button>
     </div>
 
-    <table id="tabMeg" style="width:100%; margin-top:20px; border-collapse: collapse; background:white;">
-        <thead style="background:#f1f5f9"><tr><th style="padding:10px; border:1px solid #ddd">Ponto</th><th style="border:1px solid #ddd">Valor</th></tr></thead>
+    <table id="tabMeg" style="width:100%; margin-top:15px; border-collapse: collapse; background:white; font-size:14px">
+        <thead style="background:#f1f5f9"><tr><th style="padding:10px; border:1px solid #ddd">PONTO</th><th style="border:1px solid #ddd">VALOR</th></tr></thead>
         <tbody></tbody>
     </table>
     
-    <button class="btn-menu" style="background:#16a34a; padding:15px; border-radius:10px; margin-top:20px" onclick="arquivar()">💾 SALVAR NO HISTÓRICO</button>
-    <button class="btn-menu" style="background:#64748b; padding:15px; border-radius:10px; margin-top:10px" onclick="voltar()">VOLTAR</button>
+    <button class="btn-sh" style="width:100%; padding:15px; border-radius:10px; margin-top:20px; border:none; color:white; font-weight:bold" onclick="arquivar()">💾 ARQUIVAR ENSAIO</button>
+    <button class="btn-del" style="width:100%; padding:12px; border-radius:10px; margin-top:10px; border:none; color:white; font-weight:bold" onclick="voltar()">CANCELAR E VOLTAR</button>
 </div>
 
 <div id="secCONFIG" class="tela">
     <div class="card">
-        <h3 style="color:var(--accent); border-bottom: 2px solid #ddd; padding-bottom: 5px;">📁 HISTÓRICO</h3>
+        <h3 style="color:var(--accent); border-bottom: 2px solid #ddd; padding-bottom: 5px;">HISTÓRICO</h3>
         <div id="listaHist"></div>
 
-        <h3 style="color:var(--accent); margin-top:20px;">👥 TÉCNICOS</h3>
-        <div style="display:flex; gap:5px;"><input type="text" id="cfgT"><button onclick="salvarCfg('tecnicos','cfgT')" style="background:var(--accent); border:none; color:white; width:40px; border-radius:8px;">+</button></div>
+        <h3 style="color:var(--accent); margin-top:20px;">TÉCNICOS</h3>
+        <div style="display:flex; gap:5px;"><input type="text" id="cfgT" placeholder="NOME DO TÉCNICO"><button onclick="salvarCfg('tecnicos','cfgT')" style="background:var(--accent); border:none; color:white; width:45px; border-radius:8px;">+</button></div>
         <div id="listT" style="margin: 10px 0;"></div>
 
-        <h3 style="color:var(--accent); margin-top:20px;">📍 LOCAIS</h3>
-        <div style="display:flex; gap:5px;"><input type="text" id="cfgL"><button onclick="salvarCfg('locais','cfgL')" style="background:var(--accent); border:none; color:white; width:40px; border-radius:8px;">+</button></div>
+        <h3 style="color:var(--accent); margin-top:20px;">LOCAIS</h3>
+        <div style="display:flex; gap:5px;"><input type="text" id="cfgL" placeholder="NOME DO LOCAL"><button onclick="salvarCfg('locais','cfgL')" style="background:var(--accent); border:none; color:white; width:45px; border-radius:8px;">+</button></div>
         <div id="listL"></div>
 
-        <button class="btn-menu" style="background:#64748b; padding:15px; border-radius:10px; margin-top:20px" onclick="voltar()">VOLTAR AO MENU</button>
+        <button class="btn-cont" style="width:100%; padding:15px; border-radius:10px; margin-top:20px; border:none; color:white; font-weight:bold" onclick="voltar()">SALVAR E SAIR</button>
     </div>
 </div>
 
-<footer>Produced by unknown</footer>
+<footer>PRODUCED BY UNKNOWN</footer>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('pro_evo_v5')) || { tecnicos: [], locais: [], historico: [] };
+    let db = JSON.parse(localStorage.getItem('pro_evo_v6')) || { tecnicos: [], locais: [], historico: [] };
     let tempMedicoes = [];
 
     window.onload = () => { setTimeout(() => { document.getElementById('splash').style.display='none'; }, 2000); render(); };
@@ -136,11 +143,11 @@
     }
 
     function renderTabela() {
-        document.querySelector('#tabMeg tbody').innerHTML = tempMedicoes.map(m => `<tr><td style="padding:8px; border:1px solid #ddd">${m.p}</td><td style="padding:8px; border:1px solid #ddd">${m.v}</td></tr>`).join('');
+        document.querySelector('#tabMeg tbody').innerHTML = tempMedicoes.map(m => `<tr><td style="padding:10px; border:1px solid #ddd">${m.p}</td><td style="padding:10px; border:1px solid #ddd">${m.v}</td></tr>`).join('');
     }
 
     function arquivar() {
-        if(tempMedicoes.length === 0) return;
+        if(tempMedicoes.length === 0) return alert("INSIRA AO MENOS UMA MEDIÇÃO");
         const id = document.getElementById('editId').value || Date.now();
         const index = db.historico.findIndex(h => h.id == id);
         
@@ -149,13 +156,31 @@
         if(index > -1) db.historico[index] = registro;
         else db.historico.unshift(registro);
 
-        localStorage.setItem('pro_evo_v5', JSON.stringify(db));
+        localStorage.setItem('pro_evo_v6', JSON.stringify(db));
         tempMedicoes = [];
         document.getElementById('editId').value = '';
         renderTabela();
-        alert("Salvo!");
         render();
         voltar();
+    }
+
+    async function compartilhar(id) {
+        const ensaio = db.historico.find(h => h.id == id);
+        if(!ensaio) return;
+
+        let texto = `📊 RELATÓRIO: ${ensaio.tipo}\n📅 DATA: ${ensaio.data}\n\n`;
+        ensaio.dados.forEach(d => {
+            texto += `• ${d.p}: ${d.v}\n`;
+        });
+        texto += `\nGERADO POR ENSAIO PRO EVOLUTION`;
+
+        if (navigator.share) {
+            try {
+                await navigator.share({ title: 'Relatório Técnico', text: texto });
+            } catch (err) { console.log("Erro no share"); }
+        } else {
+            alert("COMPARTILHAMENTO NÃO SUPORTADO NESTE NAVEGADOR");
+        }
     }
 
     function carregarEnsaio(id) {
@@ -167,31 +192,31 @@
     }
 
     function deletar(id) {
-        if(confirm("Deseja realmente excluir este ensaio?")) {
+        if(confirm("TEM CERTEZA QUE DESEJA EXCLUIR ESTE ENSAIO?")) {
             db.historico = db.historico.filter(x => x.id != id);
-            localStorage.setItem('pro_evo_v5', JSON.stringify(db));
+            localStorage.setItem('pro_evo_v6', JSON.stringify(db));
             render();
         }
     }
 
     function salvarCfg(tipo, id) {
-        const val = document.getElementById(id).value;
-        if(val) { db[tipo].push(val); localStorage.setItem('pro_evo_v5', JSON.stringify(db)); render(); document.getElementById(id).value=''; }
+        const val = document.getElementById(id).value.toUpperCase();
+        if(val) { db[tipo].push(val); localStorage.setItem('pro_evo_v6', JSON.stringify(db)); render(); document.getElementById(id).value=''; }
     }
 
     function render() {
-        document.getElementById('listT').innerHTML = db.tecnicos.map((t,i) => `<span style="background:#e2e8f0; padding:5px; border-radius:10px; margin:2px; display:inline-block">${t} <b onclick="db.tecnicos.splice(${i},1);render();" style="color:red">×</b></span>`).join('');
-        document.getElementById('listL').innerHTML = db.locais.map((l,i) => `<span style="background:#e2e8f0; padding:5px; border-radius:10px; margin:2px; display:inline-block">${l} <b onclick="db.locais.splice(${i},1);render();" style="color:red">×</b></span>`).join('');
+        document.getElementById('listT').innerHTML = db.tecnicos.map((t,i) => `<span style="background:#e2e8f0; padding:5px 10px; border-radius:15px; margin:2px; display:inline-block; font-size:12px">${t} <b onclick="db.tecnicos.splice(${i},1);localStorage.setItem('pro_evo_v6',JSON.stringify(db));render();" style="color:red">×</b></span>`).join('');
+        document.getElementById('listL').innerHTML = db.locais.map((l,i) => `<span style="background:#e2e8f0; padding:5px 10px; border-radius:15px; margin:2px; display:inline-block; font-size:12px">${l} <b onclick="db.locais.splice(${i},1);localStorage.setItem('pro_evo_v6',JSON.stringify(db));render();" style="color:red">×</b></span>`).join('');
         
         document.getElementById('listaHist').innerHTML = db.historico.map(h => `
             <div class="hist-item">
-                <b>${h.data} - ${h.tipo}</b><br><small>${h.dados.length} medições</small>
+                <b style="font-size:13px">${h.data} - ${h.tipo}</b><br><small>${h.dados.length} PONTOS</small>
                 <div class="hist-btns">
-                    <button class="btn-s btn-cont" onclick="carregarEnsaio(${h.id})">CONTINUAR</button>
-                    <button class="btn-s btn-sh" onclick="alert('Compartilhando...')">PDF</button>
+                    <button class="btn-s btn-cont" onclick="carregarEnsaio(${h.id})">EDITAR</button>
+                    <button class="btn-s btn-sh" onclick="compartilhar(${h.id})">COMPARTILHAR</button>
                     <button class="btn-s btn-del" onclick="deletar(${h.id})">EXCLUIR</button>
                 </div>
-            </div>`).join('') || "Vazio";
+            </div>`).join('') || "<p style='text-align:center;color:#94a3b8'>SEM REGISTROS</p>";
     }
 </script>
 </body>
