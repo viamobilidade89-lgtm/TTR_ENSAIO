@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENSAIOS PRO EVOLUTION</title>
+    <title>PRO EVOLUTION - SISTEMA UNIFICADO</title>
     <style>
         :root { --p: #facc15; --bg: #ffffff; --dark: #0f172a; --accent: #0284c7; --danger: #ef4444; --success: #16a34a; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; color: var(--dark); display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
@@ -11,174 +11,150 @@
         input, select { text-transform: uppercase; width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 12px; font-size: 15px; box-sizing: border-box; margin-bottom: 10px; }
         label { font-size: 11px; font-weight: 800; color: #64748b; margin-left: 5px; text-transform: uppercase; display: block; margin-bottom: 4px; }
 
-        /* Splash Screen Original */
+        /* Splash */
         #splash { position: fixed; top:0; left:0; width:100%; height:100%; background: var(--dark); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; }
-        .logo-box { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
         .logo-circle { width: 140px; height: 140px; border: 5px solid var(--p); border-radius: 50%; position: absolute; animation: pulse 2s infinite; }
         .bolt-logo { width: 70px; height: 90px; background: var(--p); clip-path: polygon(45% 0%, 100% 0%, 55% 45%, 100% 45%, 15% 100%, 45% 55%, 0% 55%); z-index: 2; }
-        .empresa-nome { color: white; font-weight: 900; font-size: 28px; letter-spacing: 3px; text-align: center; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
 
-        /* Header Original */
         header { display: grid; grid-template-columns: 50px 1fr 50px; align-items: center; padding: 25px 15px; background: white; border-bottom: 1px solid #f1f5f9; }
-        .header-title { grid-column: 2; font-size: 20px; font-weight: 900; color: var(--accent); margin: 0; text-align: center; letter-spacing: 1px; }
-        .config-icon { grid-column: 3; font-size: 24px; cursor: pointer; background: none; border: none; color: #cbd5e1; justify-self: end; }
+        .header-title { grid-column: 2; font-size: 20px; font-weight: 900; color: var(--accent); text-align: center; }
 
-        /* Interface Principal Original */
         #main-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .monolito-menu { display: flex; flex-direction: column; width: 95%; max-width: 400px; background: linear-gradient(145deg, #0284c7, #0271ab); border-radius: 40px; overflow: hidden; box-shadow: 0 30px 60px rgba(2, 132, 199, 0.45); }
-        .btn-monolito { background: transparent; color: white; border: none; padding: 45px 25px; cursor: pointer; display: flex; align-items: center; gap: 25px; position: relative; text-align: left; width: 100%; }
-        .icon-box { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 40px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
-        .btn-label { font-size: 22px; font-weight: 900; display: block; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .btn-desc { font-size: 12px; color: rgba(255,255,255,0.8); }
-
-        /* Telas e Cards Originais */
+        .monolito-menu { display: flex; flex-direction: column; width: 95%; max-width: 400px; background: linear-gradient(145deg, #0284c7, #0271ab); border-radius: 40px; overflow: hidden; box-shadow: 0 30px 60px rgba(2,132,199,0.4); }
+        .btn-monolito { background: transparent; color: white; border: none; padding: 45px 25px; cursor: pointer; display: flex; align-items: center; gap: 25px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        
         .tela { display: none; padding: 20px; animation: fadeIn 0.4s ease-out; }
         .ativa { display: block !important; }
-        .card { background: #f8fafc; padding: 25px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 600px; margin: auto; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .btn-acao { width: 100%; padding: 18px; border-radius: 15px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; color: white; margin-top: 10px; }
+        .card { background: #f8fafc; padding: 25px; border-radius: 30px; border: 1px solid #e2e8f0; max-width: 600px; margin: 0 auto 20px auto; }
         
-        .multi-select { background: white; border: 2px solid #cbd5e1; border-radius: 12px; padding: 10px; max-height: 150px; overflow-y: auto; margin-bottom: 10px; }
-        .multi-item { display: flex; align-items: center; justify-content: flex-start; gap: 12px; padding: 10px; border-bottom: 1px solid #f1f5f9; font-size: 14px; font-weight: 600; text-align: left; }
-        .btn-inf { background: #e2e8f0; border: none; border-radius: 8px; padding: 0 15px; cursor: pointer; font-size: 20px; font-weight: bold; margin-bottom: 10px; height: 45px; }
+        /* Alinhamento à Esquerda */
+        .multi-select { background: white; border: 2px solid #cbd5e1; border-radius: 12px; padding: 10px; max-height: 150px; overflow-y: auto; }
+        .multi-item { display: flex; align-items: center; justify-content: flex-start; gap: 10px; padding: 8px; border-bottom: 1px solid #f1f5f9; font-weight: 600; text-align: left; }
 
-        .info-box { background: #fff3cd; color: #856404; padding: 15px; border-radius: 15px; margin-bottom: 15px; font-size: 12px; border-left: 5px solid #ffc107; font-weight: bold; }
-
-        /* Tabela Original */
-        .table-wrap { overflow-x: auto; background: white; border-radius: 15px; border: 1px solid #e2e8f0; }
-        table { width: 100%; border-collapse: collapse; font-size: 10px; min-width: 520px; }
+        .table-wrap { overflow-x: auto; background: white; border-radius: 15px; border: 1px solid #e2e8f0; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; font-size: 10px; min-width: 500px; }
         th { background: #f1f5f9; padding: 10px; border-bottom: 2px solid #e2e8f0; }
-        td { padding: 10px; border-bottom: 1px solid #f1f5f9; text-align: center; }
-        .btn-del-row { background: var(--danger); color: white; border: none; border-radius: 6px; padding: 6px 10px; font-weight: bold; cursor: pointer; }
+        td { padding: 10px; border-bottom: 1px solid #f1f5f9; text-align: center; font-weight: bold; }
+
+        .btn-acao { width: 100%; padding: 18px; border-radius: 15px; border: none; font-weight: bold; cursor: pointer; color: white; margin-top: 10px; }
+        .info-box { background: #e0f2fe; color: #0369a1; padding: 15px; border-radius: 15px; margin-bottom: 15px; font-size: 12px; border-left: 5px solid var(--accent); font-weight: bold; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        footer { text-align: center; padding: 30px; font-size: 11px; color: #cbd5e1; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
 <div id="splash">
-    <div class="logo-box">
-        <div class="logo-circle"></div>
-        <div class="bolt-logo"></div>
-    </div>
-    <div class="empresa-nome">PRO EVOLUTION</div>
+    <div class="logo-circle"></div><div class="bolt-logo"></div>
+    <h2 style="color:white; margin-top:180px; letter-spacing:3px">PRO EVOLUTION</h2>
 </div>
 
 <header>
-    <div></div>
-    <h1 class="header-title">ENSAIOS PRO EVOLUTION</h1>
-    <button class="config-icon" onclick="mudar('CONFIG')">⚙️</button>
+    <div></div><h1 class="header-title">SISTEMA DE ENSAIOS</h1>
+    <button onclick="mudar('CONFIG')" style="background:none; border:none; font-size:24px">⚙️</button>
 </header>
 
 <div id="main-wrapper">
-    <div id="menuHome" class="monolito-menu">
-        <button class="btn-monolito" onclick="mudar('MEG')">
-            <div class="icon-box">⚡</div>
-            <div><span class="btn-label">MEGGER</span><span class="btn-desc">Resistência de isolação</span></div>
-        </button>
-        <button class="btn-monolito" onclick="mudar('TTR')">
-            <div class="icon-box">📟</div>
-            <div><span class="btn-label">TTR</span><span class="btn-desc">Relação de transformação</span></div>
+    <div class="monolito-menu">
+        <button class="btn-monolito" onclick="mudar('ENS')">
+            <div style="font-size:40px">📋</div>
+            <div><span style="font-size:22px; font-weight:900">REALIZAR ENSAIOS</span><br><span style="font-size:12px">MEGGER & TTR UNIFICADOS</span></div>
         </button>
     </div>
 </div>
 
-<div id="secMEG" class="tela">
+<div id="secENS" class="tela">
     <div class="card">
-        <button class="btn-acao" style="background:var(--dark); margin-bottom:20px" onclick="novoEnsaio('MEG')">+ NOVO ENSAIO MEGGER</button>
         <label>TAG EQUIPAMENTO</label>
-        <input type="text" id="mTag" placeholder="EX: TR-01">
-        <label>Técnicos</label>
-        <div id="mTecContainer" class="multi-select"></div>
-        <label>Local</label>
-        <select id="mLoc"></select>
-        <label>Ponto de Medição</label>
+        <input type="text" id="globalTag" placeholder="EX: TR-01">
+        <label>TÉCNICOS (ALINHADOS À ESQUERDA)</label>
+        <div id="tecContainer" class="multi-select"></div>
+    </div>
+
+    <div class="card" style="border-top: 5px solid var(--accent)">
+        <h3 style="color:var(--accent)">⚡ PARTE 1: MEGGER</h3>
+        <label>PONTO</label>
         <select id="mPonto">
             <option>PRIMÁRIO X SECUNDÁRIO</option><option>PRIMÁRIO X CARCAÇA</option>
             <option>SECUNDÁRIO X CARCAÇA</option><option>CAMIS</option>
         </select>
-        <label>Tensão Aplicada</label>
+        <label>TENSÃO</label>
         <select id="mTen"><option>250V</option><option>500V</option><option>1KV</option><option>2,5KV</option><option>5KV</option></select>
-        <label>Ref. Mínima</label>
-        <div style="display:flex; gap:5px"><input type="number" id="mRef" inputmode="decimal"><select id="mRefUni" style="width:100px"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select></div>
-        <label>Leituras</label>
-        <div style="display:flex; gap:5px; align-items:center"><input type="text" id="m30" placeholder="30s" inputmode="decimal"><button class="btn-inf" onclick="setInf('m30')">∞</button><select id="u30"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select></div>
-        <div style="display:flex; gap:5px; align-items:center"><input type="text" id="m60" placeholder="60s" inputmode="decimal"><button class="btn-inf" onclick="setInf('m60')">∞</button><select id="u60"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select></div>
-        <div style="display:flex; gap:5px; align-items:center"><input type="text" id="m120" placeholder="120s" inputmode="decimal"><button class="btn-inf" onclick="setInf('m120')">∞</button><select id="u120"><option>MΩ</option><option>GΩ</option><option>TΩ</option></select></div>
-        <button class="btn-acao" style="background:var(--accent)" onclick="registrarMegger()">ADICIONAR À TABELA</button>
+        <label>REF. MÍNIMA (MΩ)</label>
+        <input type="number" id="mRef" inputmode="decimal">
+        
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px">
+            <div><label>30s</label><input type="text" id="m30" inputmode="decimal"></div>
+            <div><label>60s</label><input type="text" id="m60" inputmode="decimal"></div>
+        </div>
+        <label>120s</label>
+        <div style="display:flex; gap:5px">
+            <input type="text" id="m120" inputmode="decimal">
+            <button onclick="document.getElementById('m120').value='∞'" style="width:60px; border-radius:10px; border:1px solid #ccc">∞</button>
+        </div>
+        <button class="btn-acao" style="background:var(--accent)" onclick="addMeg()">REGISTRAR MEGGER</button>
+        
+        <div class="table-wrap">
+            <table id="tabMeg"><thead><tr><th>PONTO</th><th>REF</th><th>120s</th><th>ST.</th></tr></thead><tbody></tbody></table>
+        </div>
     </div>
-    <div class="card" style="padding:15px">
-        <div class="table-wrap"><table id="tabMegResult"><thead><tr><th>PONTO</th><th>TEN.</th><th>30s</th><th>60s</th><th>120s</th><th>ST.</th><th>×</th></tr></thead><tbody></tbody></table></div>
-        <button class="btn-acao" style="background:var(--success); margin-top:20px" onclick="salvarHistorico('MEG')">💾 SALVAR HISTÓRICO</button>
-    </div>
-    <button class="btn-acao" style="background:#64748b" onclick="voltar()">VOLTAR AO MENU</button>
-</div>
 
-<div id="secTTR" class="tela">
-    <div class="card">
-        <button class="btn-acao" style="background:var(--dark); margin-bottom:20px" onclick="novoEnsaio('TTR')">+ NOVO ENSAIO TTR</button>
-        <label>TAG EQUIPAMENTO</label>
-        <input type="text" id="tTag" placeholder="EX: TR-02">
-        <label>Técnicos</label>
-        <div id="tTecContainer" class="multi-select"></div>
+    <div class="card" style="border-top: 5px solid var(--p)">
+        <h3 style="color:#856404">📟 PARTE 2: TTR</h3>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px">
             <div><label>U1 (ENTRADA)</label><input type="number" id="tU1" inputmode="decimal" oninput="calcTTR()"></div>
             <div><label>U2 (SAÍDA)</label><input type="number" id="tU2" inputmode="decimal" oninput="calcTTR()"></div>
         </div>
-        <label>Fasorial / Grupo Vetorial</label>
-        <select id="tFas" onchange="atualizarTTR()">
-            <option value="Ydn">Ydn1 / Ydn11 (300° / 30°)</option>
-            <option value="Yd1">Yd1 (300° ou 30°)</option>
-            <option value="Yd11">Yd11 (30°)</option>
-            <option value="Dyn">Dyn1 / Dyn11 (300° / 30°)</option>
-            <option value="Dy1">Dy1 (330° ou -30°)</option>
-            <option value="Dy11">Dy11 (30°)</option>
-            <option value="Yyn0">Yyn0 (0°)</option>
-            <option value="Ynyn0">Ynyn0 (0°)</option>
-            <option value="Yy0_Dd0">Yy0 / Dd0 (0°)</option>
-        </select>
-        <label>Neutro</label>
+        <label>FASORIAL</label>
+        <select id="tFas" onchange="atualizarTTR()"></select>
+        <label>NEUTRO</label>
         <select id="tNeu" onchange="atualizarTTR()">
-            <option value="X0">C/ X0 APARENTE</option>
-            <option value="H0">C/ H0 APARENTE</option>
+            <option value="X0">C/ X0 APARENTE</option><option value="H0">C/ H0 APARENTE</option>
         </select>
-        <div id="tDica" class="info-box">Fórmula e Pontas aqui.</div>
-        <label>Valor Teórico</label>
-        <input type="text" id="tTeo" readonly style="background:#f1f5f9; font-weight:900; color:var(--accent)">
-        <label>Pontas de Prova</label>
-        <select id="tPonta"></select>
-        <label>Leitura do Equipamento</label>
+        <div id="tDica" class="info-box">Selecione as pontas...</div>
+        <label>VALOR TEÓRICO</label>
+        <input type="text" id="tTeo" readonly style="background:#f1f5f9; font-weight:bold">
+        <label>PONTAS DE PROVA (REFERÊNCIA)</label>
+        <select id="tPontaSel"></select>
+        <label>LEITURA TTR</label>
         <input type="number" id="tLido" inputmode="decimal" step="0.0001">
-        <button class="btn-acao" style="background:var(--accent)" onclick="registrarTTR()">ADICIONAR À TABELA</button>
+        <button class="btn-acao" style="background:var(--p); color:var(--dark)" onclick="addTtr()">REGISTRAR TTR</button>
+
+        <div class="table-wrap">
+            <table id="tabTtr"><thead><tr><th>PONTAS</th><th>TEO</th><th>LIDO</th><th>DESVIO%</th><th>ST.</th></tr></thead><tbody></tbody></table>
+        </div>
     </div>
-    <div class="card" style="padding:15px">
-        <div class="table-wrap"><table id="tabTtrResult"><thead><tr><th>PONTAS</th><th>TEO</th><th>LIDO</th><th>ERRO%</th><th>ST.</th><th>×</th></tr></thead><tbody></tbody></table></div>
-        <button class="btn-acao" style="background:var(--success); margin-top:20px" onclick="salvarHistorico('TTR')">💾 SALVAR TTR</button>
-    </div>
-    <button class="btn-acao" style="background:#64748b" onclick="voltar()">VOLTAR AO MENU</button>
+
+    <button class="btn-acao" style="background:var(--success); padding:25px; font-size:18px" onclick="finalizarRelatorio()">💾 FINALIZAR RELATÓRIO UNIFICADO</button>
+    <button class="btn-acao" style="background:#64748b" onclick="voltar()">CANCELAR</button>
 </div>
 
 <div id="secCONFIG" class="tela">
     <div class="card">
-        <h3>👥 GESTÃO</h3>
-        <input type="text" id="cTec" placeholder="NOVO TÉCNICO"><button class="btn-acao" style="background:var(--accent)" onclick="addCfg('tecnicos','cTec')">ADICIONAR</button>
-        <div id="lTec" style="margin: 10px 0"></div>
+        <h3>CADASTROS</h3>
+        <input type="text" id="cTec" placeholder="NOME TÉCNICO">
+        <button class="btn-acao" style="background:var(--accent)" onclick="addCfg('tecnicos','cTec')">SALVAR TÉCNICO</button>
+        <div id="lTec" style="margin-top:10px"></div>
         <hr>
-        <input type="text" id="cLoc" placeholder="NOVO LOCAL"><button class="btn-acao" style="background:var(--accent)" onclick="addCfg('locais','cLoc')">ADICIONAR</button>
-        <div id="lLoc" style="margin: 10px 0"></div>
-        <h3>📁 HISTÓRICO</h3>
+        <h3>HISTÓRICO DE LAUDOS</h3>
         <div id="listaHist"></div>
     </div>
-    <button class="btn-acao" style="background:#64748b" onclick="voltar()">FECHAR</button>
+    <button class="btn-acao" style="background:#64748b" onclick="voltar()">VOLTAR</button>
 </div>
 
-<footer>PRODUCED BY UNKNOWN</footer>
-
 <script>
-    const DB_KEY = 'PRO_EVO_MASTER_V25';
-    let db = JSON.parse(localStorage.getItem(DB_KEY)) || { tecnicos: [], locais: [], historico: [] };
-    let megAtuais = [], ttrAtuais = [];
+    const DB_KEY = 'PRO_EVO_V3_FINAL';
+    let db = JSON.parse(localStorage.getItem(DB_KEY)) || { tecnicos: [], historico: [] };
+    let megTemp = [], ttrTemp = [];
+
+    const fasoriais = {
+        "Ydn": { d: "Ydn1 / Ydn11", f: (u1,u2,n) => n=='X0' ? (u1*1.732/u2) : (u1/(1.732*u2)), p: { "X0": ["H1-H3 | X1-X0", "H1-H2 | X2-X0", "H3-H1 | X3-X0"], "H0": ["H1-H0 | X1-X3", "H2-H0 | X2-X1", "H3-H0 | X3-X2"]} },
+        "Yd": { d: "Yd1 / Yd11", f: (u1,u2) => (0.866*u1/u2), p: { "X0": ["H2-H1~H3 | X2-X3", "H3-H2~H1 | X3-X1", "H1-H3~H2 | X1-X2"], "H0": ["H2-H1~H3 | X2-X3", "H3-H2~H1 | X3-X1", "H1-H3~H2 | X1-X2"]} },
+        "Dy": { d: "Dy1 / Dy11", f: (u1,u2) => (u1/(0.866*u2)), p: { "X0": ["H1-H3 | X2-X1~X3", "H3-H2 | X3-X2~X1", "H1-H3 | X1-X3~X2"], "H0": ["H1-H3 | X2-X1~X3", "H3-H2 | X3-X2~X1", "H1-H3 | X1-X3~X2"]} },
+        "Yyn0": { d: "Yyn0", f: (u1,u2) => (u1/(1.732*u2*0.866)), p: { "X0": ["H1-H2~H3 | X1-X0", "H2-H3~H1 | X2-X0", "H3-H1~H2 | X3-X0"], "H0": ["H1-H0 | X1-X3", "H2-H0 | X2-X1", "H3-H0 | X3-X2"]} },
+        "Yy0": { d: "Yy0 / Dd0 / Ynyn0", f: (u1,u2) => (u1/u2), p: { "X0": ["H1-H2 | X1-X2", "H2-H3 | X2-X3", "H3-H1 | X3-X1"], "H0": ["H1-H0 | X1-X0", "H2-H0 | X2-X0", "H3-H0 | X3-X0"]} }
+    };
 
     function mudar(t) {
         document.getElementById('main-wrapper').style.display = 'none';
@@ -187,103 +163,76 @@
         else document.getElementById('sec'+t).classList.add('ativa');
     }
     function voltar() { mudar('HOME'); }
-    function setInf(id) { document.getElementById(id).value = "∞"; }
+
+    function addMeg() {
+        const ref = parseFloat(document.getElementById('mRef').value);
+        const v30 = convInf(document.getElementById('m30').value);
+        const v60 = convInf(document.getElementById('m60').value);
+        const v120 = convInf(document.getElementById('m120').value);
+        
+        // CORREÇÃO: Se qualquer valor for menor que a referência, REPROVA
+        const ok = (v30 >= ref && v60 >= ref && v120 >= ref);
+        megTemp.push({ ponto: document.getElementById('mPonto').value, ref, v120: document.getElementById('m120').value, st: ok?'OK':'REPR', cor: ok? 'var(--success)':'var(--danger)' });
+        renderMeg();
+    }
+    function convInf(v) { return v === "∞" ? 999999999 : parseFloat(v); }
 
     function atualizarTTR() {
-        const fas = document.getElementById('tFas').value;
+        const fKey = document.getElementById('tFas').value;
         const neu = document.getElementById('tNeu').value;
-        const sel = document.getElementById('tPonta');
-        const dica = document.getElementById('tDica');
-        sel.innerHTML = ''; let p = [];
-
-        if(fas==='Ydn' || fas==='Dyn') {
-            if(neu==='X0') { p=["H1-H3 | X1-X0", "H1-H2 | X2-X0", "H3-H1 | X3-X0"]; dica.innerText="U1 * 1,732 / U2"; }
-            else { p=["H1-H0 | X1-X3", "H2-H0 | X2-X1", "H3-H0 | X3-X2"]; dica.innerText="U1 / (1,732 * U2)"; }
-        } else if(fas==='Yd1' || fas==='Yd11') {
-            p = fas==='Yd1' ? ["H2-H1~H3 | X2-X3", "H3-H2~H1 | X3-X1", "H1-H3~H2 | X1-X2"] : ["H1-H2~H3 | X1-X3", "H2-H3~H1 | X2-X1", "H3-H1~H2 | X3-X2"];
-            dica.innerText="0,866 * U1 / U2";
-        } else if(fas==='Dy1' || fas==='Dy11') {
-            p = ["H1-H3 | X2-X1~X3", "H3-H2 | X3-X2~X1", "H1-H3 | X1-X3~X2"];
-            dica.innerText="U1 / (0,866 * U2)";
-        } else if(fas==='Yyn0') {
-            p = neu==='H0' ? ["H1-H0 | X1-X3", "H2-H0 | X2-X1", "H3-H0 | X3-X2"] : ["H1-H2~H3 | X1-X0", "H2-H3~H1 | X2-X0", "H3-H1~H2 | X3-X0"];
-            dica.innerText="U1 / (1,732 * U2 * 0,866)";
-        } else if(fas==='Ynyn0') {
-            p = ["H1-H0 | X1-X0", "H2-H0 | X2-X0", "H3-H0 | X3-X0"]; dica.innerText="U1 / U2";
-        } else {
-            p = ["H1-H2 | X1-X2", "H2-H3 | X2-X3", "H3-H1 | X3-X1"]; dica.innerText="U1 / U2";
-        }
-        p.forEach(x => sel.innerHTML += `<option>${x}</option>`);
+        const pSel = document.getElementById('tPontaSel');
+        pSel.innerHTML = '';
+        fasoriais[fKey].p[neu].forEach(p => pSel.innerHTML += `<option>${p}</option>`);
         calcTTR();
     }
 
     function calcTTR() {
         const u1 = parseFloat(document.getElementById('tU1').value), u2 = parseFloat(document.getElementById('tU2').value);
-        const fas = document.getElementById('tFas').value, neu = document.getElementById('tNeu').value;
         if(!u1 || !u2) return;
-        let k = 0;
-        if(fas==='Ydn' || fas==='Dyn') k = (neu==='X0' ? (u1*1.732/u2) : (u1/(1.732*u2)));
-        else if(fas.startsWith('Yd')) k = (0.866*u1/u2);
-        else if(fas.startsWith('Dy')) k = (u1/(0.866*u2));
-        else if(fas==='Yyn0') k = (u1/(1.732*u2*0.866));
-        else k = (u1/u2);
-        document.getElementById('tTeo').value = k.toFixed(5);
+        const res = fasoriais[document.getElementById('tFas').value].f(u1, u2, document.getElementById('tNeu').value);
+        document.getElementById('tTeo').value = res.toFixed(5);
     }
 
-    function registrarTTR() {
-        const teo = parseFloat(document.getElementById('tTeo').value), lido = parseFloat(document.getElementById('tLido').value);
-        if(!teo || !lido) return;
-        const erro = Math.abs(((lido - teo) / teo) * 100);
-        const ok = erro <= 0.5;
-        ttrAtuais.push({ id: Date.now(), p: document.getElementById('tPonta').value, teo: teo.toFixed(5), lido: lido.toFixed(5), err: erro.toFixed(3), ok: ok?'OK':'REPR', cor: ok? 'var(--success)':'var(--danger)' });
-        renderTtrTab();
+    function addTtr() {
+        const teo = parseFloat(document.getElementById('tTeo').value);
+        const lido = parseFloat(document.getElementById('tLido').value);
+        const desvio = Math.abs(((lido - teo) / teo) * 100);
+        const ok = desvio <= 0.5;
+        ttrTemp.push({ pontas: document.getElementById('tPontaSel').value, teo: teo.toFixed(4), lido: lido.toFixed(4), desvio: desvio.toFixed(3), st: ok?'OK':'REPR', cor: ok?'var(--success)':'var(--danger)' });
+        renderTtr();
     }
 
-    function renderTtrTab() {
-        document.querySelector('#tabTtrResult tbody').innerHTML = ttrAtuais.map(t => `<tr><td>${t.p}</td><td>${t.teo}</td><td>${t.lido}</td><td>${t.err}%</td><td style="background:${t.cor}; color:white">${t.ok}</td><td><button class="btn-del-row" onclick="ttrAtuais=ttrAtuais.filter(x=>x.id!=${t.id});renderTtrTab()">×</button></td></tr>`).join('');
+    function renderMeg() {
+        document.querySelector('#tabMeg tbody').innerHTML = megTemp.map(m => `<tr><td>${m.ponto}</td><td>${m.ref}</td><td>${m.v120}</td><td style="color:white; background:${m.cor}">${m.st}</td></tr>`).join('');
+    }
+    function renderTtr() {
+        document.querySelector('#tabTtr tbody').innerHTML = ttrTemp.map(t => `<tr><td>${t.pontas}</td><td>${t.teo}</td><td>${t.lido}</td><td>${t.desvio}%</td><td style="color:white; background:${t.cor}">${t.st}</td></tr>`).join('');
     }
 
-    function registrarMegger() {
-        const r = parseFloat(document.getElementById('mRef').value);
-        const v30 = document.getElementById('m30').value;
-        if(!r || !v30) return;
-        megAtuais.push({ id: Date.now(), p: document.getElementById('mPonto').value, t: document.getElementById('mTen').value, v30: v30, v60: document.getElementById('m60').value, v120: document.getElementById('m120').value });
-        renderMegTab();
-    }
-
-    function renderMegTab() {
-        document.querySelector('#tabMegResult tbody').innerHTML = megAtuais.map(m => `<tr><td>${m.p}</td><td>${m.t}</td><td>${m.v30}</td><td>${m.v60}</td><td>${m.v120}</td><td style="background:var(--success); color:white">OK</td><td><button class="btn-del-row" onclick="megAtuais=megAtuais.filter(x=>x.id!=${m.id});renderMegTab()">×</button></td></tr>`).join('');
+    function finalizarRelatorio() {
+        const tag = document.getElementById('globalTag').value;
+        if(!tag) return alert("INSIRA A TAG!");
+        db.historico.unshift({ id: Date.now(), tag, data: new Date().toLocaleDateString(), meg: [...megTemp], ttr: [...ttrTemp] });
+        localStorage.setItem(DB_KEY, JSON.stringify(db));
+        alert("RELATÓRIO UNIFICADO SALVO COM SUCESSO!");
+        location.reload();
     }
 
     function addCfg(tipo, id) {
         const v = document.getElementById(id).value.trim().toUpperCase();
-        if(v) { db[tipo].push(v); db[tipo].sort(); salvar(); document.getElementById(id).value=''; }
+        if(v) { db[tipo].push(v); db[tipo].sort(); localStorage.setItem(DB_KEY, JSON.stringify(db)); renderTudo(); document.getElementById(id).value=''; }
     }
-    function salvar() { localStorage.setItem(DB_KEY, JSON.stringify(db)); renderTudo(); }
 
     function renderTudo() {
-        const tcs = db.tecnicos.map(t => `<div class="multi-item"><input type="checkbox" class="tec-check" value="${t}"> ${t}</div>`).join('');
-        document.getElementById('mTecContainer').innerHTML = tcs;
-        document.getElementById('tTecContainer').innerHTML = tcs;
-        document.getElementById('mLoc').innerHTML = db.locais.map(l => `<option>${l}</option>`).join('');
-        document.getElementById('lTec').innerHTML = db.tecnicos.map((t,i) => `<span class="chip-delete">${t}<b onclick="db.tecnicos.splice(${i},1);salvar()">×</b></span>`).join('');
-        document.getElementById('lLoc').innerHTML = db.locais.map((l,i) => `<span class="chip-delete">${l}<b onclick="db.locais.splice(${i},1);salvar()">×</b></span>`).join('');
-        document.getElementById('listaHist').innerHTML = db.historico.map(h => `<div class="card" style="padding:10px"><b>${h.tag}</b> (${h.tipo})<button class="btn-del-row" style="float:right" onclick="db.historico=db.historico.filter(x=>x.id!=${h.id});salvar()">×</button></div>`).join('');
+        document.getElementById('tecContainer').innerHTML = db.tecnicos.map(t => `<div class="multi-item"><input type="checkbox" class="tec-check" value="${t}"> ${t}</div>`).join('');
+        document.getElementById('lTec').innerHTML = db.tecnicos.map((t,i) => `<span style="background:#ddd; padding:5px; margin:2px; display:inline-block; border-radius:5px">${t} <b onclick="db.tecnicos.splice(${i},1);renderTudo()">×</b></span>`).join('');
+        const combo = document.getElementById('tFas');
+        combo.innerHTML = '';
+        for(let k in fasoriais) combo.innerHTML += `<option value="${k}">${fasoriais[k].d}</option>`;
+        document.getElementById('listaHist').innerHTML = db.historico.map(h => `<div class="card"><b>TAG: ${h.tag}</b> - ${h.data}<br><small>Megger: ${h.meg.length} | TTR: ${h.ttr.length}</small></div>`).join('');
     }
 
-    function salvarHistorico(tipo) {
-        const tag = document.getElementById(tipo==='MEG'?'mTag':'tTag').value;
-        if(!tag) return alert("INSIRA A TAG");
-        db.historico.unshift({ id: Date.now(), tag, tipo, data: new Date().toLocaleDateString() });
-        salvar(); novoEnsaio(tipo); voltar();
-    }
-
-    function novoEnsaio(tipo) {
-        if(tipo==='MEG') { megAtuais=[]; renderMegTab(); } else { ttrAtuais=[]; renderTtrTab(); }
-    }
-
-    window.onload = () => { renderTudo(); atualizarTTR(); setTimeout(()=>document.getElementById('splash').style.display='none', 2000); };
+    window.onload = () => { renderTudo(); atualizarTTR(); setTimeout(()=>document.getElementById('splash').style.display='none', 1500); };
 </script>
 </body>
 </html>
-
