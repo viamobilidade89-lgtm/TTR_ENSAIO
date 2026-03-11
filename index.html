@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ENSAIOS PRO EVOLUTION</title>
     <style>
@@ -24,32 +25,42 @@
             width: 100%; max-width: 480px;
             background: linear-gradient(160deg, #0369a1 0%, #0284c7 40%, #0271ab 100%);
             border-radius: 28px; overflow: hidden;
-            box-shadow: 0 2px 0 rgba(255,255,255,0.15) inset, 0 -2px 0 rgba(0,0,0,0.2) inset,
-                        0 25px 50px rgba(2,100,180,0.55), 0 8px 20px rgba(0,0,0,0.25);
-            border: 1px solid rgba(255,255,255,0.12); position: relative;
+            box-shadow:
+                0 2px 0 rgba(255,255,255,0.15) inset,
+                0 -2px 0 rgba(0,0,0,0.2) inset,
+                0 25px 50px rgba(2,100,180,0.55),
+                0 8px 20px rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.12);
+            position: relative;
         }
         .monolito-menu::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%;
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 50%;
             background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 100%);
-            border-radius: 28px 28px 0 0; pointer-events: none; z-index: 1;
+            border-radius: 28px 28px 0 0;
+            pointer-events: none; z-index: 1;
         }
         .btn-monolito {
             background: transparent; color: white; border: none;
             padding: 28px 24px; cursor: pointer;
             display: flex; align-items: center; gap: 22px;
             position: relative; text-align: left; z-index: 2;
-            border-bottom: 1px solid rgba(255,255,255,0.08); transition: background 0.2s ease;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            transition: background 0.2s ease;
         }
         .btn-monolito:last-child { border-bottom: none; }
         .btn-monolito:active { background: rgba(255,255,255,0.08); }
         .btn-monolito:not(:last-child)::after {
-            content: ''; position: absolute; bottom: 0; left: 24px; right: 24px; height: 1px;
+            content: '';
+            position: absolute; bottom: 0; left: 24px; right: 24px; height: 1px;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
         }
         .icon-box {
             width: 68px; height: 68px; min-width: 68px;
-            display: flex; align-items: center; justify-content: center; font-size: 42px;
-            background: rgba(255,255,255,0.10); border-radius: 20px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 42px;
+            background: rgba(255,255,255,0.10);
+            border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.15);
             box-shadow: 0 4px 12px rgba(0,0,0,0.2), 0 1px 0 rgba(255,255,255,0.15) inset;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
@@ -91,8 +102,7 @@
     </style>
 </head>
 <body>
-
-<div id="splash">
+    <div id="splash">
     <div class="logo-box"><div class="logo-circle"></div><div class="bolt-logo"></div></div>
     <div class="empresa-nome">PRO EVOLUTION</div>
 </div>
@@ -107,12 +117,18 @@
     <div id="menuHome" class="monolito-menu">
         <button class="btn-monolito" onclick="mudar('MEG')">
             <div class="icon-box">⚡</div>
-            <div class="btn-text"><span class="btn-label">MEGGER</span><span class="btn-desc">Resistência de isolação</span></div>
+            <div class="btn-text">
+                <span class="btn-label">MEGGER</span>
+                <span class="btn-desc">Resistência de isolação</span>
+            </div>
             <span class="btn-arrow">›</span>
         </button>
         <button class="btn-monolito" onclick="mudar('TTR')">
             <div class="icon-box">📟</div>
-            <div class="btn-text"><span class="btn-label">TTR</span><span class="btn-desc">Relação de transformação</span></div>
+            <div class="btn-text">
+                <span class="btn-label">TTR</span>
+                <span class="btn-desc">Relação de transformação</span>
+            </div>
             <span class="btn-arrow">›</span>
         </button>
         <button class="btn-monolito" onclick="mudar('MICRO')">
@@ -131,7 +147,10 @@
                   <text x="38" y="16" font-family="serif" font-size="11" fill="#facc15" font-weight="bold">Ω</text>
                 </svg>
             </div>
-            <div class="btn-text"><span class="btn-label">MICRO</span><span class="btn-desc">Resistência de contato</span></div>
+            <div class="btn-text">
+                <span class="btn-label">MICRO</span>
+                <span class="btn-desc">Resistência de contato</span>
+            </div>
             <span class="btn-arrow">›</span>
         </button>
     </div>
@@ -262,7 +281,6 @@
     </div>
     <button class="btn-acao" style="background:#64748b; max-width:600px; display:block; margin:0 auto 20px" onclick="voltar()">VOLTAR AO MENU</button>
 </div>
-
 <!-- ========== TELA MICRO ========== -->
 <div id="secMICRO" class="tela">
     <div class="card">
@@ -284,67 +302,68 @@
             <div class="teorico-val" id="micFator" style="color:#4ade80">--</div>
             <div class="teorico-formula" id="micFatorFormula">(T+TR) / (T+TM) — Insira TM</div>
         </div>
+        <!-- ALTA TENSÃO -->
         <div class="pontas-box" style="border-color:#16a34a; margin-bottom:12px">
             <div class="pontas-title" style="color:#16a34a">⚡ ALTA TENSÃO — Buchas H (× 1,5)</div>
             <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px">
                 <div>
                     <div style="font-size:9px; font-weight:800; color:#64748b; margin-bottom:5px; text-align:center">H1-H3</div>
                     <input type="number" id="micH1H3" placeholder="Medido" inputmode="decimal" style="margin:0; font-size:13px; padding:10px; text-align:center">
-                    <!-- ✅ CORRIGIDO: ohm / miliohm / microohm -->
-                    <select id="micH1H3uni" style="margin-top:4px; padding:6px; font-size:11px">
-                        <option value="Ω">ohm (Ω)</option>
-                        <option value="mΩ">miliohm (mΩ)</option>
-                        <option value="μΩ">microohm (μΩ)</option>
+                    <select id="micH1H3uni" style="margin-top:4px; padding:6px; font-size:11px; text-transform:none">
+                        <option value="Ω">Ω</option>
+                        <option value="mΩ">mΩ</option>
+                        <option value="μΩ">µΩ</option>
                     </select>
                 </div>
                 <div>
                     <div style="font-size:9px; font-weight:800; color:#64748b; margin-bottom:5px; text-align:center">H1-H2</div>
                     <input type="number" id="micH1H2" placeholder="Medido" inputmode="decimal" style="margin:0; font-size:13px; padding:10px; text-align:center">
-                    <select id="micH1H2uni" style="margin-top:4px; padding:6px; font-size:11px">
-                        <option value="Ω">ohm (Ω)</option>
-                        <option value="mΩ">miliohm (mΩ)</option>
-                        <option value="μΩ">microohm (μΩ)</option>
+                    <select id="micH1H2uni" style="margin-top:4px; padding:6px; font-size:11px; text-transform:none">
+                        <option value="Ω">Ω</option>
+                        <option value="mΩ">mΩ</option>
+                        <option value="μΩ">µΩ</option>
                     </select>
                 </div>
                 <div>
                     <div style="font-size:9px; font-weight:800; color:#64748b; margin-bottom:5px; text-align:center">H2-H3</div>
                     <input type="number" id="micH2H3" placeholder="Medido" inputmode="decimal" style="margin:0; font-size:13px; padding:10px; text-align:center">
-                    <select id="micH2H3uni" style="margin-top:4px; padding:6px; font-size:11px">
-                        <option value="Ω">ohm (Ω)</option>
-                        <option value="mΩ">miliohm (mΩ)</option>
-                        <option value="μΩ">microohm (μΩ)</option>
+                    <select id="micH2H3uni" style="margin-top:4px; padding:6px; font-size:11px; text-transform:none">
+                        <option value="Ω">Ω</option>
+                        <option value="mΩ">mΩ</option>
+                        <option value="μΩ">µΩ</option>
                     </select>
                 </div>
             </div>
         </div>
+        <!-- BAIXA TENSÃO -->
         <div class="pontas-box" style="border-color:#0284c7; margin-bottom:12px">
             <div class="pontas-title" style="color:#0284c7">🔵 BAIXA TENSÃO — Buchas X (sem multiplicação)</div>
             <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px">
                 <div>
                     <div style="font-size:9px; font-weight:800; color:#64748b; margin-bottom:5px; text-align:center">X1-X0</div>
                     <input type="number" id="micX1X0" placeholder="Medido" inputmode="decimal" style="margin:0; font-size:13px; padding:10px; text-align:center">
-                    <select id="micX1X0uni" style="margin-top:4px; padding:6px; font-size:11px">
-                        <option value="Ω">ohm (Ω)</option>
-                        <option value="mΩ">miliohm (mΩ)</option>
-                        <option value="μΩ">microohm (μΩ)</option>
+                    <select id="micX1X0uni" style="margin-top:4px; padding:6px; font-size:11px; text-transform:none">
+                        <option value="Ω">Ω</option>
+                        <option value="mΩ">mΩ</option>
+                        <option value="μΩ">µΩ</option>
                     </select>
                 </div>
                 <div>
                     <div style="font-size:9px; font-weight:800; color:#64748b; margin-bottom:5px; text-align:center">X2-X0</div>
                     <input type="number" id="micX2X0" placeholder="Medido" inputmode="decimal" style="margin:0; font-size:13px; padding:10px; text-align:center">
-                    <select id="micX2X0uni" style="margin-top:4px; padding:6px; font-size:11px">
-                        <option value="Ω">ohm (Ω)</option>
-                        <option value="mΩ">miliohm (mΩ)</option>
-                        <option value="μΩ">microohm (μΩ)</option>
+                    <select id="micX2X0uni" style="margin-top:4px; padding:6px; font-size:11px; text-transform:none">
+                        <option value="Ω">Ω</option>
+                        <option value="mΩ">mΩ</option>
+                        <option value="μΩ">µΩ</option>
                     </select>
                 </div>
                 <div>
                     <div style="font-size:9px; font-weight:800; color:#64748b; margin-bottom:5px; text-align:center">X3-X0</div>
                     <input type="number" id="micX3X0" placeholder="Medido" inputmode="decimal" style="margin:0; font-size:13px; padding:10px; text-align:center">
-                    <select id="micX3X0uni" style="margin-top:4px; padding:6px; font-size:11px">
-                        <option value="Ω">ohm (Ω)</option>
-                        <option value="mΩ">miliohm (mΩ)</option>
-                        <option value="μΩ">microohm (μΩ)</option>
+                    <select id="micX3X0uni" style="margin-top:4px; padding:6px; font-size:11px; text-transform:none">
+                        <option value="Ω">Ω</option>
+                        <option value="mΩ">mΩ</option>
+                        <option value="μΩ">µΩ</option>
                     </select>
                 </div>
             </div>
@@ -391,7 +410,8 @@
 </div>
 
 <footer>PRODUCED BY UNKNOWN</footer>
-<script>
+
+   <script>
 const FASORIAIS = {
     "Ydn1_Ydn11": {
         label: "Ydn1 / Ydn11", neutros: ["X0", "H0"],
@@ -520,8 +540,8 @@ function renderTabelaMeg() {
         <td style="font-weight:bold">${e.ponto}</td><td>${e.tensao}</td><td>${e.v30}</td><td>${e.v60}</td><td>${e.v120}</td>
         <td style="color:white;background:${e.cor};font-weight:bold;border-radius:4px">${e.status}</td>
         <td><button class="btn-del-row" onclick="ensaiosAtuaisMeg=ensaiosAtuaisMeg.filter(x=>x.id!=${e.id});renderTabelaMeg()">×</button></td>
-    </tr>`).join('');
-}
+    </tr>`).join(''); 
+      }
 function salvarHistoricoMeg() {
     const tcs=Array.from(document.querySelectorAll('#secMEG .tec-check:checked')).map(c=>c.value).join(', ');
     if(!tcs) return alert("SELECIONE O(S) TÉCNICO(S)");
@@ -618,8 +638,8 @@ function renderTabelaTTR() {
         <td style="color:white;background:${e.cor};font-weight:bold;border-radius:4px">${e.status}</td>
         <td><button class="btn-del-row" onclick="ensaiosAtuaisTTR=ensaiosAtuaisTTR.filter(x=>x.id!=${e.id});renderTabelaTTR()">×</button></td>
     </tr>`).join('');
-}
-function salvarHistoricoTTR() {
+       } 
+       function salvarHistoricoTTR() {
     const tcs=Array.from(document.querySelectorAll('#secTTR .tec-check:checked')).map(c=>c.value).join(', ');
     if(!tcs) return alert("SELECIONE O(S) TÉCNICO(S)");
     if(ensaiosAtuaisTTR.length===0) return alert("ADICIONE MEDIÇÕES NA TABELA");
@@ -680,7 +700,7 @@ function copiarFallback(t) {
     document.body.removeChild(ta);
 }
 
-function gerarPDF(id) {
+  function gerarPDF(id) {
     const h=db.historico.find(x=>x.id==id); if(!h) return;
     const ensaios=h.ensaios||{};
     const ss=s=>s==='OK'?'background:#16a34a;color:white;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10px':'background:#ef4444;color:white;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10px';
@@ -723,8 +743,8 @@ ${megHTML}${ttrHTML}${microHTML}
 <div class="footer"><div class="footer-brand">PRODUCED BY UNKNOWN — PRO EVOLUTION</div><div style="font-size:8px;color:#cbd5e1">${h.data}</div></div>
 </div><script>window.onload=()=>{window.print();}<\/script></body></html>`);
     w.document.close();
-    }
-    // ===== MICRO =====
+       }     
+   // ===== MICRO =====
 const MICRO_T=237, MICRO_TR=75;
 let ensaiosAtuaisMicro=[];
 
@@ -739,7 +759,7 @@ function calcFatorMicro() {
 function converterMicro(val,uni) {
     const n=parseFloat(String(val).replace(',','.'));
     if(isNaN(n)) return null;
-    if(uni==='Ω') return n*1000;
+    if(uni==='Ω')  return n*1000;
     if(uni==='mΩ') return n;
     if(uni==='μΩ') return n/1000;
     return n;
@@ -790,8 +810,8 @@ function salvarHistoricoMicro() {
     ficha.tecnico=tcs; ficha.local=local; ficha.data=data; ficha.ensaios.MICRO=[...ensaiosAtuaisMicro];
     salvar(); alert("SALVO NA FICHA DE "+tag+"!\nVocê pode continuar adicionando medições ou ir para outro ensaio.");
     ensaiosAtuaisMicro=[]; renderTabelaMicro();
-}
-function novoEnsaioMicro() {
+       }    
+       function novoEnsaioMicro() {
     ensaiosAtuaisMicro=[]; renderTabelaMicro();
     document.getElementById('micTag').value=''; document.getElementById('micTM').value='';
     document.getElementById('micFator').textContent='--'; document.getElementById('micFatorFormula').textContent='(T+TR) / (T+TM) — Insira TM';
