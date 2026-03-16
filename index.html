@@ -98,7 +98,7 @@
     </style>
 </head>
 <body>
-    <!-- Trilha rock sintetizada via Web Audio API — toca só na splash -->
+  <!-- Trilha rock sintetizada via Web Audio API — toca só na splash -->
 
 <div id="splash">
     <div class="logo-box"><div class="logo-circle"></div><div class="bolt-logo"></div></div>
@@ -144,7 +144,7 @@
         </button>
     </div>
 </div>
-<!-- ========== TELA MEGGER ========== -->
+    <!-- ========== TELA MEGGER ========== -->
 <div id="secMEG" class="tela">
     <div class="card">
         <button class="btn-acao" style="background:var(--dark); margin-bottom:20px" onclick="novoEnsaioMeg()">+ NOVO ENSAIO</button>
@@ -299,7 +299,7 @@
             <div class="teorico-formula" id="micFatorFormula">(T+TR) / (T+TM) — Insira TM</div>
         </div>
         <div class="pontas-box" style="border-color:#16a34a; margin-bottom:12px">
-            <div class="pontas-title" style="color:#16a34a">⚡ ALTA TENSÃO — Buchas H</div>
+            <div class="pontas-title" style="color:#16a34a">⚡ ALTA TENSÃO — Buchas H (× 1,5)</div>
             <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px">
                 <div>
                     <div style="font-size:9px; font-weight:800; color:#64748b; margin-bottom:5px; text-align:center">H1-H3</div>
@@ -435,12 +435,10 @@ function inicializar() {
     setTimeout(() => { document.getElementById('splash').style.display='none'; pararRock(); }, 2000);
     iniciarRock();
 }
-
 function salvar() {
     try { localStorage.setItem(DB_KEY, JSON.stringify(db)); return true; }
     catch(e) { alert('⚠️ ERRO AO SALVAR!\n\nDetalhe: '+e.message); return false; }
 }
-
 function testarStorage() {
     const box=document.getElementById('diagBox'); let html='';
     try { localStorage.setItem('_teste_','1'); localStorage.removeItem('_teste_'); html+='✅ localStorage: <b>DISPONÍVEL</b><br>'; }
@@ -451,20 +449,20 @@ function testarStorage() {
     html+=`🔑 Chave: <b>${DB_KEY}</b><br>🌐 Domínio: <b>${location.hostname||'local'}</b><br>🔒 Protocolo: <b>${location.protocol}</b>`;
     box.innerHTML=html;
 }
-
 function mudar(t) {
     document.getElementById('main-wrapper').style.display='none';
     document.querySelectorAll('.tela').forEach(x=>x.classList.remove('ativa'));
     if(t==='HOME') document.getElementById('main-wrapper').style.display='flex';
     else document.getElementById('sec'+t).classList.add('ativa');
 }
-function voltar() { mudar('HOME'); }
+    function voltar() { mudar('HOME'); }
 function setInf(id) { document.getElementById(id).value="∞"; }
 function addCfg(tipo,id) {
     const v=document.getElementById(id).value.trim().toUpperCase();
     if(v){ db[tipo].push(v); db[tipo].sort(); salvar(); renderTudo(); document.getElementById(id).value=''; }
 }
-    // ===== MEGGER =====
+
+// ===== MEGGER =====
 function converter(v,u) {
     if(v==="∞") return Infinity;
     let n=parseFloat(String(v).replace(',','.')), p={"MΩ":1,"GΩ":1000,"TΩ":1000000}[u]||1;
@@ -605,7 +603,7 @@ function novoEnsaioTTR() {
     document.getElementById('tFasorial').value=''; document.getElementById('tNeutralBox').style.display='none';
     document.getElementById('tPontasBox').style.display='none'; document.getElementById('tU1').value=''; document.getElementById('tU2').value='';
     if(document.getElementById('tCamposFases')) document.getElementById('tCamposFases').innerHTML='';
-                               }
+    }
     // ===== HISTÓRICO =====
 function carregarHistorico(id,tipo) {
     const h=db.historico.find(x=>x.id==id); if(!h) return;
@@ -625,7 +623,7 @@ function compartilhar(id) {
     let t=`PRO EVOLUTION — LAUDO DE ENSAIOS\nTAG: ${h.tag}\nDATA: ${h.data}\nLOCAL: ${h.local}\nTÉCNICOS: ${h.tecnico}\n\n`;
     if(ensaios.MEG&&ensaios.MEG.length>0){ t+=`===== MEGGER =====\n`; ensaios.MEG.forEach(d=>{ t+=`PONTO: ${d.ponto} (${d.tensao})\n30s: ${d.v30}  60s: ${d.v60}  120s: ${d.v120}\nSTATUS: ${d.status}\n---\n`; }); }
     if(ensaios.TTR&&ensaios.TTR.length>0){ t+=`\n===== TTR =====\n`; ensaios.TTR.forEach(d=>{ t+=`FASORIAL: ${d.fasorial} (${d.neutro})\nFASE: ${d.fase}\nTEÓRICO: ${d.teorico}  MEDIDO: ${d.medido}  DESVIO: ${d.erro}%\nSTATUS: ${d.status}\n---\n`; }); }
-    if(ensaios.MICRO&&ensaios.MICRO.length>0){ t+=`\n===== MICRO-OHMÍMETRO =====\n`; ensaios.MICRO.forEach(d=>{ t+=`BUCHA: ${d.bucha} (${d.lado}) | CORRENTE: ${d.corrente} | MEDIDO: ${d.medidoRaw} ${d.medidoUni} | RESULTADO: ${parseFloat(d.resultado).toFixed(2)} mΩ\n`; }); }
+    if(ensaios.MICRO&&ensaios.MICRO.length>0){ t+=`\n===== MICRO-OHMÍMETRO =====\n`; ensaios.MICRO.forEach(d=>{ t+=`BUCHA: ${d.bucha} (${d.lado}) | CORRENTE: ${d.corrente} | MEDIDO: ${d.medidoRaw} ${d.medidoUni}${d.mult>1?' × 1,5':''} | RESULTADO: ${parseFloat(d.resultado).toFixed(2)} mΩ\n`; }); }
     if(navigator.share){ navigator.share({title:`Laudo_${h.tag}`,text:t}).catch(()=>copiarTexto(t)); } else { copiarTexto(t); }
 }
 function copiarTexto(t) {
@@ -647,7 +645,7 @@ function gerarPDF(id) {
     let ttrHTML='';
     if(ensaios.TTR&&ensaios.TTR.length>0){ ttrHTML=`<div class="section-block"><div class="section-title">📟 ENSAIO TTR — RELAÇÃO DE TRANSFORMAÇÃO</div><table class="rel-table"><thead><tr><th>FASORIAL</th><th>NEUTRO</th><th>FASE / PONTAS</th><th>TEÓRICO</th><th>MEDIDO</th><th>DESVIO%</th><th>STATUS</th></tr></thead><tbody>${ensaios.TTR.map(d=>`<tr><td style="font-weight:700">${d.fasorial}</td><td>${d.neutro}</td><td style="text-align:left;font-size:9px">${d.fase}</td><td>${d.teorico}</td><td style="font-weight:700">${d.medido}</td><td>${d.erro}%</td><td><span style="${ss(d.status)}">${d.status}</span></td></tr>`).join('')}</tbody></table></div>`; }
     let microHTML='';
-    if(ensaios.MICRO&&ensaios.MICRO.length>0){ microHTML=`<div class="section-block"><div class="section-title">🔬 ENSAIO MICRO-OHMÍMETRO — RESISTÊNCIA ÔHMICA</div><table class="rel-table"><thead><tr><th>BUCHA</th><th>LADO</th><th>CORRENTE</th><th>MEDIDO</th><th>FATOR</th><th>RESULTADO (mΩ)</th></tr></thead><tbody>${ensaios.MICRO.map(d=>`<tr><td style="font-weight:700">${d.bucha}</td><td><span style="background:${d.lado==='AT'?'#ef4444':'#0284c7'};color:white;padding:2px 6px;border-radius:6px;font-size:9px;font-weight:700">${d.lado}</span></td><td style="font-weight:600">${d.corrente}</td><td>${d.medidoRaw} ${d.medidoUni}</td><td style="font-size:9px;color:#64748b">${d.fator}</td><td style="font-weight:700">${parseFloat(d.resultado).toFixed(2)}</td></tr>`).join('')}</tbody></table></div>`; }
+    if(ensaios.MICRO&&ensaios.MICRO.length>0){ microHTML=`<div class="section-block"><div class="section-title">🔬 ENSAIO MICRO-OHMÍMETRO — RESISTÊNCIA ÔHMICA</div><table class="rel-table"><thead><tr><th>BUCHA</th><th>LADO</th><th>CORRENTE</th><th>MEDIDO</th><th>FATOR</th><th>RESULTADO (mΩ)</th></tr></thead><tbody>${ensaios.MICRO.map(d=>`<tr><td style="font-weight:700">${d.bucha}</td><td><span style="background:${d.lado==='AT'?'#ef4444':'#0284c7'};color:white;padding:2px 6px;border-radius:6px;font-size:9px;font-weight:700">${d.lado}</span></td><td style="font-weight:600">${d.corrente}</td><td>${d.medidoRaw} ${d.medidoUni}${d.mult>1?' × 1,5':''}</td><td style="font-size:9px;color:#64748b">${d.fator}</td><td style="font-weight:700">${parseFloat(d.resultado).toFixed(2)}</td></tr>`).join('')}</tbody></table></div>`; }
     const w=window.open('','_blank');
     w.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Laudo ${h.tag}</title><style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
@@ -704,9 +702,12 @@ function registrarMicro() {
     [...buchasAT,...buchasBT].forEach(b=>{
         const el=document.getElementById('mic'+b.id), uni=document.getElementById('mic'+b.id+'uni').value;
         if(!el||el.value==='') return; algum=true;
-        const medidoMohm=converterMicro(el.value,uni), resultado=medidoMohm*fator;
+        const medidoMohm=converterMicro(el.value,uni);
+        // AT: medido × 1,5 × fator | BT: medido × fator
+        const mult=b.lado==='AT'?1.5:1;
+        const resultado=medidoMohm*mult*fator;
         const corrente=b.lado==='AT'?(correnteAT!=='--'?correnteAT+' A':'--'):(correnteBT!=='--'?correnteBT+' A':'--');
-        novos.push({id:Date.now()+Math.random(),bucha:b.label,lado:b.lado,corrente,medidoRaw:parseFloat(el.value),medidoUni:uni,medidoMohm,fator:fator.toFixed(2),resultado:resultado.toFixed(2)});
+        novos.push({id:Date.now()+Math.random(),bucha:b.label,lado:b.lado,corrente,medidoRaw:parseFloat(el.value),medidoUni:uni,medidoMohm,mult,fator:fator.toFixed(2),resultado:resultado.toFixed(2)});
         el.value='';
     });
     if(!algum) return alert("INSIRA PELO MENOS UM VALOR MEDIDO");
@@ -717,13 +718,13 @@ function renderTabelaMicro() {
         <td style="font-weight:bold">${e.bucha}</td>
         <td><span style="background:${e.lado==='AT'?'#ef4444':'#0284c7'};color:white;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700">${e.lado}</span></td>
         <td style="font-size:10px;font-weight:600">${e.corrente}</td>
-        <td>${e.medidoRaw} ${e.medidoUni}</td>
+        <td>${e.medidoRaw} ${e.medidoUni}${e.mult>1?' × 1,5':''}</td>
         <td style="font-size:9px;color:#64748b">${e.fator}</td>
         <td style="font-weight:700">${parseFloat(e.resultado).toFixed(2)} mΩ</td>
         <td><button class="btn-del-row" onclick="ensaiosAtuaisMicro=ensaiosAtuaisMicro.filter(x=>x.id!=${e.id});renderTabelaMicro()">×</button></td>
     </tr>`).join('');
-}
-function salvarHistoricoMicro() {
+    }
+    function salvarHistoricoMicro() {
     const tcs=Array.from(document.querySelectorAll('#secMICRO .tec-check:checked')).map(c=>c.value).join(', ');
     if(!tcs) return alert("SELECIONE O(S) TÉCNICO(S)");
     if(ensaiosAtuaisMicro.length===0) return alert("ADICIONE MEDIÇÕES NA TABELA");
@@ -736,16 +737,15 @@ function salvarHistoricoMicro() {
     salvar(); renderTudo();
     alert("SALVO NA FICHA DE "+tag+"!\nVocê pode continuar adicionando medições ou ir para outro ensaio.");
     ensaiosAtuaisMicro=[]; renderTabelaMicro();
-    }
-    function novoEnsaioMicro() {
+}
+function novoEnsaioMicro() {
     ensaiosAtuaisMicro=[]; renderTabelaMicro();
     document.getElementById('micTag').value=''; document.getElementById('micTM').value='';
     document.getElementById('micCorrenteAT').value=''; document.getElementById('micCorrenteBT').value='';
     document.getElementById('micFator').textContent='--'; document.getElementById('micFatorFormula').textContent='(T+TR) / (T+TM) — Insira TM';
     ['H1H3','H1H2','H2H3','X1X0','X2X0','X3X0'].forEach(id=>{ const el=document.getElementById('mic'+id); if(el) el.value=''; });
 }
-
-// ===== RENDER GERAL =====
+    // ===== RENDER GERAL =====
 function renderTudo() {
     const tecMeg=db.tecnicos.map(t=>`<div class="multi-item"><input type="checkbox" class="tec-check" value="${t}"> <span>${t}</span></div>`).join('')||'<p style="font-size:11px;padding:10px">CADASTRE TÉCNICOS NAS CONFIGURAÇÕES.</p>';
     document.getElementById('mTecContainer').innerHTML=tecMeg;
@@ -790,10 +790,10 @@ function irParaEnsaio(destino) {
     if(destino==='TTR'){ document.getElementById('tTag').value=tag; Array.from(document.getElementById('tLoc').options).forEach(o=>{if(o.value===local)o.selected=true;}); document.querySelectorAll('#secTTR .tec-check').forEach(c=>{c.checked=tecsSelecionados.includes(c.value);}); }
     else if(destino==='MEG'){ document.getElementById('mTag').value=tag; Array.from(document.getElementById('mLoc').options).forEach(o=>{if(o.value===local)o.selected=true;}); document.querySelectorAll('#secMEG .tec-check').forEach(c=>{c.checked=tecsSelecionados.includes(c.value);}); }
     else if(destino==='MICRO'){ document.getElementById('micTag').value=tag; Array.from(document.getElementById('micLoc').options).forEach(o=>{if(o.value===local)o.selected=true;}); document.querySelectorAll('#secMICRO .tec-check').forEach(c=>{c.checked=tecsSelecionados.includes(c.value);}); }
-}
+        }
+    window.onload = inicializar;
 
-window.onload = inicializar;
-    // ===== ROCK — Web Audio API (toca só na splash) =====
+// ===== ROCK — Web Audio API (toca só na splash) =====
 let musicaLigada=false, audioCtx=null, rockNodes=[], rockInterval=null;
 
 function criarAudioCtx() { if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); return audioCtx; }
