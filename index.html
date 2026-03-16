@@ -98,9 +98,7 @@
     </style>
 </head>
 <body>
-  <!-- Trilha rock sintetizada via Web Audio API — toca só na splash -->
-
-<div id="splash">
+   <div id="splash">
     <div class="logo-box"><div class="logo-circle"></div><div class="bolt-logo"></div></div>
     <div class="empresa-nome">PRO EVOLUTION</div>
 </div>
@@ -115,12 +113,18 @@
     <div id="menuHome" class="monolito-menu">
         <button class="btn-monolito" onclick="mudar('MEG')">
             <div class="icon-box">⚡</div>
-            <div class="btn-text"><span class="btn-label">MEGGER</span><span class="btn-desc">Resistência de isolação</span></div>
+            <div class="btn-text">
+                <span class="btn-label">MEGÔMETRO</span>
+                <span class="btn-desc">Resistência de isolação</span>
+            </div>
             <span class="btn-arrow">›</span>
         </button>
         <button class="btn-monolito" onclick="mudar('TTR')">
             <div class="icon-box">📟</div>
-            <div class="btn-text"><span class="btn-label">TTR</span><span class="btn-desc">Relação de transformação</span></div>
+            <div class="btn-text">
+                <span class="btn-label">TTR</span>
+                <span class="btn-desc">Relação de transformação</span>
+            </div>
             <span class="btn-arrow">›</span>
         </button>
         <button class="btn-monolito" onclick="mudar('MICRO')">
@@ -139,16 +143,19 @@
                   <text x="38" y="16" font-family="serif" font-size="11" fill="#facc15" font-weight="bold">Ω</text>
                 </svg>
             </div>
-            <div class="btn-text"><span class="btn-label">MICRO</span><span class="btn-desc">Resistência de contato</span></div>
+            <div class="btn-text">
+                <span class="btn-label">MICROOHMÍMETRO</span>
+                <span class="btn-desc">Resistência de contato</span>
+            </div>
             <span class="btn-arrow">›</span>
         </button>
     </div>
-</div>
-    <!-- ========== TELA MEGGER ========== -->
+</div> 
+    <!-- ========== TELA MEGÔMETRO ========== -->
 <div id="secMEG" class="tela">
     <div class="card">
         <button class="btn-acao" style="background:var(--dark); margin-bottom:20px" onclick="novoEnsaioMeg()">+ NOVO ENSAIO</button>
-        <h2 style="text-align:center; color:var(--accent); margin:0 0 20px 0">ENSAIO MEGGER</h2>
+        <h2 style="text-align:center; color:var(--accent); margin:0 0 20px 0">ENSAIO MEGÔMETRO</h2>
         <input type="hidden" id="editId">
         <label>1. TAG do Equipamento</label>
         <input type="text" id="mTag" placeholder="EX: TR-01">
@@ -197,7 +204,7 @@
         </div>
         <button class="btn-acao" style="background:var(--success); margin-top:20px" onclick="salvarHistoricoMeg()">💾 SALVAR NO HISTÓRICO</button>
         <button class="btn-acao" style="background:#7c3aed; margin-top:8px" onclick="irParaEnsaio('TTR')">📟 CONTINUAR NO TTR →</button>
-        <button class="btn-acao" style="background:#16a34a; margin-top:8px" onclick="irParaEnsaio('MICRO')">🔬 CONTINUAR NO MICRO →</button>
+        <button class="btn-acao" style="background:#16a34a; margin-top:8px" onclick="irParaEnsaio('MICRO')">🔬 CONTINUAR NO MICROOHMÍMETRO →</button>
     </div>
     <button class="btn-acao" style="background:#64748b; max-width:600px; display:block; margin:0 auto 20px" onclick="voltar()">VOLTAR AO MENU</button>
 </div>
@@ -264,16 +271,16 @@
             </table>
         </div>
         <button class="btn-acao" style="background:var(--success); margin-top:20px" onclick="salvarHistoricoTTR()">💾 SALVAR NO HISTÓRICO</button>
-        <button class="btn-acao" style="background:var(--accent); margin-top:8px" onclick="irParaEnsaio('MEG')">⚡ CONTINUAR NO MEGGER →</button>
-        <button class="btn-acao" style="background:#16a34a; margin-top:8px" onclick="irParaEnsaio('MICRO')">🔬 CONTINUAR NO MICRO →</button>
+        <button class="btn-acao" style="background:var(--accent); margin-top:8px" onclick="irParaEnsaio('MEG')">⚡ CONTINUAR NO MEGÔMETRO →</button>
+        <button class="btn-acao" style="background:#16a34a; margin-top:8px" onclick="irParaEnsaio('MICRO')">🔬 CONTINUAR NO MICROOHMÍMETRO →</button>
     </div>
     <button class="btn-acao" style="background:#64748b; max-width:600px; display:block; margin:0 auto 20px" onclick="voltar()">VOLTAR AO MENU</button>
 </div>
-<!-- ========== TELA MICRO ========== -->
+<!-- ========== TELA MICROOHMÍMETRO ========== -->
 <div id="secMICRO" class="tela">
     <div class="card">
         <button class="btn-acao" style="background:var(--dark); margin-bottom:20px" onclick="novoEnsaioMicro()">+ NOVO ENSAIO</button>
-        <h2 style="text-align:center; color:#16a34a; margin:0 0 20px 0">🧰 MICRO — RESISTÊNCIA DE CONTATO</h2>
+        <h2 style="text-align:center; color:#16a34a; margin:0 0 20px 0">🧰 MICROOHMÍMETRO — RESISTÊNCIA DE CONTATO</h2>
         <input type="hidden" id="micEditId">
         <label>1. TAG do Equipamento</label>
         <input type="text" id="micTag" placeholder="EX: TR-01">
@@ -343,12 +350,12 @@
     <div class="card" style="padding:15px">
         <div class="table-wrap">
             <table id="tabMicroResult">
-                <thead><tr><th>BUCHA</th><th>LADO</th><th>CORRENTE</th><th>MEDIDO</th><th>FATOR</th><th>RESULTADO (mΩ)</th><th>×</th></tr></thead>
+                <thead><tr><th>BUCHA</th><th>LADO</th><th>CORRENTE</th><th>MEDIDO</th><th>FATOR</th><th>RESULTADO</th><th>×</th></tr></thead>
                 <tbody></tbody>
             </table>
         </div>
         <button class="btn-acao" style="background:var(--success); margin-top:20px" onclick="salvarHistoricoMicro()">💾 SALVAR NO HISTÓRICO</button>
-        <button class="btn-acao" style="background:var(--accent); margin-top:8px" onclick="irParaEnsaio('MEG')">⚡ CONTINUAR NO MEGGER →</button>
+        <button class="btn-acao" style="background:var(--accent); margin-top:8px" onclick="irParaEnsaio('MEG')">⚡ CONTINUAR NO MEGÔMETRO →</button>
         <button class="btn-acao" style="background:#7c3aed; margin-top:8px" onclick="irParaEnsaio('TTR')">📟 CONTINUAR NO TTR →</button>
     </div>
     <button class="btn-acao" style="background:#64748b; max-width:600px; display:block; margin:0 auto 20px" onclick="voltar()">VOLTAR AO MENU</button>
@@ -432,8 +439,7 @@ function inicializar() {
         return h;
     });
     salvar(); renderTudo();
-    setTimeout(() => { document.getElementById('splash').style.display='none'; pararRock(); }, 2000);
-    iniciarRock();
+    setTimeout(() => { document.getElementById('splash').style.display='none'; }, 2000);
 }
 function salvar() {
     try { localStorage.setItem(DB_KEY, JSON.stringify(db)); return true; }
@@ -455,14 +461,13 @@ function mudar(t) {
     if(t==='HOME') document.getElementById('main-wrapper').style.display='flex';
     else document.getElementById('sec'+t).classList.add('ativa');
 }
-    function voltar() { mudar('HOME'); }
+function voltar() { mudar('HOME'); }
 function setInf(id) { document.getElementById(id).value="∞"; }
 function addCfg(tipo,id) {
     const v=document.getElementById(id).value.trim().toUpperCase();
     if(v){ db[tipo].push(v); db[tipo].sort(); salvar(); renderTudo(); document.getElementById(id).value=''; }
 }
-
-// ===== MEGGER =====
+    // ===== MEGÔMETRO =====
 function converter(v,u) {
     if(v==="∞") return Infinity;
     let n=parseFloat(String(v).replace(',','.')), p={"MΩ":1,"GΩ":1000,"TΩ":1000000}[u]||1;
@@ -510,7 +515,7 @@ function novoEnsaioMeg() {
     document.getElementById('mPonto').selectedIndex=0; document.getElementById('mTen').selectedIndex=0;
     document.getElementById('mRef').value=''; document.getElementById('m30').value=''; document.getElementById('m60').value=''; document.getElementById('m120').value='';
     }
-    // ===== TTR =====
+  // ===== TTR =====
 function selecionarNeutro(neutro) {
     neutroSelecionado=neutro;
     document.getElementById('btnX0').classList.toggle('ativo',neutro==='X0');
@@ -621,9 +626,9 @@ function compartilhar(id) {
     const h=db.historico.find(x=>x.id==id); if(!h) return;
     const ensaios=h.ensaios||{};
     let t=`PRO EVOLUTION — LAUDO DE ENSAIOS\nTAG: ${h.tag}\nDATA: ${h.data}\nLOCAL: ${h.local}\nTÉCNICOS: ${h.tecnico}\n\n`;
-    if(ensaios.MEG&&ensaios.MEG.length>0){ t+=`===== MEGGER =====\n`; ensaios.MEG.forEach(d=>{ t+=`PONTO: ${d.ponto} (${d.tensao})\n30s: ${d.v30}  60s: ${d.v60}  120s: ${d.v120}\nSTATUS: ${d.status}\n---\n`; }); }
+    if(ensaios.MEG&&ensaios.MEG.length>0){ t+=`===== MEGÔMETRO =====\n`; ensaios.MEG.forEach(d=>{ t+=`PONTO: ${d.ponto} (${d.tensao})\n30s: ${d.v30}  60s: ${d.v60}  120s: ${d.v120}\nSTATUS: ${d.status}\n---\n`; }); }
     if(ensaios.TTR&&ensaios.TTR.length>0){ t+=`\n===== TTR =====\n`; ensaios.TTR.forEach(d=>{ t+=`FASORIAL: ${d.fasorial} (${d.neutro})\nFASE: ${d.fase}\nTEÓRICO: ${d.teorico}  MEDIDO: ${d.medido}  DESVIO: ${d.erro}%\nSTATUS: ${d.status}\n---\n`; }); }
-    if(ensaios.MICRO&&ensaios.MICRO.length>0){ t+=`\n===== MICRO-OHMÍMETRO =====\n`; ensaios.MICRO.forEach(d=>{ t+=`BUCHA: ${d.bucha} (${d.lado}) | CORRENTE: ${d.corrente} | MEDIDO: ${d.medidoRaw} ${d.medidoUni}${d.mult>1?' × 1,5':''} | RESULTADO: ${parseFloat(d.resultado).toFixed(2)} mΩ\n`; }); }
+    if(ensaios.MICRO&&ensaios.MICRO.length>0){ t+=`\n===== MICROOHMÍMETRO =====\n`; ensaios.MICRO.forEach(d=>{ t+=`BUCHA: ${d.bucha} (${d.lado}) | CORRENTE: ${d.corrente} | MEDIDO: ${d.medidoRaw} ${d.medidoUni}${d.mult>1?' × 1,5':''} | RESULTADO: ${d.lado==="AT" ? (parseFloat(d.resultado)/1000).toFixed(4)+" Ω" : (parseFloat(d.resultado)*1000).toFixed(2)+" µΩ"}\n`; }); }
     if(navigator.share){ navigator.share({title:`Laudo_${h.tag}`,text:t}).catch(()=>copiarTexto(t)); } else { copiarTexto(t); }
 }
 function copiarTexto(t) {
@@ -641,11 +646,11 @@ function gerarPDF(id) {
     const ensaios=h.ensaios||{};
     const ss=s=>s==='OK'?'background:#16a34a;color:white;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10px':'background:#ef4444;color:white;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10px';
     let megHTML='';
-    if(ensaios.MEG&&ensaios.MEG.length>0){ megHTML=`<div class="section-block"><div class="section-title">⚡ ENSAIO MEGGER — RESISTÊNCIA DE ISOLAÇÃO</div><table class="rel-table"><thead><tr><th>PONTO DE MEDIÇÃO</th><th>TENSÃO</th><th>30s</th><th>60s</th><th>120s</th><th>STATUS</th></tr></thead><tbody>${ensaios.MEG.map(d=>`<tr><td style="text-align:left;font-weight:600">${d.ponto}</td><td>${d.tensao}</td><td>${d.v30}</td><td>${d.v60}</td><td>${d.v120}</td><td><span style="${ss(d.status)}">${d.status}</span></td></tr>`).join('')}</tbody></table></div>`; }
+    if(ensaios.MEG&&ensaios.MEG.length>0){ megHTML=`<div class="section-block"><div class="section-title">⚡ ENSAIO MEGÔMETRO — RESISTÊNCIA DE ISOLAÇÃO</div><table class="rel-table"><thead><tr><th>PONTO DE MEDIÇÃO</th><th>TENSÃO</th><th>30s</th><th>60s</th><th>120s</th><th>STATUS</th></tr></thead><tbody>${ensaios.MEG.map(d=>`<tr><td style="text-align:left;font-weight:600">${d.ponto}</td><td>${d.tensao}</td><td>${d.v30}</td><td>${d.v60}</td><td>${d.v120}</td><td><span style="${ss(d.status)}">${d.status}</span></td></tr>`).join('')}</tbody></table></div>`; }
     let ttrHTML='';
     if(ensaios.TTR&&ensaios.TTR.length>0){ ttrHTML=`<div class="section-block"><div class="section-title">📟 ENSAIO TTR — RELAÇÃO DE TRANSFORMAÇÃO</div><table class="rel-table"><thead><tr><th>FASORIAL</th><th>NEUTRO</th><th>FASE / PONTAS</th><th>TEÓRICO</th><th>MEDIDO</th><th>DESVIO%</th><th>STATUS</th></tr></thead><tbody>${ensaios.TTR.map(d=>`<tr><td style="font-weight:700">${d.fasorial}</td><td>${d.neutro}</td><td style="text-align:left;font-size:9px">${d.fase}</td><td>${d.teorico}</td><td style="font-weight:700">${d.medido}</td><td>${d.erro}%</td><td><span style="${ss(d.status)}">${d.status}</span></td></tr>`).join('')}</tbody></table></div>`; }
     let microHTML='';
-    if(ensaios.MICRO&&ensaios.MICRO.length>0){ microHTML=`<div class="section-block"><div class="section-title">🔬 ENSAIO MICRO-OHMÍMETRO — RESISTÊNCIA ÔHMICA</div><table class="rel-table"><thead><tr><th>BUCHA</th><th>LADO</th><th>CORRENTE</th><th>MEDIDO</th><th>FATOR</th><th>RESULTADO (mΩ)</th></tr></thead><tbody>${ensaios.MICRO.map(d=>`<tr><td style="font-weight:700">${d.bucha}</td><td><span style="background:${d.lado==='AT'?'#ef4444':'#0284c7'};color:white;padding:2px 6px;border-radius:6px;font-size:9px;font-weight:700">${d.lado}</span></td><td style="font-weight:600">${d.corrente}</td><td>${d.medidoRaw} ${d.medidoUni}${d.mult>1?' × 1,5':''}</td><td style="font-size:9px;color:#64748b">${d.fator}</td><td style="font-weight:700">${parseFloat(d.resultado).toFixed(2)}</td></tr>`).join('')}</tbody></table></div>`; }
+    if(ensaios.MICRO&&ensaios.MICRO.length>0){ microHTML=`<div class="section-block"><div class="section-title">🔬 ENSAIO MICROOHMÍMETRO — RESISTÊNCIA ÔHMICA</div><table class="rel-table"><thead><tr><th>BUCHA</th><th>LADO</th><th>CORRENTE</th><th>MEDIDO</th><th>FATOR</th><th>RESULTADO</th></tr></thead><tbody>${ensaios.MICRO.map(d=>`<tr><td style="font-weight:700">${d.bucha}</td><td><span style="background:${d.lado==='AT'?'#ef4444':'#0284c7'};color:white;padding:2px 6px;border-radius:6px;font-size:9px;font-weight:700">${d.lado}</span></td><td style="font-weight:600">${d.corrente}</td><td>${d.medidoRaw} ${d.medidoUni}${d.mult>1?' × 1,5':''}</td><td style="font-size:9px;color:#64748b">${d.fator}</td><td style="font-weight:700">${d.lado==="AT"?(parseFloat(d.resultado)/1000).toFixed(4)+" Ω":(parseFloat(d.resultado)*1000).toFixed(2)+" µΩ"}</td></tr>`).join('')}</tbody></table></div>`; }
     const w=window.open('','_blank');
     w.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Laudo ${h.tag}</title><style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
@@ -672,7 +677,7 @@ ${megHTML}${ttrHTML}${microHTML}
 </div><script>window.onload=()=>{window.print();}<\/script></body></html>`);
     w.document.close();
     }
-    // ===== MICRO =====
+  // ===== MICROOHMÍMETRO =====
 const MICRO_T=237, MICRO_TR=75;
 let ensaiosAtuaisMicro=[];
 
@@ -703,7 +708,8 @@ function registrarMicro() {
         const el=document.getElementById('mic'+b.id), uni=document.getElementById('mic'+b.id+'uni').value;
         if(!el||el.value==='') return; algum=true;
         const medidoMohm=converterMicro(el.value,uni);
-        // AT: medido × 1,5 × fator | BT: medido × fator
+        // AT: medido × 1,5 × fator (resultado em mΩ, exibido em Ω)
+        // BT: medido × fator (resultado em mΩ, exibido em µΩ)
         const mult=b.lado==='AT'?1.5:1;
         const resultado=medidoMohm*mult*fator;
         const corrente=b.lado==='AT'?(correnteAT!=='--'?correnteAT+' A':'--'):(correnteBT!=='--'?correnteBT+' A':'--');
@@ -720,11 +726,11 @@ function renderTabelaMicro() {
         <td style="font-size:10px;font-weight:600">${e.corrente}</td>
         <td>${e.medidoRaw} ${e.medidoUni}${e.mult>1?' × 1,5':''}</td>
         <td style="font-size:9px;color:#64748b">${e.fator}</td>
-        <td style="font-weight:700">${parseFloat(e.resultado).toFixed(2)} mΩ</td>
+        <td style="font-weight:700">${e.lado==="AT"?(parseFloat(e.resultado)/1000).toFixed(4)+" Ω":(parseFloat(e.resultado)*1000).toFixed(2)+" µΩ"}</td>
         <td><button class="btn-del-row" onclick="ensaiosAtuaisMicro=ensaiosAtuaisMicro.filter(x=>x.id!=${e.id});renderTabelaMicro()">×</button></td>
     </tr>`).join('');
-    }
-    function salvarHistoricoMicro() {
+}
+function salvarHistoricoMicro() {
     const tcs=Array.from(document.querySelectorAll('#secMICRO .tec-check:checked')).map(c=>c.value).join(', ');
     if(!tcs) return alert("SELECIONE O(S) TÉCNICO(S)");
     if(ensaiosAtuaisMicro.length===0) return alert("ADICIONE MEDIÇÕES NA TABELA");
@@ -744,7 +750,6 @@ function novoEnsaioMicro() {
     document.getElementById('micCorrenteAT').value=''; document.getElementById('micCorrenteBT').value='';
     document.getElementById('micFator').textContent='--'; document.getElementById('micFatorFormula').textContent='(T+TR) / (T+TM) — Insira TM';
     ['H1H3','H1H2','H2H3','X1X0','X2X0','X3X0'].forEach(id=>{ const el=document.getElementById('mic'+id); if(el) el.value=''; });
-}
     // ===== RENDER GERAL =====
 function renderTudo() {
     const tecMeg=db.tecnicos.map(t=>`<div class="multi-item"><input type="checkbox" class="tec-check" value="${t}"> <span>${t}</span></div>`).join('')||'<p style="font-size:11px;padding:10px">CADASTRE TÉCNICOS NAS CONFIGURAÇÕES.</p>';
@@ -790,90 +795,9 @@ function irParaEnsaio(destino) {
     if(destino==='TTR'){ document.getElementById('tTag').value=tag; Array.from(document.getElementById('tLoc').options).forEach(o=>{if(o.value===local)o.selected=true;}); document.querySelectorAll('#secTTR .tec-check').forEach(c=>{c.checked=tecsSelecionados.includes(c.value);}); }
     else if(destino==='MEG'){ document.getElementById('mTag').value=tag; Array.from(document.getElementById('mLoc').options).forEach(o=>{if(o.value===local)o.selected=true;}); document.querySelectorAll('#secMEG .tec-check').forEach(c=>{c.checked=tecsSelecionados.includes(c.value);}); }
     else if(destino==='MICRO'){ document.getElementById('micTag').value=tag; Array.from(document.getElementById('micLoc').options).forEach(o=>{if(o.value===local)o.selected=true;}); document.querySelectorAll('#secMICRO .tec-check').forEach(c=>{c.checked=tecsSelecionados.includes(c.value);}); }
-        }
-    window.onload = inicializar;
-
-// ===== ROCK — Web Audio API (toca só na splash) =====
-let musicaLigada=false, audioCtx=null, rockNodes=[], rockInterval=null;
-
-function criarAudioCtx() { if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); return audioCtx; }
-function getMaster() { const m=audioCtx.createGain(); m.gain.value=0.35; m.connect(audioCtx.destination); return m; }
-
-function tocarGuitarra(freq,inicio,duracao,master) {
-    const osc=audioCtx.createOscillator(), dist=audioCtx.createWaveShaper(), gain=audioCtx.createGain();
-    const curve=new Float32Array(256);
-    for(let i=0;i<256;i++){const x=(i*2/256)-1;curve[i]=x<0?-1+Math.pow(1+x,0.3):1-Math.pow(1-x,0.3);}
-    dist.curve=curve; osc.type='sawtooth'; osc.frequency.setValueAtTime(freq,inicio);
-    gain.gain.setValueAtTime(0.6,inicio); gain.gain.exponentialRampToValueAtTime(0.01,inicio+duracao);
-    osc.connect(dist); dist.connect(gain); gain.connect(master);
-    osc.start(inicio); osc.stop(inicio+duracao+0.05); rockNodes.push(osc);
-}
-function tocarBaixo(freq,inicio,duracao,master) {
-    const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
-    const osc2=audioCtx.createOscillator(), g2=audioCtx.createGain();
-    osc.type='sine'; osc.frequency.setValueAtTime(freq,inicio);
-    osc2.type='triangle'; osc2.frequency.setValueAtTime(freq*0.5,inicio); g2.gain.value=0.4;
-    gain.gain.setValueAtTime(0.7,inicio); gain.gain.exponentialRampToValueAtTime(0.01,inicio+duracao);
-    osc.connect(gain); gain.connect(master); osc2.connect(g2); g2.connect(master);
-    osc.start(inicio); osc.stop(inicio+duracao+0.05); osc2.start(inicio); osc2.stop(inicio+duracao+0.05);
-    rockNodes.push(osc,osc2);
-}
-function tocarBumbo(inicio,master) {
-    const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
-    osc.type='sine'; osc.frequency.setValueAtTime(160,inicio); osc.frequency.exponentialRampToValueAtTime(40,inicio+0.15);
-    gain.gain.setValueAtTime(1.2,inicio); gain.gain.exponentialRampToValueAtTime(0.001,inicio+0.25);
-    osc.connect(gain); gain.connect(master); osc.start(inicio); osc.stop(inicio+0.3); rockNodes.push(osc);
-}
-function tocarCaixa(inicio,master) {
-    const buf=audioCtx.createBuffer(1,audioCtx.sampleRate*0.15,audioCtx.sampleRate);
-    const data=buf.getChannelData(0);
-    for(let i=0;i<data.length;i++) data[i]=(Math.random()*2-1)*Math.pow(1-i/data.length,1.5);
-    const src=audioCtx.createBufferSource(), gain=audioCtx.createGain();
-    src.buffer=buf; gain.gain.setValueAtTime(0.8,inicio); gain.gain.exponentialRampToValueAtTime(0.001,inicio+0.15);
-    src.connect(gain); gain.connect(master); src.start(inicio); rockNodes.push(src);
-}
-function tocarHihat(inicio,aberto,master) {
-    const buf=audioCtx.createBuffer(1,audioCtx.sampleRate*(aberto?0.3:0.06),audioCtx.sampleRate);
-    const data=buf.getChannelData(0);
-    for(let i=0;i<data.length;i++) data[i]=(Math.random()*2-1)*Math.pow(1-i/data.length,2);
-    const src=audioCtx.createBufferSource(), filt=audioCtx.createBiquadFilter(), gain=audioCtx.createGain();
-    filt.type='highpass'; filt.frequency.value=8000;
-    gain.gain.setValueAtTime(aberto?0.3:0.2,inicio); gain.gain.exponentialRampToValueAtTime(0.001,inicio+(aberto?0.3:0.06));
-    src.connect(filt); filt.connect(gain); gain.connect(master); src.start(inicio); rockNodes.push(src);
 }
 
-const RIFF_GUITAR=[[82,0,0.18],[82,0.5,0.18],[110,1.0,0.18],[110,1.5,0.18],[98,2.0,0.18],[98,2.5,0.18],[110,3.0,0.35],[82,4.0,0.18],[82,4.5,0.18],[110,5.0,0.18],[98,5.5,0.18],[88,6.0,0.35],[82,7.0,0.5]];
-const RIFF_BASS=[[41,0,0.4],[41,0.5,0.4],[55,1.0,0.4],[55,1.5,0.4],[49,2.0,0.4],[49,2.5,0.4],[55,3.0,0.7],[41,4.0,0.4],[41,4.5,0.4],[55,5.0,0.4],[49,5.5,0.4],[44,6.0,0.7],[41,7.0,0.9]];
-const DRUM_PATTERN=[[1,0,1,0],[0,0,1,0],[0,1,1,0],[0,0,1,0],[1,0,1,0],[0,0,1,0],[0,1,0,1],[0,0,1,0]];
-const BPM=148, BEAT=60/BPM, COMPASSOS=8;
-
-function tocarLoop() {
-    if(!musicaLigada||!audioCtx) return;
-    const master=getMaster(), agora=audioCtx.currentTime+0.05, totalBeats=COMPASSOS*8;
-    for(let b=0;b<totalBeats;b++){
-        const t=agora+b*BEAT, pat=DRUM_PATTERN[b%8];
-        if(pat[0]) tocarBumbo(t,master);
-        if(pat[1]) tocarCaixa(t,master);
-        if(pat[2]) tocarHihat(t,false,master);
-        if(pat[3]) tocarHihat(t,true,master);
-    }
-    for(let c=0;c<COMPASSOS;c++){
-        const offset=agora+c*8*BEAT;
-        RIFF_GUITAR.forEach(([f,bo,d])=>tocarGuitarra(f,offset+bo*BEAT,d,master));
-        RIFF_BASS.forEach(([f,bo,d])=>tocarBaixo(f,offset+bo*BEAT,d,master));
-    }
-    rockInterval=setTimeout(tocarLoop,totalBeats*BEAT*1000-200);
-}
-function iniciarRock() {
-    try { criarAudioCtx(); if(audioCtx.state==='suspended') audioCtx.resume(); musicaLigada=true; tocarLoop(); }
-    catch(e){ console.log('Audio não disponível:',e); }
-}
-function pararRock() {
-    musicaLigada=false;
-    if(rockInterval) clearTimeout(rockInterval);
-    rockNodes.forEach(n=>{ try{ n.stop(); }catch(e){} });
-    rockNodes=[];
-}
+window.onload = inicializar;
 </script>
 </body>
-</html>
+</html>                                  }  
