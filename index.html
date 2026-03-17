@@ -150,6 +150,7 @@
     </div>
     <div class="empresa-nome">PRO EVOLUTION</div>
 </div>
+    
 <header>
     <div></div>
     <h1 class="header-title">ENSAIOS PRO EVOLUTION</h1>
@@ -301,7 +302,7 @@
             <label>5. Configuração de Neutro</label>
             <div class="tab-seg">
                 <button class="tab-btn ativo" id="btnX0" onclick="selecionarNeutro('X0')">C/ X0 APARENTE</button>
-                            <button class="tab-btn" id="btnH0" onclick="selecionarNeutro('H0')">C/ H0 APARENTE</button>
+                    <button class="tab-btn" id="btnH0" onclick="selecionarNeutro('H0')">C/ H0 APARENTE</button>
             </div>
         </div>
 
@@ -757,7 +758,7 @@ function registrarMegger() {
     const v120 = document.getElementById('m120').value;
     const refRaw = document.getElementById('mRef').value;
     const refUni = document.getElementById('mRefUni').value;
-   
+  
     if(!v30 || !v60 || !v120 || !refRaw) return alert("PREENCHA TODOS OS CAMPOS");
 
     const numRef = converter(refRaw, refUni);
@@ -1213,7 +1214,7 @@ function gerarPDF(id) {
   .doc-tag { font-size:22px; font-weight:900; color:#0284c7; }
   .doc-data { font-size:10px; color:#64748b; margin-top:2px; }
 
-      /* Faixa de info */
+     /* Faixa de info */
   .info-bar { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px; margin-bottom:16px; }
   .info-item { }
   .info-label { font-size:8px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:1px; margin-bottom:3px; }
@@ -1365,11 +1366,7 @@ function registrarMicro() {
             corrente: corrente !== '--' ? corrente + ' A' : '--',
             medidoRaw: parseFloat(el.value),
             medidoUni: uni,
-    medidoUni: uni,
-PARTE 10/10
-149 linhas
-📋 COPIAR PARTE 10
-            medidoMohm,
+                medidoMohm,
             mult,
             fator: fator.toFixed(2),
             resultado: resultado.toFixed(2)
@@ -1518,3 +1515,4 @@ window.onload = inicializar;
 </script>
 </body>
 </html>
+
