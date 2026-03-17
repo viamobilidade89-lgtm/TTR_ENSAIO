@@ -96,7 +96,7 @@
     </style>
 </head>
 <body>
-    <div id="splash">
+  <div id="splash">
     <div class="logo-box"><div class="logo-circle"></div><div class="bolt-logo"></div></div>
     <div class="empresa-nome">PRO EVOLUTION</div>
 </div>
@@ -206,7 +206,7 @@
     </div>
     <button class="btn-acao" style="background:#64748b; max-width:600px; display:block; margin:0 auto 20px" onclick="voltar()">VOLTAR AO MENU</button>
 </div>
-    <!-- ========== TELA TTR ========== -->
+<!-- ========== TELA TTR ========== -->
 <div id="secTTR" class="tela">
     <div class="card">
         <button class="btn-acao" style="background:var(--dark); margin-bottom:20px" onclick="novoEnsaioTTR()">+ NOVO ENSAIO</button>
@@ -358,9 +358,8 @@
         <button class="btn-acao" style="background:#7c3aed; margin-top:8px" onclick="irParaEnsaio('TTR')">📟 CONTINUAR NO TTR →</button>
     </div>
     <button class="btn-acao" style="background:#64748b; max-width:600px; display:block; margin:0 auto 20px" onclick="voltar()">VOLTAR AO MENU</button>
-</div>
-
-<!-- ========== TELA CONFIG ========== -->
+                </div>
+          <!-- ========== TELA CONFIG ========== -->
 <div id="secCONFIG" class="tela">
     <div class="card">
         <h3>📁 HISTÓRICO DE ENSAIOS</h3>
@@ -418,7 +417,7 @@ const FASORIAIS = {
         pontas:{ X0:[{fase:"H1-h3 / X2-x1~x3",H:"H1-h3",X:"X2-x1~x3"},{fase:"H3-H2 / X3-x2~x1",H:"H3-H2",X:"X3-x2~x1"},{fase:"H1-h3 / X1-x3~x2",H:"H1-h3",X:"X1-x3~x2"}] },
         formula:{ X0:{expr:"U1/(0,866·U2)",fn:(u1,u2)=>u1/(0.866*u2)} } },
     "Yyn0": { label:"Yyn0", neutros:["H0"],
-        pontas:{ H0:[{fase:"H1-h2~h3 / X1-X0 | H1-H0 / X1-x3",H:"H1-H0",X:"X1-x3"},{fase:"H2-h3~h1 / X2-X0 | H2-H0 / X2-x1",H:"H2-H0",X:"X2-x1"},{fase:"H3-h1~h2 / X3-X0 | H3-H0 / X3-x2",H:"H3-H0",X:"X3-x2"}] },
+        pontas:{ H0:[{fase:"H1-H0 / X1-x3",H:"H1-H0",X:"X1-x3"},{fase:"H2-H0 / X2-x1",H:"H2-H0",X:"X2-x1"},{fase:"H3-H0 / X3-x2",H:"H3-H0",X:"X3-x2"}] },
         formula:{ H0:{expr:"U1/(√3·U2·0,866)",fn:(u1,u2)=>u1/(Math.sqrt(3)*u2*0.866)} } },
     "Ynyn0": { label:"Ynyn0", neutros:["X0","H0"],
         pontas:{
@@ -438,12 +437,11 @@ let db = { tecnicos:[], locais:[], historico:[] };
 let ensaiosAtuaisMeg = [], ensaiosAtuaisTTR = [], neutroSelecionado = 'X0';
 
 function fecharSplash() { const s=document.getElementById('splash'); if(s) s.style.display='none'; }
-
 function inicializar() {
     setTimeout(fecharSplash, 2500);
     try { const saved=localStorage.getItem(DB_KEY); if(saved) db=JSON.parse(saved); } catch(e) { console.error("Erro ao carregar banco."); }
     try {
-        db.historico=db.historico.map(h=>{ if(!h.ensaios){h.ensaios={};if(h.tipo==='TTR'&&h.dados)h.ensaios.TTR=h.dados;else if(h.dados)h.ensaios.MEG=h.dados;delete h.tipo;delete h.dados;}return h; });
+        db.historico=db.historico.map(h=>{if(!h.ensaios){h.ensaios={};if(h.tipo==='TTR'&&h.dados)h.ensaios.TTR=h.dados;else if(h.dados)h.ensaios.MEG=h.dados;delete h.tipo;delete h.dados;}return h;});
         salvar(); renderTudo();
     } catch(e) { console.error("Erro ao inicializar:",e); }
     setTimeout(fecharSplash, 2000);
@@ -512,8 +510,9 @@ function novoEnsaioMeg() {
     ensaiosAtuaisMeg=[];document.getElementById('editId').value='';renderTabelaMeg();
     document.getElementById('mPonto').selectedIndex=0;document.getElementById('mTen').selectedIndex=0;
     document.getElementById('mRef').value='';document.getElementById('m30').value='';document.getElementById('m60').value='';document.getElementById('m120').value='';
-        }
-        // ===== TTR =====
+}
+
+// ===== TTR =====
 function selecionarNeutro(neutro) { neutroSelecionado=neutro; document.getElementById('btnX0').classList.toggle('ativo',neutro==='X0'); document.getElementById('btnH0').classList.toggle('ativo',neutro==='H0'); renderPontasTTR();calcTeoricoTTR(); }
 function atualizarTTR() {
     const fas=document.getElementById('tFasorial').value;
@@ -540,8 +539,7 @@ function renderPontasTTR() {
                 </div>`).join('')}
             </div>
         </div>`;
-}
-function getU(idVal,idUni) { const v=parseFloat(document.getElementById(idVal).value),u=document.getElementById(idUni).value; if(isNaN(v)||v<=0)return null; return u==='kV'?v*1000:v; }
+ function getU(idVal,idUni) { const v=parseFloat(document.getElementById(idVal).value),u=document.getElementById(idUni).value; if(isNaN(v)||v<=0)return null; return u==='kV'?v*1000:v; }
 function calcTeoricoTTR() {
     const fas=document.getElementById('tFasorial').value;if(!fas)return;
     const f=FASORIAIS[fas],formula=f.formula[neutroSelecionado];if(!formula)return;
@@ -587,7 +585,7 @@ function novoEnsaioTTR() {
     document.getElementById('tPontasBox').style.display='none';document.getElementById('tU1').value='';document.getElementById('tU2').value='';
     if(document.getElementById('tCamposFases'))document.getElementById('tCamposFases').innerHTML='';
         }
-        // ===== HISTÓRICO =====
+   // ===== HISTÓRICO =====
 function carregarHistorico(id,tipo) {
     const h=db.historico.find(x=>x.id==id);if(!h)return;
     if(tipo==='TTR'){document.getElementById('tEditId').value=h.id;document.getElementById('tTag').value=h.tag;document.getElementById('tLoc').value=h.local;
@@ -606,7 +604,7 @@ function compartilhar(id) {
     let t=`PRO EVOLUTION — LAUDO DE ENSAIOS\nTAG: ${h.tag}\nDATA: ${h.data}\nLOCAL: ${h.local}\nTÉCNICOS: ${h.tecnico}\n\n`;
     if(ensaios.MEG&&ensaios.MEG.length>0){t+=`===== MEGÔMETRO =====\n`;ensaios.MEG.forEach(d=>{t+=`PONTO: ${d.ponto} (${d.tensao})\n30s: ${d.v30}  60s: ${d.v60}  120s: ${d.v120}\nSTATUS: ${d.status}\n---\n`;});}
     if(ensaios.TTR&&ensaios.TTR.length>0){t+=`\n===== TTR =====\n`;ensaios.TTR.forEach(d=>{t+=`FASORIAL: ${d.fasorial} (${d.neutro})\nFASE: ${d.fase}\nTEÓRICO: ${d.teorico}  MEDIDO: ${d.medido}  DESVIO: ${d.erro}%\nSTATUS: ${d.status}\n---\n`;});}
-    if(ensaios.MICRO&&ensaios.MICRO.length>0){t+=`\n===== MICROOHMÍMETRO =====\n`;ensaios.MICRO.forEach(d=>{t+=`BUCHA: ${d.bucha} (${d.lado}) | CORRENTE: ${d.corrente} | MEDIDO: ${d.medidoRaw} ${d.medidoUni}${d.mult>1?' × 1,5':''} | RESULTADO: ${d.lado==="AT"?(parseFloat(d.resultado)/1000).toFixed(4)+" Ω":(parseFloat(d.resultado)*1000).toFixed(2)+" µΩ"}\n`;});}
+    if(ensaios.MICRO&&ensaios.MICRO.length>0){t+=`\n===== MICROOHMÍMETRO =====\n`;ensaios.MICRO.forEach(d=>{t+=`BUCHA: ${d.bucha} (${d.lado}) | CORRENTE: ${d.corrente} | MEDIDO: ${d.medidoRaw} ${d.medidoUni}${d.mult>1?' × 1,5':''} | RESULTADO: ${d.lado==="AT"?(parseFloat(d.resultado)/1000).toFixed(2)+" Ω":(parseFloat(d.resultado)*1000).toFixed(2)+" µΩ"}\n`;});}
     if(navigator.share){navigator.share({title:`Laudo_${h.tag}`,text:t}).catch(()=>copiarTexto(t));}else{copiarTexto(t);}
 }
 function copiarTexto(t) {
@@ -628,7 +626,7 @@ function gerarPDF(id) {
     let ttrHTML='';
     if(ensaios.TTR&&ensaios.TTR.length>0){ttrHTML=`<div class="section-block"><div class="section-title">📟 ENSAIO TTR — RELAÇÃO DE TRANSFORMAÇÃO</div><table class="rel-table"><thead><tr><th>FASORIAL</th><th>NEUTRO</th><th>FASE / PONTAS</th><th>TEÓRICO</th><th>MEDIDO</th><th>DESVIO%</th><th>STATUS</th></tr></thead><tbody>${ensaios.TTR.map(d=>`<tr><td style="font-weight:700">${d.fasorial}</td><td>${d.neutro}</td><td style="text-align:left;font-size:9px">${d.fase}</td><td>${d.teorico}</td><td style="font-weight:700">${d.medido}</td><td>${d.erro}%</td><td><span style="${ss(d.status)}">${d.status}</span></td></tr>`).join('')}</tbody></table></div>`;}
     let microHTML='';
-    if(ensaios.MICRO&&ensaios.MICRO.length>0){microHTML=`<div class="section-block"><div class="section-title">🔬 ENSAIO MICROOHMÍMETRO — RESISTÊNCIA ÔHMICA</div><table class="rel-table"><thead><tr><th>BUCHA</th><th>LADO</th><th>CORRENTE</th><th>MEDIDO</th><th>FATOR</th><th>RESULTADO</th></tr></thead><tbody>${ensaios.MICRO.map(d=>`<tr><td style="font-weight:700">${d.bucha}</td><td><span style="background:${d.lado==='AT'?'#ef4444':'#0284c7'};color:white;padding:2px 6px;border-radius:6px;font-size:9px;font-weight:700">${d.lado}</span></td><td style="font-weight:600">${d.corrente}</td><td>${d.medidoRaw} ${d.medidoUni}${d.mult>1?' × 1,5':''}</td><td style="font-size:9px;color:#64748b">${d.fator}</td><td style="font-weight:700">${d.lado==="AT"?(parseFloat(d.resultado)/1000).toFixed(4)+" Ω":(parseFloat(d.resultado)*1000).toFixed(2)+" µΩ"}</td></tr>`).join('')}</tbody></table></div>`;}
+    if(ensaios.MICRO&&ensaios.MICRO.length>0){microHTML=`<div class="section-block"><div class="section-title">🔬 ENSAIO MICROOHMÍMETRO — RESISTÊNCIA ÔHMICA</div><table class="rel-table"><thead><tr><th>BUCHA</th><th>LADO</th><th>CORRENTE</th><th>MEDIDO</th><th>FATOR</th><th>RESULTADO</th></tr></thead><tbody>${ensaios.MICRO.map(d=>`<tr><td style="font-weight:700">${d.bucha}</td><td><span style="background:${d.lado==='AT'?'#ef4444':'#0284c7'};color:white;padding:2px 6px;border-radius:6px;font-size:9px;font-weight:700">${d.lado}</span></td><td style="font-weight:600">${d.corrente}</td><td>${d.medidoRaw} ${d.medidoUni}${d.mult>1?' × 1,5':''}</td><td style="font-size:9px;color:#64748b">${d.fator}</td><td style="font-weight:700">${d.lado==="AT"?(parseFloat(d.resultado)/1000).toFixed(2)+" Ω":(parseFloat(d.resultado)*1000).toFixed(2)+" µΩ"}</td></tr>`).join('')}</tbody></table></div>`;}
     const w=window.open('','_blank');
     w.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Laudo ${h.tag}</title><style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
@@ -655,8 +653,7 @@ ${megHTML}${ttrHTML}${microHTML}
 </div><script>window.onload=()=>{window.print();}<\/script></body></html>`);
     w.document.close();
         }
-        
-// ===== MICROOHMÍMETRO =====
+    // ===== MICROOHMÍMETRO =====
 const MICRO_T=237, MICRO_TR=75;
 let ensaiosAtuaisMicro=[];
 
@@ -699,7 +696,7 @@ function renderTabelaMicro() {
         <td style="font-size:10px;font-weight:600">${e.corrente}</td>
         <td>${e.medidoRaw} ${e.medidoUni}${e.mult>1?' × 1,5':''}</td>
         <td style="font-size:9px;color:#64748b">${e.fator}</td>
-        <td style="font-weight:700">${e.lado==="AT"?(parseFloat(e.resultado)/1000).toFixed(4)+" Ω":(parseFloat(e.resultado)*1000).toFixed(2)+" µΩ"}</td>
+        <td style="font-weight:700">${e.lado==="AT"?(parseFloat(e.resultado)/1000).toFixed(2)+" Ω":(parseFloat(e.resultado)*1000).toFixed(2)+" µΩ"}</td>
         <td><button class="btn-del-row" onclick="ensaiosAtuaisMicro=ensaiosAtuaisMicro.filter(x=>x.id!=${e.id});renderTabelaMicro()">×</button></td>
     </tr>`).join('');
 }
