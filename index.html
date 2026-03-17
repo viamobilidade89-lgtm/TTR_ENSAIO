@@ -150,7 +150,6 @@
     </div>
     <div class="empresa-nome">PRO EVOLUTION</div>
 </div>
-    
 <header>
     <div></div>
     <h1 class="header-title">ENSAIOS PRO EVOLUTION</h1>
@@ -302,7 +301,7 @@
             <label>5. Configuração de Neutro</label>
             <div class="tab-seg">
                 <button class="tab-btn ativo" id="btnX0" onclick="selecionarNeutro('X0')">C/ X0 APARENTE</button>
-                    <button class="tab-btn" id="btnH0" onclick="selecionarNeutro('H0')">C/ H0 APARENTE</button>
+                                <button class="tab-btn" id="btnH0" onclick="selecionarNeutro('H0')">C/ H0 APARENTE</button>
             </div>
         </div>
 
@@ -417,17 +416,17 @@
                 <div>
                     <div style="font-size:9px; font-weight:800; color:#64748b; margin-bottom:5px; text-align:center">X1-X0</div>
                     <input type="number" id="micX1X0" placeholder="Medido" inputmode="decimal" style="margin:0; font-size:13px; padding:10px; text-align:center">
-                    <select id="micX1X0uni" style="margin-top:4px; padding:6px; font-size:11px; text-transform:none"><option value="Ω">Ω</option><option value="mΩ">mΩ</option><option value="μΩ">µΩ</option></select>
+                    <select id="micX1X0uni" style="margin-top:4px; padding:6px; font-size:11px; text-transform:none"><option value="mΩ">mΩ</option><option value="Ω">Ω</option><option value="μΩ">µΩ</option></select>
                 </div>
                 <div>
                     <div style="font-size:9px; font-weight:800; color:#64748b; margin-bottom:5px; text-align:center">X2-X0</div>
                     <input type="number" id="micX2X0" placeholder="Medido" inputmode="decimal" style="margin:0; font-size:13px; padding:10px; text-align:center">
-                    <select id="micX2X0uni" style="margin-top:4px; padding:6px; font-size:11px; text-transform:none"><option value="Ω">Ω</option><option value="mΩ">mΩ</option><option value="μΩ">µΩ</option></select>
+                    <select id="micX2X0uni" style="margin-top:4px; padding:6px; font-size:11px; text-transform:none"><option value="mΩ">mΩ</option><option value="Ω">Ω</option><option value="μΩ">µΩ</option></select>
                 </div>
                 <div>
                     <div style="font-size:9px; font-weight:800; color:#64748b; margin-bottom:5px; text-align:center">X3-X0</div>
                     <input type="number" id="micX3X0" placeholder="Medido" inputmode="decimal" style="margin:0; font-size:13px; padding:10px; text-align:center">
-                    <select id="micX3X0uni" style="margin-top:4px; padding:6px; font-size:11px; text-transform:none"><option value="Ω">Ω</option><option value="mΩ">mΩ</option><option value="μΩ">µΩ</option></select>
+                    <select id="micX3X0uni" style="margin-top:4px; padding:6px; font-size:11px; text-transform:none"><option value="mΩ">mΩ</option><option value="Ω">Ω</option><option value="μΩ">µΩ</option></select>
                 </div>
             </div>
         </div>
@@ -438,7 +437,7 @@
     <div class="card" style="padding:15px">
         <div class="table-wrap">
             <table id="tabMicroResult">
-                <thead><tr><th>BUCHA</th><th>LADO</th><th>CORRENTE</th><th>MEDIDO</th><th>FATOR</th><th>RESULTADO (mΩ)</th><th>×</th></tr></thead>
+                <thead><tr><th>BUCHA</th><th>LADO</th><th>CORRENTE</th><th>MEDIDO</th><th>FATOR</th><th>RESULTADO</th><th>×</th></tr></thead>
                 <tbody></tbody>
             </table>
         </div>
@@ -454,7 +453,7 @@
     <div class="card">
         <h3>📁 HISTÓRICO DE ENSAIOS</h3>
         <div id="listaHist"></div>
-            <hr>
+               <hr>
         <h3>👥 CADASTRAR TÉCNICO</h3>
         <div style="display:flex; gap:8px">
             <input type="text" id="cTec" placeholder="NOME" style="margin:0">
@@ -758,7 +757,7 @@ function registrarMegger() {
     const v120 = document.getElementById('m120').value;
     const refRaw = document.getElementById('mRef').value;
     const refUni = document.getElementById('mRefUni').value;
-  
+    
     if(!v30 || !v60 || !v120 || !refRaw) return alert("PREENCHA TODOS OS CAMPOS");
 
     const numRef = converter(refRaw, refUni);
@@ -1515,4 +1514,3 @@ window.onload = inicializar;
 </script>
 </body>
 </html>
-
