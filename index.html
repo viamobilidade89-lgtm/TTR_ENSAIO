@@ -20,7 +20,8 @@
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; color: var(--dark); display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
         input, select { text-transform: uppercase; width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 12px; font-size: 15px; box-sizing: border-box; margin-bottom: 10px; }
         label { font-size: 11px; font-weight: 800; color: #64748b; margin-left: 5px; text-transform: uppercase; display: block; margin-bottom: 4px; }
-        #splash { position: fixed; top:0; left:0; width:100%; height:100%; background: var(--dark); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; }
+        #splash { position: fixed; top:0; left:0; width:100%; height:100%; background: var(--dark); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; animation: splashOut 0.5s ease-out 2.5s forwards; }
+        @keyframes splashOut { to { opacity: 0; pointer-events: none; visibility: hidden; } }
         .logo-box { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
         .logo-circle { width: 140px; height: 140px; border: 5px solid var(--p); border-radius: 50%; position: absolute; animation: pulse 2s infinite; }
         .bolt-logo { width: 70px; height: 90px; background: var(--p); clip-path: polygon(45% 0%, 100% 0%, 55% 45%, 100% 45%, 15% 100%, 45% 55%, 0% 55%); z-index: 2; }
@@ -98,7 +99,7 @@
     </style>
 </head>
 <body>
-   <div id="splash">
+    <div id="splash">
     <div class="logo-box"><div class="logo-circle"></div><div class="bolt-logo"></div></div>
     <div class="empresa-nome">PRO EVOLUTION</div>
 </div>
@@ -150,8 +151,8 @@
             <span class="btn-arrow">›</span>
         </button>
     </div>
-</div> 
-    <!-- ========== TELA MEGÔMETRO ========== -->
+</div>
+<!-- ========== TELA MEGÔMETRO ========== -->
 <div id="secMEG" class="tela">
     <div class="card">
         <button class="btn-acao" style="background:var(--dark); margin-bottom:20px" onclick="novoEnsaioMeg()">+ NOVO ENSAIO</button>
@@ -208,6 +209,7 @@
     </div>
     <button class="btn-acao" style="background:#64748b; max-width:600px; display:block; margin:0 auto 20px" onclick="voltar()">VOLTAR AO MENU</button>
 </div>
+
 <!-- ========== TELA TTR ========== -->
 <div id="secTTR" class="tela">
     <div class="card">
@@ -360,6 +362,7 @@
     </div>
     <button class="btn-acao" style="background:#64748b; max-width:600px; display:block; margin:0 auto 20px" onclick="voltar()">VOLTAR AO MENU</button>
 </div>
+
 <!-- ========== TELA CONFIG ========== -->
 <div id="secCONFIG" class="tela">
     <div class="card">
@@ -409,7 +412,7 @@ const FASORIAIS = {
     },
     "Dy1": { label:"Dy1", neutros:["X0"], pontas:{ X0:[{fase:"H1-h3 / X2-x1~x3",H:"H1-h3",X:"X2-x1~x3"},{fase:"H3-H2 / X3-x2~x1",H:"H3-H2",X:"X3-x2~x1"},{fase:"H1-h3 / X1-x3~x2",H:"H1-h3",X:"X1-x3~x2"}] }, formula:{ X0:{expr:"U1/(0,866·U2)",fn:(u1,u2)=>u1/(0.866*u2)} } },
     "Dy11": { label:"Dy11", neutros:["X0"], pontas:{ X0:[{fase:"H1-h3 / X2-x1~x3",H:"H1-h3",X:"X2-x1~x3"},{fase:"H3-H2 / X3-x2~x1",H:"H3-H2",X:"X3-x2~x1"},{fase:"H1-h3 / X1-x3~x2",H:"H1-h3",X:"X1-x3~x2"}] }, formula:{ X0:{expr:"U1/(0,866·U2)",fn:(u1,u2)=>u1/(0.866*u2)} } },
-    "Yyn0": { label:"Yyn0", neutros:["H0"], pontas:{ H0:[{fase:"H1-h2~h3 / X1-X0 | H1-H0 / X1-x3",H:"H1-H0",X:"X1-x3"},{fase:"H2-h3~h1 / X2-X0 | H2-H0 / X2-x1",H:"H2-H0",X:"X2-x1"},{fase:"H3-h1~h2 / X3-X0 | H3-H0 / X3-x2",H:"H3-H0",X:"X3-x2"}] }, formula:{ H0:{expr:"U1/(√3·U2·0,866)",fn:(u1,u2)=>u1/(Math.sqrt(3)*u2*0.866)} } },
+    "Yyn0": { label:"Yyn0", neutros:["H0"], pontas:{ H0:[{fase:"H1-H0 / X1-x3",H:"H1-H0",X:"X1-x3"},{fase:"H2-H0 / X2-x1",H:"H2-H0",X:"X2-x1"},{fase:"H3-H0 / X3-x2",H:"H3-H0",X:"X3-x2"}] }, formula:{ H0:{expr:"U1/(√3·U2·0,866)",fn:(u1,u2)=>u1/(Math.sqrt(3)*u2*0.866)} } },
     "Ynyn0": {
         label:"Ynyn0", neutros:["X0","H0"],
         pontas: {
@@ -432,15 +435,28 @@ const DB_KEY = 'PRO_EVO_V21_FINAL';
 let db = { tecnicos:[], locais:[], historico:[] };
 let ensaiosAtuaisMeg = [], ensaiosAtuaisTTR = [], neutroSelecionado = 'X0';
 
-function inicializar() {
-    try { const saved=localStorage.getItem(DB_KEY); if(saved) db=JSON.parse(saved); } catch(e) {}
-    db.historico = db.historico.map(h => {
-        if(!h.ensaios){ h.ensaios={}; if(h.tipo==='TTR'&&h.dados) h.ensaios.TTR=h.dados; else if(h.dados) h.ensaios.MEG=h.dados; delete h.tipo; delete h.dados; }
-        return h;
-    });
-    salvar(); renderTudo();
-    setTimeout(() => { document.getElementById('splash').style.display='none'; }, 2000);
+function fecharSplash() {
+    const splash = document.getElementById('splash');
+    if(splash) splash.style.display = 'none';
 }
+
+function inicializar() {
+    setTimeout(fecharSplash, 2500);
+    try {
+        const saved = localStorage.getItem(DB_KEY);
+        if(saved) db = JSON.parse(saved);
+    } catch(e) { console.error("Erro ao carregar banco."); }
+    try {
+        db.historico = db.historico.map(h => {
+            if(!h.ensaios){ h.ensaios={}; if(h.tipo==='TTR'&&h.dados) h.ensaios.TTR=h.dados; else if(h.dados) h.ensaios.MEG=h.dados; delete h.tipo; delete h.dados; }
+            return h;
+        });
+        salvar();
+        renderTudo();
+    } catch(e) { console.error("Erro ao inicializar:", e); }
+    setTimeout(fecharSplash, 2000);
+}
+
 function salvar() {
     try { localStorage.setItem(DB_KEY, JSON.stringify(db)); return true; }
     catch(e) { alert('⚠️ ERRO AO SALVAR!\n\nDetalhe: '+e.message); return false; }
@@ -465,9 +481,8 @@ function voltar() { mudar('HOME'); }
 function setInf(id) { document.getElementById(id).value="∞"; }
 function addCfg(tipo,id) {
     const v=document.getElementById(id).value.trim().toUpperCase();
-    if(v){ db[tipo].push(v); db[tipo].sort(); salvar(); renderTudo(); document.getElementById(id).value=''; }
-}
-    // ===== MEGÔMETRO =====
+    if(v){ db[tipo].push(v); db[tipo].sort();
+// ===== MEGÔMETRO =====
 function converter(v,u) {
     if(v==="∞") return Infinity;
     let n=parseFloat(String(v).replace(',','.')), p={"MΩ":1,"GΩ":1000,"TΩ":1000000}[u]||1;
@@ -514,8 +529,9 @@ function novoEnsaioMeg() {
     ensaiosAtuaisMeg=[]; document.getElementById('editId').value=''; renderTabelaMeg();
     document.getElementById('mPonto').selectedIndex=0; document.getElementById('mTen').selectedIndex=0;
     document.getElementById('mRef').value=''; document.getElementById('m30').value=''; document.getElementById('m60').value=''; document.getElementById('m120').value='';
-    }
-  // ===== TTR =====
+}
+
+// ===== TTR =====
 function selecionarNeutro(neutro) {
     neutroSelecionado=neutro;
     document.getElementById('btnX0').classList.toggle('ativo',neutro==='X0');
@@ -608,8 +624,8 @@ function novoEnsaioTTR() {
     document.getElementById('tFasorial').value=''; document.getElementById('tNeutralBox').style.display='none';
     document.getElementById('tPontasBox').style.display='none'; document.getElementById('tU1').value=''; document.getElementById('tU2').value='';
     if(document.getElementById('tCamposFases')) document.getElementById('tCamposFases').innerHTML='';
-    }
-    // ===== HISTÓRICO =====
+                 }
+        // ===== HISTÓRICO =====
 function carregarHistorico(id,tipo) {
     const h=db.historico.find(x=>x.id==id); if(!h) return;
     if(tipo==='TTR'){ document.getElementById('tEditId').value=h.id; document.getElementById('tTag').value=h.tag; document.getElementById('tLoc').value=h.local;
@@ -628,7 +644,7 @@ function compartilhar(id) {
     let t=`PRO EVOLUTION — LAUDO DE ENSAIOS\nTAG: ${h.tag}\nDATA: ${h.data}\nLOCAL: ${h.local}\nTÉCNICOS: ${h.tecnico}\n\n`;
     if(ensaios.MEG&&ensaios.MEG.length>0){ t+=`===== MEGÔMETRO =====\n`; ensaios.MEG.forEach(d=>{ t+=`PONTO: ${d.ponto} (${d.tensao})\n30s: ${d.v30}  60s: ${d.v60}  120s: ${d.v120}\nSTATUS: ${d.status}\n---\n`; }); }
     if(ensaios.TTR&&ensaios.TTR.length>0){ t+=`\n===== TTR =====\n`; ensaios.TTR.forEach(d=>{ t+=`FASORIAL: ${d.fasorial} (${d.neutro})\nFASE: ${d.fase}\nTEÓRICO: ${d.teorico}  MEDIDO: ${d.medido}  DESVIO: ${d.erro}%\nSTATUS: ${d.status}\n---\n`; }); }
-    if(ensaios.MICRO&&ensaios.MICRO.length>0){ t+=`\n===== MICROOHMÍMETRO =====\n`; ensaios.MICRO.forEach(d=>{ t+=`BUCHA: ${d.bucha} (${d.lado}) | CORRENTE: ${d.corrente} | MEDIDO: ${d.medidoRaw} ${d.medidoUni}${d.mult>1?' × 1,5':''} | RESULTADO: ${d.lado==="AT" ? (parseFloat(d.resultado)/1000).toFixed(4)+" Ω" : (parseFloat(d.resultado)*1000).toFixed(2)+" µΩ"}\n`; }); }
+    if(ensaios.MICRO&&ensaios.MICRO.length>0){ t+=`\n===== MICROOHMÍMETRO =====\n`; ensaios.MICRO.forEach(d=>{ t+=`BUCHA: ${d.bucha} (${d.lado}) | CORRENTE: ${d.corrente} | MEDIDO: ${d.medidoRaw} ${d.medidoUni}${d.mult>1?' × 1,5':''} | RESULTADO: ${d.lado==="AT"?(parseFloat(d.resultado)/1000).toFixed(4)+" Ω":(parseFloat(d.resultado)*1000).toFixed(2)+" µΩ"}\n`; }); }
     if(navigator.share){ navigator.share({title:`Laudo_${h.tag}`,text:t}).catch(()=>copiarTexto(t)); } else { copiarTexto(t); }
 }
 function copiarTexto(t) {
@@ -664,20 +680,20 @@ function gerarPDF(id) {
 .info-label{font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}.info-value{font-size:11px;font-weight:700;color:#0f172a;}
 .section-block{margin-bottom:16px;}.section-title{font-size:10px;font-weight:800;color:#0284c7;text-transform:uppercase;letter-spacing:1px;border-left:3px solid #0284c7;padding-left:8px;margin-bottom:8px;}
 .rel-table{width:100%;border-collapse:collapse;font-size:10px;}.rel-table thead tr{background:#0f172a;color:white;}
-.rel-table th{padding:7px 8px;text-align:center;font-size:9px;font-weight:700;letter-spacing:0.5px;}.rel-table tbody tr:nth-child(even){background:#f8fafc;}
+.rel-table th{padding:7px 8px;text-align:center;font-size:9px;font-weight:700;}.rel-table tbody tr:nth-child(even){background:#f8fafc;}
 .rel-table td{padding:7px 8px;text-align:center;border-bottom:1px solid #e2e8f0;vertical-align:middle;}
-.footer{border-top:1px solid #e2e8f0;padding-top:10px;margin-top:16px;display:flex;justify-content:space-between;align-items:center;}
+.footer{border-top:1px solid #e2e8f0;padding-top:10px;margin-top:16px;display:flex;justify-content:space-between;}
 .footer-brand{font-size:8px;color:#cbd5e1;font-weight:700;letter-spacing:2px;}
 @media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
 </style></head><body><div class="page">
-<div class="header"><div class="header-left"><div class="bolt"></div><div><div class="brand-title">PRO EVOLUTION</div><div class="brand-sub">Ensaios Elétricos</div></div></div><div class="doc-info"><div class="doc-tag">${h.tag}</div><div class="doc-data">Data: ${h.data} &nbsp;|&nbsp; Local: ${h.local||'—'}</div></div></div>
-<div class="info-bar"><div class="info-item"><div class="info-label">Equipamento (TAG)</div><div class="info-value">${h.tag}</div></div><div class="info-item"><div class="info-label">Local</div><div class="info-value">${h.local||'—'}</div></div><div class="info-item"><div class="info-label">Técnico(s) Responsável(is)</div><div class="info-value">${h.tecnico}</div></div></div>
+<div class="header"><div class="header-left"><div class="bolt"></div><div><div class="brand-title">PRO EVOLUTION</div><div class="brand-sub">Ensaios Elétricos</div></div></div><div class="doc-info"><div class="doc-tag">${h.tag}</div><div class="doc-data">Data: ${h.data} | Local: ${h.local||'—'}</div></div></div>
+<div class="info-bar"><div><div class="info-label">Equipamento (TAG)</div><div class="info-value">${h.tag}</div></div><div><div class="info-label">Local</div><div class="info-value">${h.local||'—'}</div></div><div><div class="info-label">Técnico(s)</div><div class="info-value">${h.tecnico}</div></div></div>
 ${megHTML}${ttrHTML}${microHTML}
 <div class="footer"><div class="footer-brand">PRODUCED BY UNKNOWN — PRO EVOLUTION</div><div style="font-size:8px;color:#cbd5e1">${h.data}</div></div>
 </div><script>window.onload=()=>{window.print();}<\/script></body></html>`);
     w.document.close();
     }
-  // ===== MICROOHMÍMETRO =====
+          // ===== MICROOHMÍMETRO =====
 const MICRO_T=237, MICRO_TR=75;
 let ensaiosAtuaisMicro=[];
 
@@ -708,8 +724,6 @@ function registrarMicro() {
         const el=document.getElementById('mic'+b.id), uni=document.getElementById('mic'+b.id+'uni').value;
         if(!el||el.value==='') return; algum=true;
         const medidoMohm=converterMicro(el.value,uni);
-        // AT: medido × 1,5 × fator (resultado em mΩ, exibido em Ω)
-        // BT: medido × fator (resultado em mΩ, exibido em µΩ)
         const mult=b.lado==='AT'?1.5:1;
         const resultado=medidoMohm*mult*fator;
         const corrente=b.lado==='AT'?(correnteAT!=='--'?correnteAT+' A':'--'):(correnteBT!=='--'?correnteBT+' A':'--');
@@ -750,7 +764,9 @@ function novoEnsaioMicro() {
     document.getElementById('micCorrenteAT').value=''; document.getElementById('micCorrenteBT').value='';
     document.getElementById('micFator').textContent='--'; document.getElementById('micFatorFormula').textContent='(T+TR) / (T+TM) — Insira TM';
     ['H1H3','H1H2','H2H3','X1X0','X2X0','X3X0'].forEach(id=>{ const el=document.getElementById('mic'+id); if(el) el.value=''; });
-    // ===== RENDER GERAL =====
+}
+
+// ===== RENDER GERAL =====
 function renderTudo() {
     const tecMeg=db.tecnicos.map(t=>`<div class="multi-item"><input type="checkbox" class="tec-check" value="${t}"> <span>${t}</span></div>`).join('')||'<p style="font-size:11px;padding:10px">CADASTRE TÉCNICOS NAS CONFIGURAÇÕES.</p>';
     document.getElementById('mTecContainer').innerHTML=tecMeg;
@@ -800,4 +816,4 @@ function irParaEnsaio(destino) {
 window.onload = inicializar;
 </script>
 </body>
-</html>                                  }  
+</html>
